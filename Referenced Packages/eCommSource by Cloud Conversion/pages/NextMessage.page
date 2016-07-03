@@ -1,0 +1,2 @@
+<apex:page standardController="CloudConversion__Message__c" extensions="CloudConversion.ManageMessagesController" action="{!nextMessage}"> 
+</apex:page>

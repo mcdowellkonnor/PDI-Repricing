@@ -1,0 +1,5 @@
+<apex:page standardController="serp__Forecast_Period__c" sidebar="false" showHeader="true">
+
+	<c:AnalyzeForecast />
+	
+</apex:page>

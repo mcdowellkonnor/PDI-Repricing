@@ -1,0 +1,50 @@
+<apex:page controller="ECS.ProductCategoryController">
+
+	<c:Analytics event="INFO" app="ECS" />
+	
+	<apex:stylesheet value="{!URLFOR($Resource.ECS__sf1css, 'sf1css.css')}" />
+	<apex:stylesheet value="{!URLFOR($Resource.ECS__SLDS104, 'assets/styles/salesforce-lightning-design-system-vf.css')}" />
+	<apex:stylesheet value="//dl.dropboxusercontent.com/s/lirw44gyffz7krw/product-category.css" />
+	
+	<apex:includeScript value="https://code.jquery.com/jquery-2.2.1.min.js"/>
+    <apex:includeScript value="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.15.0/jquery.validate.min.js"/>
+    <apex:includeScript value="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.15.0/additional-methods.min.js"/>
+	<apex:includeScript value="//dl.dropboxusercontent.com/s/bfujlmgq0hcqydl/product-category.js" />
+
+	<apex:pagemessages />
+	
+	<div class="slds">
+		<div class="slds-text-heading--small mainheading">Select Category</div>
+		
+		<apex:form id="theForm">
+		
+			<fieldset class="slds-form--compound">
+				<div class="form-element__group">
+			     	<div class="slds-form-element__row">   
+			      		<!-- COL 1 -->
+			        	<div class="slds-form-element slds-size--1-of-2">	
+							<apex:outputPanel id="table">
+								<div class="row">
+									<c:AutoCompleteV2 allowClear="true" 
+										importJquery="true" 
+										labelField="Name" 
+										SObject="ECS__Category__c" 
+										valueField="Id" 
+										targetField="{!categoryId}" 
+										syncManualEntry="false" 
+										whereClause="ECS__Is_Active__c=true AND ECS__Include_In_Search__c=true"/> 
+								</div>
+							</apex:outputPanel>
+						</div>
+						<!-- COL 2 -->
+						<div class="slds-form-element slds-size--1-of-2">
+							<apex:commandButton styleClass="slds-button slds-button--brand" action="{!next}" value="Next" immediate="true" />
+						</div>
+					</div>
+				</div>
+			</fieldset>
+			
+		</apex:form>
+		
+	</div>				
+</apex:page>

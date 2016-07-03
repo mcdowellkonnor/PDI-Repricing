@@ -1,0 +1,53 @@
+<apex:page controller="ECS.ViewProductsController" showHeader="false">
+
+	<apex:stylesheet value="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
+	<apex:stylesheet value="//cdn.datatables.net/1.10.11/css/jquery.dataTables.min.css" />
+	<apex:stylesheet value="//dl.dropboxusercontent.com/s/dbw9a5ct2cqqjt9/view-products.css" />	
+	
+	<script src="//code.jquery.com/jquery-2.2.0.min.js" />
+	<script src="//cdn.datatables.net/1.10.11/js/jquery.dataTables.min.js" />
+	<script src="//cdn.datatables.net/1.10.11/js/dataTables.bootstrap.min.js" />
+	<script src="//dl.dropboxusercontent.com/s/750nv9bpq0ldtyx/view-products.js" />
+	
+	<apex:pageMessages />
+
+	<div class="cc slds">
+	
+		<header>
+		
+			<p><apex:image styleClass="logo" value="{!orderSetting.ECS__Logo_Resource_Name__c}"/></p>
+	
+			<apex:outputPanel rendered="{!unableToLocateProducts}">
+				<H2>Sorry, unable to locate products.</H2>
+			</apex:outputPanel>
+		
+		</header>
+	
+		<apex:outputPanel styleClass="productListTableContainer" rendered="{!!unableToLocateProducts}">
+			
+			<table id="product-list" class="table table-striped table-bordered" width="100%">
+				<thead>
+			        <tr> 
+		            	<apex:repeat value="{!$ObjectType.ECS__Product__c.FieldSets.ECS__View_Products}" var="fs">
+		            		<th>{!fs.Label}</th>
+		            	</apex:repeat>
+		            </tr>
+			    </thead>
+				<tbody>
+					<apex:repeat var="p" value="{!products}">
+						<tr>
+							<apex:repeat value="{!$ObjectType.ECS__Product__c.FieldSets.ECS__View_Products}" var="fs">
+							  	<td>
+							  		<apex:outputField value="{!p[fs]}" />
+							  	</td>
+						  	</apex:repeat>
+						</tr>
+					</apex:repeat>     
+				</tbody>
+			</table>
+		
+		</apex:outputPanel>
+	
+	</div>
+
+</apex:page>

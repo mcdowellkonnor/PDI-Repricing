@@ -1,0 +1,33 @@
+<apex:page standardController="eCommazon__Amazon_Setting__c" extensions="eCommazon.UploadAmazonReportController" sidebar="true">
+
+	<apex:pageMessages /> 
+	
+	<apex:form id="details">
+	
+	<apex:outputPanel id="all">
+     <apex:pageBlock id="pageBlock">
+		<apex:pageBlockButtons location="bottom">
+		    <apex:commandButton action="{!upload}" value="Upload" />
+		</apex:pageBlockButtons>
+
+		<apex:outputPanel id="detailPanel">
+
+             <apex:pageBlockSection columns="1">
+	           <apex:pageBlockSectionItem >
+	             <apex:outputLabel value="Report" for="report"/> 
+	             <apex:selectList size="1" id="report" value="{!report}">
+	               <apex:selectOptions value="{!reportOptions}"/>
+	             </apex:selectList>
+	           </apex:pageBlockSectionItem> 
+	        	<apex:pageBlockSectionItem id="Attachments">
+			       <apex:outputLabel value="Select File" for="attachment"/>
+			       <apex:inputFile id="attachment" value="{!attachmentBody}" filename="{!attachmentName}" contentType="{!mimeType}"/> 
+				</apex:pageBlockSectionItem> 
+			</apex:pageBlockSection>
+
+		</apex:outputPanel>
+	 </apex:pageBlock>
+	</apex:outputPanel>
+	
+	</apex:form>
+</apex:page>

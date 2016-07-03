@@ -1,0 +1,13 @@
+<apex:page controller="ECS.MassUpdateController">
+	<apex:pageMessages id="pageMessages" />
+	<apex:form >
+		Query: <apex:inputText value="{!query}" size="100"/><br/>
+		Attribute Name: <apex:inputText value="{!attrName1}"/><br/>
+		Attribute Value: <apex:inputText value="{!attrVal1}"/><br/>
+		Attribute Name 2: <apex:inputText value="{!attrName2}"/><br/>
+		Attribute Value 2: <apex:inputText value="{!attrVal2}"/><br/> 
+		Asynchronous: <apex:inputCheckbox value="{!async}"/><br/>
+		Batch Size: <apex:inputText value="{!batchSize}"/><br/> 
+		<apex:commandButton action="{!runUpdate}" value="Update"/>
+	</apex:form>
+</apex:page>

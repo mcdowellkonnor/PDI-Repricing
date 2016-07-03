@@ -1,0 +1,61 @@
+<apex:page standardController="serp__Purchase_Order__c" extensions="serp.CreateProductsForPOController">
+
+	<ECS:Analytics event="INFO" app="ERP" />
+	<apex:stylesheet value="{!URLFOR($Resource.serp__sf1css, 'sf1css.css')}" />
+
+	<apex:pagemessages />
+	
+	<apex:sectionHeader title="Creating Product for Consigner {!supplierName}" />
+
+	<apex:form id="theForm">
+		<div class="container">
+			<div class="form-panel">
+			<center> 
+				<apex:outputPanel id="table">
+					<div class="row">
+						<p>eBay Category</p>
+						<ECS:AutoCompleteV2 allowClear="true" importJquery="true" labelField="Name" SObject="ECS__Category__c" valueField="Id" targetField="{!prod.ECS__Category__c}" syncManualEntry="false" style="width:600px" rerender="customFields" whereClause="ECS__Is_Active__c=true"/> 
+					</div>
+							
+					<div class="row">
+						<p>Brand</p>
+						<ECS:AutoCompleteV2 allowClear="true" importJquery="true" labelField="Name" SObject="ECS__Brand__c" valueField="Id" targetField="{!prod.ECS__Brand_Lookup__c}" syncManualEntry="false" style="width:600px"/> 
+					</div>
+
+					<div class="row">
+						<p>Title</p>
+						<apex:inputText value="{!prod.ECS__Title__c}"/> 
+					</div>
+					
+					<div class="row">
+						<p>Price</p>
+						<apex:inputText value="{!prod.ECS__Price__c}"/>
+					</div>
+					
+					<div class="row">
+						<p>Description</p>
+						<apex:inputText value="{!prod.ECS__Description__c}"/>
+					</div>
+					
+					<apex:outputPanel id="customFields">						
+						<apex:repeat value="{!customFieldList}" var="cf">
+							<div class="row">
+								<p>{!cf.key}</p>
+								<apex:inputText value="{!cf.val}"/>
+							</div>
+						</apex:repeat>
+					</apex:outputPanel>
+				</apex:outputPanel>
+
+
+				<apex:commandButton action="{!save}" value="Save" immediate="true"
+						style="background:#137fc0;Color:white; height:30px; padding:0 15px 0 15px;  border:none; cursor:pointer; margin:4px 0 0 6px;font-weight:regular;font-size: 13px;" />
+				<apex:commandButton action="{!Cancel}" value="Cancel" immediate="true"
+						style="background:#137fc0;Color:white; height:30px; padding:0 15px 0 15px;  border:none; cursor:pointer; margin:4px 0 0 6px;font-weight:regular;font-size: 13px;" />
+
+			</center>
+			</div>
+
+		</div>
+	</apex:form>
+</apex:page>

@@ -1,0 +1,5 @@
+<apex:page standardController="ECS__Deal__c">
+		
+	<c:ManageDeal />
+	
+</apex:page>

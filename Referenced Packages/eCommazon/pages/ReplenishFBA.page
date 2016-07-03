@@ -1,0 +1,3 @@
+<apex:page controller="eCommazon.ReplenishFBAController" action="{!replenish}"> 
+	<apex:pageMessages />
+</apex:page>

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <enableEnhancedLookup>true</enableEnhancedLookup>
+    <fields>
+        <fullName>Stock_Unit__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Stock Unit</label>
+        <referenceTo>Stock_Unit__c</referenceTo>
+        <relationshipLabel>Order Lines</relationshipLabel>
+        <relationshipName>Order_Lines</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>eBay_Transaction_Id__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <formula>IF(CONTAINS(ECS__External_Order_Line_ID__c, &quot;-&quot;), ECS__External_Order_Line_ID__c, ECS__Sale_Source_ID__c+&quot;-&quot;+ECS__Unique_Transaction_Line_Id__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>eBay Transaction Id</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <webLinks>
+        <fullName>Add_Serial_Numbers</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <height>600</height>
+        <linkType>page</linkType>
+        <masterLabel>Add Serial Numbers</masterLabel>
+        <openType>sidebar</openType>
+        <page>AddStockUnits</page>
+        <protected>false</protected>
+    </webLinks>
+    <webLinks>
+        <fullName>Assign_Stock</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <height>600</height>
+        <linkType>page</linkType>
+        <masterLabel>Assign Stock</masterLabel>
+        <openType>sidebar</openType>
+        <page>AssignStockUnits</page>
+        <protected>false</protected>
+    </webLinks>
+    <webLinks>
+        <fullName>Create_Case</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <height>600</height>
+        <linkType>page</linkType>
+        <masterLabel>Create Case</masterLabel>
+        <openType>sidebar</openType>
+        <page>CreateCaseFromOrderLine</page>
+        <protected>false</protected>
+    </webLinks>
+    <webLinks>
+        <fullName>Create_RMA</fullName>
+        <availability>online</availability>
+        <displayType>massActionButton</displayType>
+        <linkType>javascript</linkType>
+        <masterLabel>Create RMA</masterLabel>
+        <openType>onClickJavaScript</openType>
+        <protected>false</protected>
+        <requireRowSelection>true</requireRowSelection>
+        <url>var ids= {!GETRECORDIDS($ObjectType.ECS__eCommSource_Order_Line__c)}; if(ids.length &lt; 1 ) alert(&apos;Please select at least one order line.&apos;); else var mywin = window.open(&apos;/apex/CloudConversion__CreateRMAFromOrder?orderLinesIds=&apos;+ids.join(&apos;,&apos;));</url>
+    </webLinks>
+</CustomObject>

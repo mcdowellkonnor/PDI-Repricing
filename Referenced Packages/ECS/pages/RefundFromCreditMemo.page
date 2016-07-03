@@ -1,0 +1,22 @@
+<apex:page standardController="ECS__Credit_Memo__c" extensions="ECS.RefundFromCreditMemoController"> 
+
+	<div class="cc">
+		<apex:stylesheet value="{!URLFOR($Resource.ECS__bootstrap_cc)}" />
+		<link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.9.0/themes/base/jquery-ui.css"/> 
+		
+		<apex:pageMessages id="page-messages"/>
+		
+		<apex:form >
+			<table id="credit-container" style="width: 30%; margin-left: 12px;">
+				<tr><td>Account</td><td><apex:inputField style="width: 120px;" value="{!creditMemo.ECS__Account__c}"/></td></tr>
+				<tr><td>Refund Amount</td><td><apex:inputText style="width: 120px;" value="{!refundAmount}"/></td></tr>
+			</table>
+			<div class="section-separator"></div> 
+			<div>
+				<apex:commandButton style="float: left; clear: both;" styleClass="btn-primary" action="{!refund}" value="Refund" rerender="page-messages" />
+				<apex:commandButton action="{!cancel}" value="Cancel" />
+			</div>
+		</apex:form>
+	</div>
+	
+</apex:page>

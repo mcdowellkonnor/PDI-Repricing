@@ -1,0 +1,88 @@
+<apex:page standardController="CloudConversion__RMA_Line__c" extensions="CloudConversion.ManageEBayReturnsController" action="{!getReturnDetails}">
+
+	<ECS:Analytics event="INFO" app="eCommSource" />
+	
+   <apex:pagemessages />
+   
+   <apex:form id="theForm">
+     <apex:pageBlock id="pageBlock" rendered="{!eBayRmaFound}">
+		 <apex:pageBlockButtons location="bottom" >
+		    <apex:commandButton action="{!save}" value="Save" rendered="{!eBayRmaFound}"/>
+		    <apex:commandButton action="{!cancel}" value="Cancel"/>
+		 </apex:pageBlockButtons>  
+	 
+         <apex:pageBlockSection id="pgsResponse" columns="1">
+			 <apex:pageBlockSection id="pgsResponse2" columns="1">
+				 <apex:pageBlockSectionItem id="activityOptionsItem" >
+				     <apex:outputLabel value="Activity Options" for="opt"/>
+						 <apex:selectList size="1" id="opt" value="{!selectedOption}">
+						    <apex:selectOptions value="{!activityOptions}"/>
+						 </apex:selectList>
+				 </apex:pageBlockSectionItem>
+				 <apex:outputPanel id="processing"> 
+             		<apex:pageBlockSection columns="2">
+             			<apex:pageBlockSectionItem id="pgsiReasons" rendered="{!renderRefundFields}">
+             				<apex:outputLabel value="Return Reason" for="RMAReason"/>
+	                       		<apex:selectList size="1" id="RMAReason" value="{!rma.CloudConversion__Actual_Return_Reason__c}">
+	                           		<apex:selectOptions value="{!RMAreasonoptions}"/> 
+	                       </apex:selectList>
+	                	</apex:pageBlockSectionItem>
+
+             			<apex:pageBlockSectionItem id="shippingOptionsItem" rendered="{!canProvideLabel}">
+             				<apex:outputLabel value="Shipping Options" for="shippingOptions"/>
+	                       		<apex:selectList size="1" id="shippingOptions" value="{!selectedShippingOption}">
+	                           		<apex:selectOptions value="{!shippingOptions}"/> 
+	                       </apex:selectList>
+	                	</apex:pageBlockSectionItem>
+	                	
+	           			<apex:pageBlockSectionItem rendered="{!renderRefundFields}">
+	             			<apex:outputLabel value="Refund Amount" for="RefundAmt"/> 
+	             			<apex:inputText id="RefundAmt" value="{!refundAmt}"/>
+	          		    </apex:pageBlockSectionItem>
+	          		  	<apex:pageBlockSectionItem rendered="{!renderRMANumber}">
+	             			<apex:outputLabel value="RMA Number" for="RMANumber"/> 
+	             			<apex:inputText id="RMANumber" value="{!RMA.Name}"/> 
+	          		    </apex:pageBlockSectionItem>
+	          		    <apex:pageBlockSectionItem rendered="{!renderRefundFields}">
+	             			<apex:outputLabel value="Include Return Shipping" for="includereturnshipping"/> 
+	             			<apex:inputCheckbox id="includereturnshipping" value="{!includeReturnShipping}"/>
+	          		    </apex:pageBlockSectionItem>
+	          		    <apex:pageBlockSectionItem rendered="{!renderRefundFields}">
+	             			<apex:outputLabel value="Refund Reason" for="refundreason"/> 
+	             			<apex:inputText id="refundreason" value="{!refundReason}"/>
+	          		    </apex:pageBlockSectionItem>
+	          		    <apex:pageBlockSectionItem rendered="{!renderRefundFields}">
+	             			<apex:outputLabel value="Restock Item" for="restockitem"/> 
+	             			<apex:inputCheckbox id="restockitem" value="{!restockItem}"/>
+	          		    </apex:pageBlockSectionItem>
+	          		    <apex:pageBlockSectionItem >
+	             			<apex:outputLabel value="Comments" for="comments"/> 
+	             			<apex:inputTextArea id="comments" value="{!comments}"/>
+	          		    </apex:pageBlockSectionItem>
+				 </apex:pageBlockSection> 
+				 </apex:outputPanel>
+				 
+				 <!-- <apex:pageBlockSectionItem id="options">
+				     <apex:outputLabel value="Return Detail" for="option"/>
+				     <apex:pageBlockSectionItem id="detail2">
+					    <apex:outputText id="detail2" value="{!selectedOption}"/>
+	                 </apex:pageBlockSectionItem>
+				 </apex:pageBlockSectionItem> 
+				 <apex:pageBlockSectionItem id="restockingFee">
+				     <apex:outputLabel value="Return Detail" for="returnDetail"/>
+				     <apex:pageBlockSectionItem id="detail">
+					    <apex:outputText id="detail" value="{!returnDetail}"/>
+	                 </apex:pageBlockSectionItem>
+				 </apex:pageBlockSectionItem>-->
+				 
+				 <apex:pageBlockSectionItem id="report">
+				 	<apex:outputLabel value="" for="report"/>
+				 	<apex:outputLink target="_blank" value="http://ocs.ebay.com/ws/eBayISAPI.dll?CustomerSupport&transid={!transactionId}&query=1562&issue=107&itemid={!eBayItemId}">Report Buyer Abuse</apex:outputLink>
+				 </apex:pageBlockSectionItem>
+				 
+			 </apex:pageBlockSection>
+           </apex:pageBlockSection>
+        </apex:pageBlock>
+   </apex:form>
+
+</apex:page>

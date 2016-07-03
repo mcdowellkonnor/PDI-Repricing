@@ -1,0 +1,5 @@
+<apex:page standardController="serp__Warehouse__c" sidebar="false" showHeader="true">
+
+	<c:ManageAisles />
+
+</apex:page>

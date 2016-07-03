@@ -1,0 +1,10 @@
+------------------------Forwarded Message---------------------------
+Date: {!Message__c.Inquiry_Time__c}
+From:  {!Message__c.Customer__c}
+To:   {!Message__c.Email_Sent_To__c}
+
+Subject:  {!Message__c.Subject__c}
+
+Body:
+
+{!Message__c.Message__c}

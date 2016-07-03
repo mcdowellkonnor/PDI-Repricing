@@ -1,0 +1,5 @@
+<apex:page standardController="ECS__Product__c" extensions="CloudGento.GetMagentoInventoryController" action="{!updateInventoryFromProduct}">
+
+   <apex:pagemessages />
+
+</apex:page>

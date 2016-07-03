@@ -1,0 +1,193 @@
+<apex:page controller="ECS.GenerateReceiptController" showheader="false" sidebar="false">
+	<style type="text/css" media="print">
+		@media print {
+			@page {margin:5mm 3mm 10mm 3mm;orphans:3;size:72mm 200mm;}
+			body{color:#000000;font-size:12px;margin:0px;}
+			table {page-break-inside:avoid;}
+			.didYouKnow{font-size:20px;font-weight:bold;}
+			.salesReceipt{font-weight:bold;}
+		}
+	</style>
+	<style type="text/css" media="screen">
+		@media screen {
+			body{color:#000000;font-size:12px;margin:0px;}
+			table {page-break-inside:avoid;}
+			.didYouKnow{font-size:20px;font-weight:bold;}
+			.salesReceipt{font-weight:bold;}
+		}
+	</style>
+	<table style="width:300px;">
+		<tr>
+			<td>
+				<apex:outputText style="float:left;" value="{0, date, MM/dd/yyyy hh:mm a}">
+					<apex:param value="{!curOrder.ECS__Order_Time__c}"/>
+				</apex:outputText>
+			</td>
+			<td>
+				<apex:outputText style="float:right;" value="Sales Receipt #{!curOrder.Name}"/>
+			</td>
+		</tr>
+		<tr>
+			<td colspan="2">&nbsp;</td>
+		</tr>
+		<apex:stylesheet value="" />
+		<tr>
+			<td colspan="2">
+				<center><apex:image value="{!curOrderSetting.ECS__Logo_Resource_Name__c}" rendered="{!curOrderSetting.ECS__Logo_Resource_Name__c!=null && curOrderSetting.ECS__Logo_Resource_Name__c!=''}"/></center>
+			</td>
+		</tr>
+		<tr>
+			<td colspan="2">
+				<center><apex:outputText value="{!websiteUrl}"/></center>
+			</td>
+		</tr>
+		<tr>
+			<td colspan="2">&nbsp;</td>
+		</tr>
+		<tr>
+			<td colspan="2">
+				<center>
+					<apex:outputPanel rendered="{!curAddress.ECS__Address_Line_1__c != null}">
+						<apex:outputText value="{!curAddress.ECS__Address_Line_1__c}"/><br/>
+					</apex:outputPanel>
+					<apex:outputPanel rendered="{!curAddress.ECS__Address_Line_2__c != null}">
+						<apex:outputText value="{!curAddress.ECS__Address_Line_2__c}"/><br/>
+					</apex:outputPanel>
+					<apex:outputPanel rendered="{!curAddress.ECS__City__c != null}">
+						<apex:outputText value="{!curAddress.ECS__City__c}"/>,&nbsp;<apex:outputText value="{!curAddress.ECS__State_Province_Region__c}"/>&nbsp;<apex:outputText value="{!curAddress.ECS__Zip_Postal_Code__c}"/><br/>
+					</apex:outputPanel>
+					<apex:outputPanel rendered="{!curAddress.ECS__Phone_Number__c != null}">
+						<apex:outputText value="{!curAddress.ECS__Phone_Number__c}"/><br/>
+					</apex:outputPanel>
+					<apex:outputPanel rendered="{!curAddress.ECS__Email_Address__c != null}">
+						<apex:outputText value="{!curAddress.ECS__Email_Address__c}"/>
+					</apex:outputPanel>
+				</center>
+			</td>
+		</tr>
+		<tr>
+			<td colspan="2">&nbsp;</td>
+		</tr>
+		<tr>
+			<td><strong>Bill To:</strong>&nbsp;<apex:outputText value="{!curOrder.ECS__Customer__r.Name}"/></td>
+			<td>&nbsp;</td>
+		</tr>
+		<tr>
+			<td colspan="2">&nbsp;</td>
+		</tr>
+		<tr>
+			<td colspan="2">Cashier:&nbsp;<apex:outputText value="{!$User.FirstName}"/></td>
+		</tr>
+		<tr>
+			<td colspan="2">
+				<table>
+					<thead>
+						<tr>
+							<td style="font-weight:bold;">Part Number</td>
+							<td style="font-weight:bold;width:9%;">Qty</td>
+							<td style="font-weight:bold;text-align:right;width:25%;">Price</td>
+							<td style="font-weight:bold;text-align:right;width:25%;">Ext Price</td>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td colspan="4" style="border-top:solid #000000 2px;"></td>
+						</tr>
+						<apex:repeat value="{!olines}" var="ol">
+							<apex:outputPanel >
+								<tr>
+									<td><apex:outputText value="{!ol.ECS__Product_Title__c}"/></td>
+									<td style="text-align:right;">{!ol.ECS__Quantity__c}</td>
+									<td style="text-align:right;">
+										<apex:outputText value="{0, number, currency}">
+											<apex:param value="{!ol.ECS__Unit_Price__c}"/>
+										</apex:outputText>
+									</td>
+									<td style="text-align:right;">
+										<apex:outputText value="{0, number, currency}">
+											<apex:param value="{!ol.ECS__Order_Line_Total__c}"/>
+										</apex:outputText>
+									</td>
+								</tr>
+							</apex:outputPanel>
+						</apex:repeat>
+						<tr>
+							<td colspan="4" style="border-bottom:solid #000000 2px;padding-top:10px;"></td>
+						</tr>
+						<tr>
+							<td colspan="2">&nbsp;</td>
+							<td style="text-align:right;"><apex:outputLabel >Subtotal:</apex:outputLabel></td>
+							<td style="text-align:right;"><apex:outputField value="{!curOrder.ECS__Order_Line_Total__c}"></apex:outputField></td>
+						</tr>
+						<tr>
+							<td colspan="3" style="text-align:right;">Local Sales Tax:</td>
+							<td style="text-align:right;"><apex:outputField value="{!curOrder.ECS__Tax_Total__c}"></apex:outputField></td>
+						</tr>
+						<tr>
+							<td colspan="3"><apex:outputLabel style="float:right;font-weight:bold;">RECEIPT TOTAL:</apex:outputLabel></td>
+							<td style="text-align:right;">
+								<apex:outputText value="{0, number, currency}" style="font-weight:bold;">
+									<apex:param value="{!curOrder.ECS__Total_Order_Amount__c}"/>
+								</apex:outputText>
+							</td>
+						</tr>
+						<tr>
+							<td colspan="3"><apex:outputLabel style="float:right;">Deposit:</apex:outputLabel></td>
+							<td style="text-align:right;">
+								<apex:outputText value="{0, number, currency}">
+									<apex:param value="{!curOrder.ECS__Total_Payments__c}"/>
+								</apex:outputText>
+							</td>
+						</tr>
+						<tr>
+							<td colspan="3"><apex:outputLabel style="float:right;font-weight:bold;">Balance Outstanding:</apex:outputLabel></td>
+							<td style="text-align:right;">
+								<apex:outputText value="{0, number, currency}" style="font-weight:bold;">
+									<apex:param value="{!curOrder.ECS__Balance_Due__c}"/>
+								</apex:outputText>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</td>
+		</tr>
+		<tr>
+			<td colspan="2">&nbsp;</td>
+		</tr>
+		<tr>
+			<td colspan="2" class="thankYou"><center>Thank you for your business!</center></td>
+		</tr>
+		<tr>
+			<td colspan="2">&nbsp;</td>
+		</tr>
+		<tr>
+			<td colspan="2"><center>If you have questions regarding this<br/>invoice/receipt, please contact us immediately.<br/>By purchasing from Never Enough Auto Accessories you have agreed to our return policies, as well as our Terms and Conditions as listed on our website.</center></td>
+		</tr>
+		<tr>
+			<td colspan="2">&nbsp;</td>
+		</tr>
+		<!-- <tr>
+			<td colspan="2">
+				<center>
+					<img src="https://cloudporter.cloudconversion.com/api/v1/barcodes/generate?code={!curOrder.Name}" width="70%"/><br/>
+					<apex:outputField value="{!curOrder.Name}"></apex:outputField>
+				</center>
+			</td>
+		</tr> -->
+		<tr>
+			<td colspan="2">&nbsp;</td>
+		</tr>
+		<tr>
+			<td class="didYouKnow" colspan="2"><center>DID YOU KNOW??</center></td>
+		</tr>
+		<tr>
+			<td class="didYouKnow" colspan="2"><center>**************************</center></td>
+		</tr>
+		<tr>
+			<td class="didYouKnow" colspan="2"><center>Never Enough Auto now does<br/>Full Service Work!</center></td>
+		</tr>
+		<tr>
+			<td class="didYouKnow" colspan="2"><center>**************************</center></td>
+		</tr>
+	</table>
+</apex:page>

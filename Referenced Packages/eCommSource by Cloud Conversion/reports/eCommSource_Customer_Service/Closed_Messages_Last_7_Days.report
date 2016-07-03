@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <field>CUST_NAME</field>
+    </columns>
+    <columns>
+        <field>Message__c.Customer__c</field>
+    </columns>
+    <columns>
+        <field>Message__c.Subject__c</field>
+    </columns>
+    <columns>
+        <field>Message__c.Inquiry_Time__c</field>
+    </columns>
+    <columns>
+        <field>Message__c.eBay_Account__c</field>
+    </columns>
+    <columns>
+        <field>Message__c.Escalated__c</field>
+    </columns>
+    <columns>
+        <field>Message__c.Reason__c</field>
+    </columns>
+    <columns>
+        <field>Message__c.Status__c</field>
+    </columns>
+    <filter>
+        <criteriaItems>
+            <column>Message__c.Status__c</column>
+            <operator>equals</operator>
+            <value>Closed</value>
+        </criteriaItems>
+    </filter>
+    <format>Tabular</format>
+    <name>Closed Messages - Last 7 Days</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>CustomEntity$Message__c</reportType>
+    <scope>organization</scope>
+    <showDetails>true</showDetails>
+    <timeFrameFilter>
+        <dateColumn>Message__c.Inquiry_Time__c</dateColumn>
+        <interval>INTERVAL_LAST7</interval>
+    </timeFrameFilter>
+</Report>

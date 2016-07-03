@@ -1,0 +1,7 @@
+<apex:page >
+
+<!--standardController="Listing__c" extensions="ListingDescriptionController" docType="html-5.0" showHeader="false" sidebar="false" applyHtmlTag="false" applyBodyTag="false" standardStylesheets="false" >
+
+	<apex:outputText value="{!listing.Description__c}" escape="false"/>  -->
+
+</apex:page>

@@ -1,0 +1,22 @@
+<apex:page standardController="CloudGento__Magento_Store__c" extensions="CloudGento.UploadStoreInfoController">
+
+	<apex:pageMessages /> 
+	
+	<apex:form id="uploadStoreInfo">
+	 
+     <apex:pageBlock id="pageBlock">
+		<apex:pageBlockButtons location="bottom">
+		    <apex:commandButton action="{!upload}" value="Upload" />
+		</apex:pageBlockButtons>
+
+        <apex:pageBlockSection id="pgsFile" columns="1">
+        	<apex:pageBlockSectionItem id="file">
+		             <apex:outputLabel value="Select File:" for="f"/>
+		             <apex:inputFile id="f" value="{!fileBody}" filename="{!fileName}" />
+			</apex:pageBlockSectionItem>
+		 </apex:pageBlockSection>
+		 		 
+	</apex:pageBlock>
+	 
+	 </apex:form>
+</apex:page>

@@ -1,0 +1,134 @@
+<apex:page controller="ECS.GenericInvoiceController" showHeader="false" renderAs="{!renderMode}">
+	
+	<apex:stylesheet value="{!$Resource.ECS__GenericInvoiceCss}"/>
+	
+	<div id="content-container" style="width: 700px;">
+		<img style="width: 170px; float: left;" src="/resource/{!settings.ECS__Logo_Resource_Name__c}"></img> 
+
+		<div class="address-block" style="float: right; font-size: 15px; width: 240px; margin-top: 40px;">
+			<div>Prepared for</div>
+			<div><strong>{!buyerAddress.Name}</strong></div>
+			<div>{!buyerAddress.ECS__Address_Line_1__c}</div>
+			<div>{!buyerAddress.ECS__City__c}, {!buyerAddress.ECS__State_Province_Region__c} {!buyerAddress.ECS__Zip_Postal_Code__c}</div>
+		</div>
+		<div class="address-block" style="float: right; font-size: 15px; width: 240px; margin-top: 40px;">
+			<div>Prepared by</div>
+			<div><strong>{!sellerAddress.Name}</strong></div>
+			<div>{!sellerAddress.ECS__Address_Line_1__c}</div>
+			<div>{!sellerAddress.ECS__City__c}, {!sellerAddress.ECS__State_Province_Region__c} {!sellerAddress.ECS__Zip_Postal_Code__c}</div>
+		</div>
+		<div style="font-size: 20px; padding-top: 20px; clear: both;"><strong>Order</strong></div>
+		<div class="divider"></div>	
+		<div style="font-size: 20px; clear: both;"><strong>Reference</strong>&nbsp;&nbsp;&nbsp;{!custOrder.Name}</div>
+		<div class="divider"></div>	
+		<div>
+			<apex:outputPanel rendered="{!custOrder.ECS__Shipping_Address_Line_1__c != null}">
+				<div style="width: 275px; float: right; margin-right: 70px;">
+					<div>
+						<h3 style="font-size: 20px; margin-top: 0px;">Delivery</h3> 
+					</div>
+					<div style="margin-top: 5px;">
+						<div style="font-size: 15px;"><strong></strong></div>
+					</div>
+					<div style="margin-top: 5px;">
+						<div style="font-size: 15px;">{!custOrder.ECS__Shipping_Address_Line_1__c}</div> 
+					</div>
+					<div style="margin-top: 5px;">
+						<div style="font-size: 15px;">{!custOrder.ECS__Shipping_Address_City__c}, {!custOrder.ECS__Shipping_Address_State__c} {!custOrder.ECS__Shipping_Address_Zip_Code__c}</div>
+					</div>
+				</div> 
+			</apex:outputPanel>
+			<div style="width: 275px;">
+				<div>
+					<h3 style="font-size: 20px;">Details</h3>
+				</div>
+				<div style="margin-top: 5px;">
+					<div style="font-size: 15px;"><strong>Order Date</strong>&nbsp;&nbsp;&nbsp;<apex:outputField value="{!custOrder.ECS__Order_Time__c}"/></div>
+				</div>
+				<div style="margin-top: 5px;">
+					<div style="font-size: 15px;"><strong>Payment Status</strong>&nbsp;&nbsp;&nbsp;{!custOrder.ECS__Payment_Status__c}</div>
+				</div>
+				<div style="margin-top: 5px;">
+					<div style="font-size: 15px;"><strong>Payment Method</strong>&nbsp;&nbsp;&nbsp;{!custOrder.ECS__Payment_Type__c}</div>
+				</div>
+			</div>
+		</div>
+		<div class="divider"></div>
+		<div>
+			<h3 style="font-size: 20px;">Line Items</h3>
+		</div>
+		<table style="margin-top: 10px;">
+			<thead style="background-color: #DDD">
+				<tr>
+					<th style="width: 50%">Product</th>
+					<th style="width: 13%">Quantity</th>
+					<th style="width: 17%">Price</th>
+					<th style="width: 20%">Total</th>
+				</tr>
+			</thead>
+			<tbody>
+				<apex:repeat value="{!custOrder.ECS__Order_Lines__r}" var="line">
+					<tr>
+						<td>{!line.ECS__Product__r.ECS__Title__c}</td>
+						<td>{!line.ECS__Quantity__c}</td>
+						<td><apex:outputField value="{!line.ECS__Unit_Price__c}"/></td>
+						<td><apex:outputField value="{!line.ECS__Order_Line_Total__c}"/></td>
+					</tr>
+				</apex:repeat>
+			</tbody>
+		</table>
+		<div style="float: right; width: 255px; margin-top: 10px;">
+			<div style="height: 20px;">
+				<div style="float:right; margin: 2px 0px; width: 135px; text-align: left;"><apex:outputField value="{!custOrder.ECS__Order_Line_Total__c}"/></div>
+				<h5 style="margin: 2px 0px;">Subtotal</h5>
+			</div>
+			<div style="height: 20px;">
+				<div style="float:right; margin: 2px 0px; width: 135px; text-align: left;"><apex:outputField value="{!custOrder.ECS__Tax_Total__c}"/></div>
+				<h5 style="margin: 2px 0px;">Tax</h5>
+			</div>
+			<div style="height: 20px;">
+				<div style="float:right; margin: 2px 0px; width: 135px; text-align: left;"><apex:outputField value="{!custOrder.ECS__Total_Order_Amount__c}"/></div>
+				<h5 style="margin: 2px 0px;">Total</h5>
+			</div>
+		</div>
+		
+		<!-- <apex:commandLink action="{!}"  value="Create Order" https://www.paypal.com/en_US/i/btn/btn_xpressCheckout.gif"/> -->
+		
+		<div class="divider"></div>
+		<div style="font-size: 10px;">
+			<ol>
+				<li>
+					<strong>Terms of Use:</strong> This Order Form shall evidence the Service provided to the customer provided above (“Customer”). The Service is
+					provided under the terms and conditions contained in the Cloud Conversion Master Services Agreement located at
+					http://www.cloudconversion.com/msa (the “Agreement”). The terms of the Agreement are incorporated herein by reference. The
+					signature below affirms Customer’s commitment to pay for the Services ordered in accordance with the terms of this Order Form. To
+					the extent that the terms and conditions of the Agreement between the parties are in conflict with the terms of this Order Form, the
+					terms and conditions of this Order Form shall control. The information provided above is accurate and complies with Customer’s
+					business practices in making this purchase, including obtaining all necessary approvals to release the funds for this purchase.
+				</li>
+				<li>
+					<strong>SFDC Service Agreement:</strong> Customer understands and agrees that Cloud Conversion’s eCommSource product is provided in
+					combination with certain Salesforce.com online services and web-based on-demand platform. Such online services and platform are
+					provided under the terms and conditions contained in the SFDC Service Agreement located at
+					http://www.cloudconversion.com/sfdc-service-agreement. By executing this Order Form, Customer agrees and accepts the terms and
+					conditions of such SFDC ServiceAgreement.
+				</li>
+				<li>
+					<strong>Purchase Orders:</strong> All invoices shall be provided to the billing contact as specified above. Customer shall inform Cloud Conversion
+					promptly in writing if it changes the person to whom invoices should be sent. Customer does _____ / does not _____ (check one)
+					require a Purchase Order ("P.O.") in order to make payments to Cloud Conversion for the fees outlined in this Order Form. If neither
+					box is checked, Customer agrees that Cloud Conversion is entitled to payment of invoices without the requirement of a P.O. authorizing
+					payments. In the event that Customer checks the box indicating that a P.O. is required, then Customer agrees to provide required P.O.
+					to Cloud Conversion within ten (10) business days after the execution of this Order Form by Customer. Any terms and conditions on
+					Customer's purchase order, or that are specified in any email from Customer or handwritten on this Order Form, are void and have no
+					legal effect.
+				</li>
+				<li>
+					<strong>Taxes:</strong> The fees set forth in this Order Form are exclusive of all taxes, levies, or duties imposed by taxing authorities and Customer
+					shall be responsible for payment of any such taxes, levies or duties, excluding only United States taxes based solely on Cloud
+					Conversion's net income.
+				</li>
+			</ol>
+		</div>
+	</div>
+</apex:page>

@@ -1,0 +1,100 @@
+<apex:page standardController="serp__Purchase_Order__c"
+	extensions="serp.ManageInvoicesController">
+
+	<apex:pageMessages id="pageMessages" />
+
+	<apex:form >
+		<apex:pageBlock id="pageBlock">
+			<apex:pageBlockButtons location="top">
+				<apex:commandButton action="{!invoice}" value="Invoice" />
+				<apex:commandButton action="{!cancel}" value="Cancel" />
+			</apex:pageBlockButtons>
+
+			<apex:outputPanel id="table">
+
+				<apex:repeat value="{!invoiceDetails}" var="inv">
+					<table cellspacing="3" cellpadding="3" border="0" width="90%">
+						<tr>
+							<td nowrap="true"><div>
+									<b>PO:</b> {!inv.po.Name}
+								</div></td>
+							<td><div>
+									<b>Payment Type:</b>
+									<apex:selectList size="1" value="{!inv.po.serp__Payment_Type__c}">
+										<apex:selectOptions value="{!paymentTypes}" />
+									</apex:selectList>
+								</div></td>
+							<td><div>
+									<b>Freight Charges:</b>
+									<apex:inputText size="7" value="{!inv.po.serp__Freight_Charges__c}" />
+								</div></td>
+							<td><div>
+									<b>Supplier Discount:</b>
+									<apex:inputText size="7" value="{!inv.po.serp__Supplier_Discount__c}" />
+								</div></td>
+							<td><div>
+									<b>Dropship Fee:</b>
+									<apex:inputText size="7" value="{!inv.po.serp__Dropship_Fee__c}" />
+								</div></td>
+						</tr>
+						<apex:outputPanel rendered="{!inv.po.serp__Order__c!=null}">
+							<tr>
+								<td></td>
+								<td><div>
+										<b>Tracking Number:</b>
+										<apex:inputText size="25" value="{!inv.trackingNumber}" />
+									</div></td>
+								<td><div>
+										<b>Ship Date:</b>
+										<apex:inputField value="{!inv.po.serp__Shipped_Date__c}" />
+									</div></td>
+								<td><div>
+										<b>Shipping Carrier:</b>
+										<apex:selectList size="1" value="{!inv.shippingCarrier}">
+											<apex:selectOptions value="{!shippingCarriers}" />
+										</apex:selectList>
+									</div></td>
+								<td><div>
+										<b>Shipping Class:</b>
+										<apex:inputText size="20" value="{!inv.shippingClass}" />
+										<!--  <apex:selectList size="1" value="{!inv.shippingClass}">
+								    <apex:selectOptions value="{!shippingClasses}"/> 
+							    </apex:selectList>-->
+									</div></td>
+							</tr>
+						</apex:outputPanel>
+					</table>
+
+					<center>
+						<table cellspacing="3" cellpadding="3" border="0" width="80%">
+							<thead>
+								<tr>
+									<td><span><b>SKU</b></span></td>
+									<td><span><b>Manufacturer</b></span></td>
+									<td><span><b>MPN</b></span></td>
+									<td><span><b>Quantity</b></span></td>
+									<td><span><b>Price</b></span></td>
+								</tr>
+							</thead>
+							<tbody>
+								<apex:repeat value="{!inv.poLines}" var="pol">
+									<tr>
+										<td><div>{!pol.serp__B2C_Product__r.Name}</div></td>
+										<td><div>{!pol.serp__B2C_Product__r.ECS__Manufacturer__c}</div></td>
+										<td><div>{!pol.serp__B2C_Product__r.ECS__MPN__c}</div></td>
+										<td><div>
+												<apex:inputText size="5" value="{!pol.serp__Quantity_Received__c}" />
+											</div></td>
+										<td><div>
+												<apex:inputText size="5" value="{!pol.serp__Purchase_Price__c}" />
+											</div></td>
+									</tr>
+								</apex:repeat>
+							</tbody>
+						</table>
+					</center>
+				</apex:repeat>
+			</apex:outputPanel>
+		</apex:pageBlock>
+	</apex:form>
+</apex:page>

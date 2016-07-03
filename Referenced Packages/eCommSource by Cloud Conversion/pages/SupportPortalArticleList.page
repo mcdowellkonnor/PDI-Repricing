@@ -1,0 +1,59 @@
+<apex:page docType="html-5.0" sidebar="false" showHeader="false" standardStylesheets="false" applyHtmlTag="false" applyBodyTag="false" cache="false">
+	<html lang="en">
+		<head>
+    
+            <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+            
+                <apex:includeScript value="{!URLFOR($Resource.CloudConversion__supportportalresources, 'js/jquery.min.js')}"/>
+                <apex:includeScript value="{!URLFOR($Resource.CloudConversion__supportportalresources, 'js/jquery-ui.js')}"/>
+                <apex:includeScript value="{!URLFOR($Resource.CloudConversion__supportportalresources, 'js/skel.min.js')}"/>
+                <apex:includeScript value="{!URLFOR($Resource.CloudConversion__supportportalresources, 'js/skel-layers.min.js')}"/>
+                <apex:includeScript value="{!URLFOR($Resource.CloudConversion__supportportalresources, 'js/init.js')}"/>
+
+                <apex:stylesheet value="{!URLFOR($Resource.CloudConversion__supportportalresources, 'css/skel.css')}"/>
+                <apex:stylesheet value="{!URLFOR($Resource.CloudConversion__supportportalresources, 'css/style.css')}"/>
+                <apex:stylesheet value="{!URLFOR($Resource.CloudConversion__supportportalresources, 'css/style-xsmall.css')}"/>
+                <apex:stylesheet value="{!URLFOR($Resource.CloudConversion__supportportalresources, 'css/style-small.css')}"/>
+                <apex:stylesheet value="{!URLFOR($Resource.CloudConversion__supportportalresources, 'css/style-medium.css')}"/>
+                <apex:stylesheet value="{!URLFOR($Resource.CloudConversion__supportportalresources, 'css/style-large.css')}"/>
+                <apex:stylesheet value="{!URLFOR($Resource.CloudConversion__supportportalresources, 'css/style-xlarge.css')}"/>
+                <apex:stylesheet value="{!URLFOR($Resource.CloudConversion__supportportalresources, 'css/jquery-ui.min.css')}"/>
+                
+                <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Arimo" />
+                
+				<!-- This jQuery script positions search button within search bar -->
+                <script type="text/javascript">
+                $(document).ready(function(){
+                
+                	$("[id$=searchCommandButton]").css({
+                	
+					   'float' : 'right',
+					   'margin-top' : '-45px',
+					   'margin-right' : '11px',
+					   'font-family' : 'Fontawesome'
+					   
+					});
+                
+                });
+                </script>
+                
+                <style>  
+
+	                input[type="submit"], input[type="reset"], input[type="button"], .button {
+					    /* padding: 0; */
+					    border-radius: 18px;
+					    color: #fff !important;
+					    height: 36px;
+					    padding: 0 0px 0 11px;
+					    width: 36px;    
+					}			
+                </style>
+                
+        </head>
+		<body class="landing">
+		    <c:SupportPortalHeader />
+		    <c:SupportPortalArticleList />
+		    <c:SupportPortalFooter />
+		</body>
+	</html>
+</apex:page>

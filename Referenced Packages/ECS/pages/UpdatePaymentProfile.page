@@ -1,0 +1,160 @@
+<apex:page doctype="html-5.0" showHeader="false" controller="ECS.ManagePaymentProfilesController" action="{!checkEncryptionKey}">
+
+	<c:Analytics event="INFO" app="ECS" />
+	
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+	<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
+
+	<apex:stylesheet value="{!URLFOR($Resource.ECS__bootstrap_cc)}" /> 
+	
+	<style type="text/css">
+		.page-section {
+			padding-top: 15px;
+			padding-left: 45px;
+			clear: both;
+		}
+		.page-section h3 {
+			margin-bottom: 10px;
+			display: block;
+		}
+		.page-section div {
+			clear: both;
+		}
+		div.section-separator {
+			border: 1px solid #DDD; 
+			margin-top: 10px; 
+			margin-bottom: 10px;
+		} 
+	</style>
+	
+	<div class="cc">
+	<apex:outputPanel id="all">
+		<apex:form >
+		<apex:outputPanel >
+			<div class="page-section">
+				<apex:image value="{!setting.ECS__Logo_Resource_Name__c}" rendered="{!setting.ECS__Logo_Resource_Name__c!=null && setting.ECS__Logo_Resource_Name__c!=''}"/><br/>
+				
+				<apex:outputPanel ><h1 style="font-size: 1.2em;">Update Profile</h1></apex:outputPanel>
+
+				<apex:pageMessages id="page-messages" />
+
+				<apex:outputPanel id="addresses-panel">
+				<table cellpadding="0" cellspacing="0" border="0" width="80%">
+				<tr>
+				<td>
+					<h3 style="font-size: 1em">Billing Information</h3>
+					<div style="font-weight: bold; margin-bottom: 5px;">
+						<apex:inputText html-placeholder="First Name" value="{!billingAddress.ECS__First_Name__c}"/>&nbsp;<apex:inputText html-placeholder="Last Name" value="{!billingAddress.ECS__Last_Name__c}"/>
+					</div>
+					<div style="margin-bottom: 5px;">
+						<apex:inputText html-placeholder="Address" value="{!billingAddress.ECS__Address_Line_1__c}"/>&nbsp;<apex:inputText html-placeholder="Address Line 2" value="{!billingAddress.ECS__Address_Line_2__c}"/>
+					</div>
+					<div style="margin-bottom: 5px;">
+						<apex:inputText style="width: 120px;" html-placeholder="City" value="{!billingAddress.ECS__City__c}"/>,&nbsp;
+						<apex:inputText style="width: 100px;" html-placeholder="State" value="{!billingAddress.ECS__State_Province_Region__c}"/>&nbsp;
+						<apex:inputText style="width: 80px;" html-placeholder="Postal Code" id="billing-zip-code" value="{!billingAddress.ECS__Zip_Postal_Code__c}"/>&nbsp;
+						<apex:inputText style="width: 80px;" html-placeholder="Country" value="{!shippingAddress.ECS__Country__c}"/>
+					</div>
+				</td>
+				<td>
+					<apex:outputPanel id="shippingAddressContainer" rendered="{!!shippingSameAsBilling}">
+							<h3 style="font-size: 1em;">Shipping Information</h3>
+							<div style="font-weight: bold; margin-bottom: 5px;">
+								<apex:inputText html-placeholder="First Name" value="{!shippingAddress.ECS__First_Name__c}"/>&nbsp;<apex:inputText html-placeholder="Last Name" value="{!shippingAddress.ECS__Last_Name__c}"/>
+							</div>
+							<div style="margin-bottom: 5px;">
+								<apex:inputText html-placeholder="Address" value="{!shippingAddress.ECS__Address_Line_1__c}"/>&nbsp;<apex:inputText html-placeholder="Address Line 2" value="{!shippingAddress.ECS__Address_Line_2__c}"/>
+							</div>
+							<div style="margin-bottom: 5px;">
+								<apex:inputText style="width: 120px;" html-placeholder="City" value="{!shippingAddress.ECS__City__c}"/>,&nbsp;
+								<apex:inputText style="width: 100px;" html-placeholder="State" value="{!shippingAddress.ECS__State_Province_Region__c}"/>&nbsp;
+								<apex:inputText style="width: 80px;" html-placeholder="Postal Code" value="{!shippingAddress.ECS__Zip_Postal_Code__c}"/>&nbsp;
+								<apex:inputText style="width: 80px;" html-placeholder="Country" value="{!shippingAddress.ECS__Country__c}"/>
+							</div>
+					</apex:outputPanel>	
+				</td>
+				</tr>
+				</table>
+
+					<div style="font-weight: bold; margin-bottom: 5px;">
+						<table class="address-form" style="float: left;">
+							<tr>
+								<td><apex:outputLabel for="shippingSameAsBilling">Shipping same as billing&nbsp;&nbsp;</apex:outputLabel></td>
+								<td><apex:inputCheckbox id="shippingSameAsBilling" value="{!shippingSameAsBilling}">
+									  <apex:actionSupport event="onchange" rerender="pageMessages, addresses-panel" status="formActionStatus" />
+								    </apex:inputCheckbox>
+								</td>
+							</tr>
+						</table>
+					</div>
+									
+				</apex:outputPanel>
+				</div>
+				<div class="page-section">
+					<h3 style="font-size: 1.0em">Payment Information</h3>
+						<apex:outputPanel > 
+							<div>
+								<apex:outputLabel style="float: left; width: 165px;" for="ccNumber">Credit Card Number</apex:outputLabel>
+								<apex:inputText id="ccNumber" value="{!creditCardNumber}" ></apex:inputText>
+							</div>
+							<div>
+								<apex:outputLabel style="float: left; width: 165px;" for="cvvNumber">Security Code</apex:outputLabel>
+								<apex:inputText id="cvvNumber" value="{!cvv}"/>
+							</div>
+							<div>
+								<apex:outputLabel style="float: left; width: 165px;" for="cardTypeSelectList">Card Type</apex:outputLabel>
+								<apex:selectList size="1" id="cardTypeSelectList" multiselect="false" value="{!cardType}"><apex:selectOptions value="{!cardTypeOptions}" /></apex:selectList>
+							</div>
+							<div>
+								<apex:outputLabel style="float: left; width: 165px;" for="cardExp">Credit Card Expiration</apex:outputLabel>
+								<apex:selectList id="expMonth" value="{!expirationMonth}" size="1" style="width: 125px"><apex:selectOptions value="{!expMonthOptions}" /></apex:selectList>
+					            <apex:selectList id="expYear" value="{!expirationYear}" size="1" style="width: 80px; margin-left: 15px;"><apex:selectOptions value="{!expYearOptions}" /></apex:selectList>
+							</div>
+						</apex:outputPanel>
+						<!-- <apex:outputPanel rendered="{!(curOrder.Payment_Type__c == 'eCheck')}">
+							<apex:outputPanel rendered="{!multipleCcGateways}">
+								<apex:outputLabel style="float: left; width: 165px;" for="ccNumber">Payment Gateway</apex:outputLabel>
+								<apex:selectList value="{!ccGatewayName}" size="1">
+									<apex:selectOptions value="{!ccGatewayOptions}" />
+								</apex:selectList>
+							</apex:outputPanel>
+							<div>
+								<apex:outputLabel style="float: left; width: 165px;">Account Type</apex:outputLabel>
+								<apex:selectList value="{!accountType}" size="1">
+									<apex:selectOptions value="{!AccountTypeOptions}" />
+								</apex:selectList>
+							</div>
+							<div>
+								<apex:outputLabel style="float: left; width: 165px;">Routing Number</apex:outputLabel>
+								<apex:inputText value="{!routingNumber}" maxLength="9"></apex:inputText>
+							</div>							
+
+							<div>
+								<apex:outputLabel style="float: left; width: 165px;">Account Number</apex:outputLabel>
+								<apex:inputText value="{!accountNumber}" maxLength="17"></apex:inputText>
+							</div>
+							<div>
+								<apex:outputLabel style="float: left; width: 165px;">Name on Account</apex:outputLabel>
+								<apex:inputText value="{!nameOnAccount}" maxLength="22"></apex:inputText>
+							</div>
+							<div>
+								<apex:outputLabel style="float: left; width: 165px;">eCheck Type</apex:outputLabel>
+								<apex:selectList value="{!eCheckType}" size="1">
+									<apex:selectOptions value="{!ECheckTypeOptions}" />
+								</apex:selectList>
+							</div>
+							<div>
+								<apex:outputLabel style="float: left; width: 165px;">Bank Name</apex:outputLabel>
+								<apex:inputText value="{!bankName}" maxLength="50"></apex:inputText>
+							</div>
+						</apex:outputPanel> -->
+
+				<div><apex:commandButton style="float: center; clear: both;" styleClass="btn-primary" action="{!save}" value="Save" rerender="page-messages" /></div>
+
+			</div>
+		</apex:outputPanel>
+		</apex:form>
+	</apex:outputPanel>
+	</div>
+
+</apex:page>

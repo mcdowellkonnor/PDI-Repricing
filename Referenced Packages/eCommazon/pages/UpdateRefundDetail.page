@@ -1,0 +1,4 @@
+<apex:page standardController="ECS__Payment_Detail__c" extensions="eCommazon.UpdateRefundDetailController" action="{!autoRun}">
+	<apex:pageMessages />
+	<apex:outputText value="{!settingId}" />
+</apex:page>

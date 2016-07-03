@@ -1,0 +1,5 @@
+<apex:page standardController="CloudConversion__Message__c" extensions="CloudConversion.ManageMessagesController" action="{!ownMessage}">
+	
+	<ECS:Analytics event="INFO" app="eCommSource" />
+	
+</apex:page>

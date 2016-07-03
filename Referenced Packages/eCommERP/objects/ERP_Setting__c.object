@@ -1,0 +1,504 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Follow</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <deprecated>false</deprecated>
+    <enableActivities>true</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableEnhancedLookup>true</enableEnhancedLookup>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>true</enableHistory>
+    <enableReports>true</enableReports>
+    <enableSearch>true</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <fields>
+        <fullName>Additional_Information__c</fullName>
+        <deprecated>false</deprecated>
+        <description>This shows on the Purchase Order that is sent to the Supplier.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>This shows on the Purchase Order that is sent to the Supplier.</inlineHelpText>
+        <label>Additional Information</label>
+        <length>32768</length>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Html</type>
+        <visibleLines>25</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Auto_Allocate_Inventory__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <description>Allows the system to auto-allocate inventory when sales orders come into the system.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Allows the system to auto-allocate inventory when sales orders come into the system.</inlineHelpText>
+        <label>Auto-Allocate Inventory</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Auto_Create_POs__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <description>For drop shipped sales orders, this allows Purchase Orders to be automatically generated once a Supplier is assigned to the Sales Order Line.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>For drop shipped sales orders, this allows Purchase Orders to be automatically generated once a Supplier is assigned to the Sales Order Line.</inlineHelpText>
+        <label>Auto-Create POs</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Credit_PO_Prefix__c</fullName>
+        <defaultValue>&quot;CR-&quot;</defaultValue>
+        <deprecated>false</deprecated>
+        <description>The Prefix of Credits that are issued against Purchase Orders.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>The Prefix of Credits that are issued against Purchase Orders.</inlineHelpText>
+        <label>Credit PO Prefix</label>
+        <length>10</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Default_Address__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <deprecated>false</deprecated>
+        <description>The billing address that is shown on the Purchase Order.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>The billing address that is shown on the Purchase Order.</inlineHelpText>
+        <label>Default Address</label>
+        <referenceTo>ECS__Address__c</referenceTo>
+        <relationshipLabel>ERP Settings</relationshipLabel>
+        <relationshipName>ERP_Settings</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Default_Location_Capacity__c</fullName>
+        <deprecated>false</deprecated>
+        <description>When creating a new BIN Location, this is the default capacity for the new location.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>When creating a new BIN Location, this is the default capacity for the new location.</inlineHelpText>
+        <label>Default Location Capacity</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Default_Location__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Default Location</label>
+        <referenceTo>Location__c</referenceTo>
+        <relationshipLabel>ERP Settings</relationshipLabel>
+        <relationshipName>ERP_Settings</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Default_Master_Plan__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <deprecated>false</deprecated>
+        <description>The default Master Plan when creating a new Purchase Order for this ERP Setting.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>The default Master Plan when creating a new Purchase Order for this ERP Setting.</inlineHelpText>
+        <label>Default Master Plan</label>
+        <referenceTo>Master_Plan__c</referenceTo>
+        <relationshipLabel>ERP Settings</relationshipLabel>
+        <relationshipName>ERP_Settings</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Default_Warehouse__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <deprecated>false</deprecated>
+        <description>The default warehouse when creating a new Purchase Order.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>The default warehouse when creating a new Purchase Order.</inlineHelpText>
+        <label>Default Warehouse</label>
+        <referenceTo>Warehouse__c</referenceTo>
+        <relationshipLabel>ERP Settings</relationshipLabel>
+        <relationshipName>ERP_Settings</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Display_Audit_Data_on_PO__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Display Audit Data on PO</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Hide_Images_on_Receive_PO__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Hide Images on Receive PO</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Hide_Locations_on_PO_Receive__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Hide Locations on PO Receive</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Hide_Pricing_on_POs__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Hide Pricing on POs</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Is_Default__c</fullName>
+        <defaultValue>true</defaultValue>
+        <deprecated>false</deprecated>
+        <description>The default ERP Setting if there are multiple settings being used.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>The default ERP Setting if there are multiple settings being used.</inlineHelpText>
+        <label>Is Default?</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Logo_Resource_Name__c</fullName>
+        <deprecated>false</deprecated>
+        <description>The URL of the Logo that is displayed on the Purchase Order.  This URL must be added to Setup -&gt; Security Controls -&gt; Remote Site Settings.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>The URL of the Logo that is displayed on the Purchase Order.  This URL must be added to Setup -&gt; Security Controls -&gt; Remote Site Settings.</inlineHelpText>
+        <label>Logo Resource Name</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Manage_Case_Pack_Quantity__c</fullName>
+        <deprecated>false</deprecated>
+        <description>When ordering items that come in Case Packs, the following logic will be used to calculate the number of items to be ordered.
+
+None - No calculation done
+Floor - Always take the minimum
+Round - Round to quantity needed
+Ceiling - Always take the maximum</description>
+        <externalId>false</externalId>
+        <inlineHelpText>When ordering items that come in Case Packs, the following logic will be used to calculate the number of items to be ordered.
+None - No calculation done
+Floor - Always take the minimum
+Round - Round to quantity needed
+Ceiling - Always take the maximum</inlineHelpText>
+        <label>Manage Case Pack Quantity</label>
+        <picklist>
+            <picklistValues>
+                <fullName>None</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Floor</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Round</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Ceiling</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Manual_PO_Refresh__c</fullName>
+        <defaultValue>true</defaultValue>
+        <deprecated>false</deprecated>
+        <description>Shows the Update button when creating new Purchase Orders to refresh the PO Totals.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Shows the Update button when creating new Purchase Orders to refresh the PO Totals.</inlineHelpText>
+        <label>Manual PO Refresh</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Next_Credit_PO_Number__c</fullName>
+        <deprecated>false</deprecated>
+        <description>The next sequence used for the Credit PO Numbers.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>The next sequence used for the Credit PO Numbers.</inlineHelpText>
+        <label>Next Credit PO Number</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Next_PO_Number__c</fullName>
+        <deprecated>false</deprecated>
+        <description>The next sequence used for the Purchase Order Number</description>
+        <externalId>false</externalId>
+        <inlineHelpText>The next sequence used for the Purchase Order Number</inlineHelpText>
+        <label>Next PO Number</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>PO_Barcode_Location__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>PO Barcode Location</label>
+        <picklist>
+            <picklistValues>
+                <fullName>None</fullName>
+                <default>true</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Top, Left</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Top, Middle</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Top, Right</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Bottom, Left</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Bottom, Middle</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Bottom, Right</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>PO_CSS__c</fullName>
+        <deprecated>false</deprecated>
+        <description>The CSS Override of the Purchase Order</description>
+        <externalId>false</externalId>
+        <inlineHelpText>The CSS Override of the Purchase Order</inlineHelpText>
+        <label>PO CSS</label>
+        <length>5000</length>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>8</visibleLines>
+    </fields>
+    <fields>
+        <fullName>PO_Number_Prefix__c</fullName>
+        <deprecated>false</deprecated>
+        <description>The prefix of the Purchase Order Number.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>The prefix of the Purchase Order Number.</inlineHelpText>
+        <label>PO Number Prefix</label>
+        <length>10</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>PO_Ordered_Statuses__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Allows you to have custom Status of the Ordered PO.  For example, if the vendor needs to approve an order, you could add &quot;Ordered - Pending Approval&quot;, &quot;Order - Approved&quot;, etc</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Allows you to have custom Status of the Ordered PO.  For example, if the vendor needs to approve an order, you could add &quot;Ordered - Pending Approval&quot;, &quot;Order - Approved&quot;, etc</inlineHelpText>
+        <label>PO Ordered Statuses</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Ordered</fullName>
+                <default>true</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>MultiselectPicklist</type>
+        <visibleLines>4</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Serialize_Inventory__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <description>Allows you to scan serial numbers into the system when receiving a Purchase Order.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Allows you to scan serial numbers into the system when receiving a Purchase Order.</inlineHelpText>
+        <label>Serialize Inventory</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Status__c</fullName>
+        <deprecated>false</deprecated>
+        <description>The status of the ERP setting.  Must be Enabled if being used.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>The status of the ERP setting.  Must be Enabled if being used.</inlineHelpText>
+        <label>Status</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Enabled</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Disabled</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Use_Order_Number_as_PO_Number__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <description>Used with the Auto-Create PO feature for drop shipped sales orders, this uses the Sales Order Number as the Purchase Order Number.  If there are multiple POs generated for 1 sales order, they will be appended with &quot;-1&quot;, &quot;-2&quot;, &quot;-3&quot; , etc.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Used with the Auto-Create PO feature for drop shipped sales orders, this uses the Sales Order Number as the Purchase Order Number.  If there are multiple POs generated for 1 sales order, they will be appended with &quot;-1&quot;, &quot;-2&quot;, &quot;-3&quot; , etc.</inlineHelpText>
+        <label>Use Order Number as PO Number</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Use_Supplier_Discounts__c</fullName>
+        <defaultValue>true</defaultValue>
+        <deprecated>false</deprecated>
+        <description>For drop shipped sales orders, this uses the Supplier Discounts object or the &quot;Average Discount %&quot; on the Supplier.  If there are no Supplier Discounts, &quot;Average Discount %&quot; is used.  These percentages are calculated based on the B2C Product Price.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>For drop shipped sales orders, this uses the Supplier Discounts object or the &quot;Average Discount %&quot; on the Supplier.  If there are no Supplier Discounts, &quot;Average Discount %&quot; is used.  These percentages are calculated based on the B2C Product Price.</inlineHelpText>
+        <label>Use Supplier Discounts</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <label>ERP Settings</label>
+    <listViews>
+        <fullName>All</fullName>
+        <columns>NAME</columns>
+        <columns>Auto_Allocate_Inventory__c</columns>
+        <columns>Auto_Create_POs__c</columns>
+        <columns>Default_Location_Capacity__c</columns>
+        <columns>Default_Master_Plan__c</columns>
+        <columns>Logo_Resource_Name__c</columns>
+        <columns>PO_Number_Prefix__c</columns>
+        <columns>Next_PO_Number__c</columns>
+        <columns>Serialize_Inventory__c</columns>
+        <columns>Is_Default__c</columns>
+        <columns>Status__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+    </listViews>
+    <nameField>
+        <label>ERP Setting Name</label>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+    </nameField>
+    <searchLayouts/>
+    <sharingModel>ReadWrite</sharingModel>
+</CustomObject>

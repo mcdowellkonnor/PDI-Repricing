@@ -1,0 +1,3 @@
+<apex:page controller="CloudGento.ManageMagentoAttributesController" action="{!createFields}">
+	<apex:pageMessages />
+</apex:page>

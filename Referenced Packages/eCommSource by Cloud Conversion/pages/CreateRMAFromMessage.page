@@ -1,0 +1,5 @@
+<apex:page standardController="CloudConversion__Message__c" >
+   
+   <c:CreateRMA caseId="{!CloudConversion__Message__c.Id}"/>
+       
+</apex:page>

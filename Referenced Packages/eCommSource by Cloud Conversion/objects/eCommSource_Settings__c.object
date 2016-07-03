@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customSettingsType>List</customSettingsType>
+    <description>Settings that control the behavior of the eCommSource by Cloud Conversion application.</description>
+    <enableFeeds>false</enableFeeds>
+    <fields>
+        <fullName>Auto_Create_Payment_Orders__c</fullName>
+        <defaultValue>true</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Auto-Create Payment Orders</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Auto_Create_Shipworks_Order_Lines__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Auto-Create Shipworks Order Lines</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Chat_Id__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Live Chat Account Id</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Live Chat Account Id</inlineHelpText>
+        <label>Chat Id</label>
+        <length>20</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Chat_Image_URL__c</fullName>
+        <deprecated>false</deprecated>
+        <description>URL Path for the Chat Images</description>
+        <externalId>false</externalId>
+        <inlineHelpText>URL Path for the Chat Images</inlineHelpText>
+        <label>Chat Image URL</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Url</type>
+    </fields>
+    <fields>
+        <fullName>Default_Unit_Weight_For_ShipWorks__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Default Unit Weight For ShipWorks</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Disable_CalculateMessageBusinessHoursAge__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Disable CalculateMessageBusinessHoursAge</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Disable_CaseTrigger__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Disable CaseTrigger</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Email_eBay_Response__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <description>Determines if the eBay Response should also be emailed.  This should only be checked if eBay has whitelisted the salesforce domain on your account.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Determines if the eBay Response should also be emailed.  This should only be checked if eBay has whitelisted the salesforce domain on your account.</inlineHelpText>
+        <label>Email the eBay Response</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Manage_RMA_Quantity__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Manage RMA Quantity</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Send_Emails_From_User__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Send Emails From User</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Stock_Unit_Label__c</fullName>
+        <deprecated>false</deprecated>
+        <description>The label to display for the Stock Unit field in the RMA Request pages.  If blank, the field will NOT be shown.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>The label to display for the Stock Unit field in the RMA Request pages.  If blank, the field will NOT be shown.</inlineHelpText>
+        <label>Stock Unit Label</label>
+        <length>25</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Use_Embedded_Edition__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <description>Determines if the eCommSource application should run in the Force.com Embedded Edition mode and you may not use standard Salesforce.com CRM objects like Cases and Solutions.</description>
+        <externalId>false</externalId>
+        <label>Use Embedded Edition</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Use_External_Order_Id_for_ShipWorks__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Use External Order Id for ShipWorks</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <label>eCommSource Settings</label>
+    <visibility>Public</visibility>
+</CustomObject>

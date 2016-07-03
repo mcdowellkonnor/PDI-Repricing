@@ -1,0 +1,5 @@
+<apex:page standardController="serp__Aisle__c" extensions="serp.ManageAislesController" sidebar="false" showHeader="true">
+
+	 <c:ManageAisles /> 
+
+</apex:page>

@@ -1,0 +1,2 @@
+<apex:page action="{!holdOrder}" standardController="ECS__eCommSource_Order__c" extensions="CloudGento.HoldOrderController">
+</apex:page>

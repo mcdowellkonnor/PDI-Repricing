@@ -1,0 +1,18 @@
+<apex:page standardController="serp__Opportunity__c" extensions="serp.CreatePOFromOpportunityController">
+
+	<apex:pageMessages />
+
+	<apex:form >
+		<apex:pageBlock id="pageBlock">
+			<apex:pageBlockButtons location="bottom">
+				<apex:commandButton action="{!save}" value="Create" />
+				<apex:commandButton action="{!cancel}" value="Cancel" />
+			</apex:pageBlockButtons>
+			<apex:pageBlockSection columns="1">
+				<apex:pageBlockSectionItem id="select">
+				 Select Master Plan: <apex:inputField value="{!po.serp__Master_Plan__c}" />
+				</apex:pageBlockSectionItem>
+			</apex:pageBlockSection>
+		</apex:pageBlock>
+	</apex:form>
+</apex:page>

@@ -1,0 +1,2 @@
+<apex:page action="{!save}" controller="ECS.CouponListener" showHeader="false">
+</apex:page>

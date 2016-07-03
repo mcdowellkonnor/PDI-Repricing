@@ -1,0 +1,21 @@
+<messaging:emailTemplate subject="Your Invoice for Order: {!relatedTo.Name}" recipientType="Contact" relatedToType="ECS__eCommSource_Order__c">
+
+    <messaging:plainTextEmailBody >
+        Dear  {!relatedTo.ECS__Customer__r.Name},                
+        
+        Thank you for your recent purchase.  Attached is your invoice.
+        
+        Feel free to contact us if you have any questions.
+        
+        Regards,
+        
+        {!$User.FirstName} {!$User.LastName}
+        
+        
+    </messaging:plainTextEmailBody>
+    
+    <messaging:attachment renderAs="pdf" filename="{!relatedTo.Name}">    
+        <c:Invoice orderId="{!relatedTo.Id}"/>      
+    </messaging:attachment>
+
+</messaging:emailTemplate>

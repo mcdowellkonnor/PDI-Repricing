@@ -1,0 +1,150 @@
+<apex:page standardController="serp__Purchase_Order__c" extensions="serp.ReceivePurchaseOrderController">
+
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function () {
+		  $("[data-sort=\"1\"]").first().focus();
+		  $('.serialNumberInput').click(function (event) { $(this).select(); });
+		  $('.serialNumberInput').keydown(function(event) { 
+		    if (event.keyCode == 13) {
+		        var currentField = $(this).data('sort');
+		        $("[data-sort=\"" + (parseInt(currentField) + 1)+"\"]").first().focus();
+		        return false;
+		    }
+		  });
+		});	
+		function copySerialNumbers() {
+			$('.serialNumberInput').each(function() {
+				var inputNum = $(this).data('sort');
+				$(this).parent().find('[type=hidden]').val($(this).val());
+			});
+			
+		}
+	</script>
+	<apex:stylesheet value="{!URLFOR($Resource.serp__SFLDS_0121, 'assets/styles/salesforce-lightning-design-system-vf.css')}" />
+	<link rel="stylesheet" href="//dl.dropboxusercontent.com/s/8kw8iu0ep3xwlg4/receivePO.css" />
+	<link rel="stylesheet" href="//dl.dropboxusercontent.com/s/n4elcaa5zm53uzd/sf-main-overrides.css" />
+	<link rel="stylesheet" href="//cdn.datatables.net/1.10.10/css/jquery.dataTables.min.css" />
+	<script type="text/javascript" src="//cdn.datatables.net/1.10.10/js/jquery.dataTables.min.js" />
+	<script type="text/javascript" src="//dl.dropboxusercontent.com/s/23kmfbujmb2zhyn/receivePO.js" />
+	
+	<ECS:Analytics event="INFO" app="ERP" />
+	
+	<apex:pageMessages id="pageMessages" />
+
+	<apex:form styleClass="slds receivePOForm">
+		<apex:pageBlock id="pageBlock">
+			<div class="actionButtons">
+				<apex:commandButton value="Receive" action="{!receive}" id="receiveBtn" styleClass="slds-button slds-button--brand"/>
+				<apex:commandButton action="{!cancel}" value="Cancel" styleClass="slds-button slds-button--brand"/>
+			</div>
+			<center>
+
+				<!-- TODO: Accept & Validate Pre-Defined Serial Numbers, UPC (12 digit) & EAN (13 digit) Barcodes  -->
+
+				<apex:outputPanel id="table">
+					<table cellspacing="3" cellpadding="3" border="0" class="display" id="poTable">
+						<thead>
+							<tr>
+								<td class="selectColumn no-sort"><input type="checkbox" id="selectAllItems" name="selectItems" /></td>
+								<apex:outputPanel rendered="{!containsProductImages}">
+									<td><span><b>Picture</b></span></td>
+								</apex:outputPanel>
+								<td><span><b>SKU</b></span></td>
+								<apex:outputPanel rendered="{!!displaySerialNumbers}">
+									<td><span><b>Quantity Received</b></span></td>
+								</apex:outputPanel>
+								<apex:outputPanel rendered="{!displaySerialNumbers}">
+									<td><span><b>Serial Number</b></span></td>
+								</apex:outputPanel>
+								<apex:outputPanel rendered="{!displayLocations}">
+									<td><span><b>Location</b></span></td>
+								</apex:outputPanel>
+								<apex:outputPanel rendered="{!displayInventory}">
+									<td><span><b>Inventory?</b></span></td>
+								</apex:outputPanel>
+								<apex:repeat value="{!$ObjectType.serp__Purchase_Order_Line__c.FieldSets.serp__Receive}" var="fs">
+									<td><span><b>{!fs.Label}</b></span></td>
+								</apex:repeat>
+							</tr>
+						</thead>
+						<tbody>
+							<apex:outputPanel id="detail">
+								<apex:repeat value="{!poLineDetails}" var="detail">
+									<tr id="{!detail.pol.Id}">
+										<td><apex:inputCheckbox styleClass="cbrow" id="cb" value="{!detail.selected}"/></td>
+										<apex:outputPanel rendered="{!containsProductImages}">
+											<td>
+												<img src="{!detail.pol.serp__B2C_Product__r.ECS__Image_1_URL__c}" width="125" />
+											</td>
+										</apex:outputPanel>
+										<apex:outputPanel >
+											<td title="{!detail.pol.serp__B2C_Product__r.Name}"><div>
+													<apex:outputLink value="/{!detail.pol.serp__B2C_Product__c}"
+														target="_blank">{!detail.pol.serp__B2C_Product__r.Name}</apex:outputLink>
+												</div></td>
+										</apex:outputPanel>
+										<!-- <apex:outputPanel rendered="{!!detail.parent}"><td title="{!detail.parentSKU}"><div>{!detail.parentSKU}</div></td></apex:outputPanel> -->
+										<!-- <apex:outputPanel rendered="{!!detail.parent}"><td title="{!detail.parentSKU}"><div>
+					                     <apex:selectList size="1" id="selectedSKU" value="{!detail.selectedSKU}">
+									        <apex:selectOptions value="{!detail.optionSKUs}"/> 
+								      	 </apex:selectList>
+										 <apex:commandLink action="{!addLine}" rerender="pageMessages,detail" value="Add">
+											 <apex:param name="lineToAdd" value="{!detail.srt}" />
+										 </apex:commandLink>
+								      	 </div></td>
+								     </apex:outputPanel> -->
+										<apex:outputPanel rendered="{!!DisplaySerialNumbers}">
+											<td title="qty">
+												<div>
+													<apex:inputText size="5" value="{!detail.quantityStr}" />
+												</div>
+											</td>
+										</apex:outputPanel>
+										<apex:outputPanel rendered="{!DisplaySerialNumbers}">
+											<td title="serialNumber">
+												<div>
+													<apex:inputHidden value="{!detail.serialNumber}" />
+													<input 
+														data-sort="{!detail.srt}" 
+														type="text"
+														value="{!detail.serialNumber}" 
+														class="serialNumberInput"
+														size="20" 
+													/>
+												</div>
+											</td>
+										</apex:outputPanel>
+										<apex:outputPanel rendered="{!displayLocations}">
+											<!--<td title="loc"><div><apex:inputField value="{!detail.pol.serp__Default_Location__c}"/></div></td>-->
+											<td title="loc">
+												<div>
+													<apex:inputField value="{!detail.pol.serp__Default_Location__c}" />
+													<!-- <apex:selectList size="1" value="{!detail.location}">
+							        <apex:selectOptions value="{!detail.locationOptions}"/> 
+						      	 </apex:selectList> -->
+													<!-- Create New? -->
+												</div>
+											</td>
+										</apex:outputPanel>
+										<apex:outputPanel rendered="{!displayInventory}">
+											<td title="displayInventory">
+												<div>
+													<apex:inputCheckbox value="{!detail.isInventory}" />
+												</div>
+											</td>
+										</apex:outputPanel>
+										<apex:repeat value="{!$ObjectType.serp__Purchase_Order_Line__c.FieldSets.serp__Receive}"
+											var="fs">
+											<td><apex:outputField value="{!detail.pol[fs]}" /></td>
+										</apex:repeat>
+									</tr>
+								</apex:repeat>
+							</apex:outputPanel>
+						</tbody>
+					</table>
+				</apex:outputPanel>
+			</center>
+		</apex:pageBlock>
+	</apex:form>
+</apex:page>

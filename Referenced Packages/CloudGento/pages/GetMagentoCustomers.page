@@ -1,0 +1,54 @@
+<apex:page standardController="CloudGento__Magento_Setting__c" extensions="CloudGento.GetMagentoCustomersController">
+
+ <apex:sectionHeader title="Get Customers"/>  
+      
+   <apex:pagemessages />
+   
+   <apex:form id="theForm">
+     <center>
+     <apex:pageBlock id="pageBlock">
+      <apex:pageBlockButtons >
+        <apex:commandButton action="{!getCustomers}" value="Get Customers"/> 
+        <apex:commandButton action="{!cancel}" value="Cancel"/> 
+      </apex:pageBlockButtons>
+      <apex:outputPanel id="outputPanelSelectBoxes">
+      <table border="0" cellpadding="0" cellspacing="0" width="90%">
+          <tr>
+	         <td nowrap="true"> 
+			        <apex:pageBlockSection id="pgsRow1" columns="1">
+			            <apex:pageBlockSectionItem id="pgsiEmailAddress">
+			                <apex:outputLabel value="Customer Email Address" for="email"/>
+					        <apex:inputText id="email" value="{!emailAddress}" />
+			            </apex:pageBlockSectionItem>
+			        </apex:pageBlockSection>
+			        <apex:pageBlockSection id="pgsRow3" columns="2">
+			            <apex:pageBlockSectionItem >
+			              <apex:outputLabel value="Start Hour" for="startDay"/> 
+			              <apex:inputText id="startDay" value="{!lastUpdated}"/>
+			            </apex:pageBlockSectionItem> 
+			            <!--<apex:pageBlockSectionItem >
+			              <apex:outputLabel value="End Day" for="endDay"/>            
+			              <apex:inputText id="endDay" value="{!endDay}"/>
+			            </apex:pageBlockSectionItem>-->
+			        </apex:pageBlockSection>
+			        <apex:pageBlockSection id="pgsRow4" columns="1">
+			            <apex:pageBlockSectionItem id="pgsiStartCustomerId">
+			                <apex:outputLabel value="Start Customer Id" for="StartCustomerId"/>
+					        <apex:inputText id="StartCustomerId" value="{!startCustomerId}" />
+			            </apex:pageBlockSectionItem>
+			        </apex:pageBlockSection>
+			        <apex:pageBlockSection id="pgsRow5" columns="1">
+			            <apex:pageBlockSectionItem id="pgsiEndCustomerId">
+			                <apex:outputLabel value="End Customer Id" for="EndCustomerId"/>
+					        <apex:inputText id="EndCustomerId" value="{!endCustomerId}" />
+			            </apex:pageBlockSectionItem>
+			        </apex:pageBlockSection>
+	         </td>
+	        </tr>
+	        </table>
+	      </apex:outputPanel>
+    </apex:pageBlock>
+    </center>
+   </apex:form>
+   
+</apex:page>

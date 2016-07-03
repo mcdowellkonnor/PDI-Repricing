@@ -1,0 +1,86 @@
+<apex:page standardController="ECS__eCommSource_Order__c" sidebar="false" id="page" extensions="ECS.CreateOrderController" action="{!initEdit}"> 
+
+	<c:CreateOrder id="c"
+	               topController="{!theController}"
+	               displayLineDollarPromo="true" 
+				   displayDollarPromo="true" 
+	               displayLinePercentPromo="true" 
+	               displayPercentPromo="true"
+				   productReadOnly="false" 
+				   priceReadOnly="false" 
+				   quantityReadOnly="false"
+				   displayCustomerSearch="true" 
+				   displayTaxExempt="true" 
+				   displayLineShipping="false"
+				   displayOrderType="true" 
+				   displayPromoCode="true" 
+				   displayShippingOptions="true"
+				   displayAddresses="true"
+				   displayNotes="true"
+				   displayPricebooks="true"
+				   displayRecurringOrder="true"
+				   displayAddOrderLine="true"
+				   displayOrderSettings="true"
+				   completeOrderRedirectURL=""/> 
+
+
+	<!-- <apex:pageMessages id="pageMessages"/>
+	
+	<apex:form >
+	<apex:outputPanel id="all">
+     <apex:pageBlock id="pageBlock">
+		<apex:pageBlockButtons location="bottom">
+		    <apex:commandButton action="{!save}" value="Save" />
+		    <apex:commandButton action="{!cancel}" value="Cancel" />
+		</apex:pageBlockButtons>
+		 <center>	 
+		 <apex:outputPanel id="table">
+	     <table cellspacing="3" cellpadding="3" border="0" width="90%">
+	        <thead>
+	           <tr>
+	             <td></td>
+	             <td><span><b>Product</b></span></td> 
+	             <td><span><b>Quantity</b></span></td>
+	             <td><span><b>Price</b></span></td>
+	           </tr>
+	        </thead>
+	        <tbody>
+	       	    <apex:actionRegion >
+	            <apex:repeat value="{!orderLines}" var="ol">
+	                 <tr id="{!ol.Id}"> 
+	                     <td align="center">
+							<apex:commandLink rendered="{!orderLines.size > 1}" action="{!removeLine}" status="formActionStatus" rerender="pageMessages, table">
+								<apex:param name="lineToRemove" value="{!ol.Id}" />
+								<span style="font-size: 30px;">&#xd7;</span>
+							</apex:commandLink>
+						 </td>
+	                     <td title="{!ol.Name}"><div><apex:inputField value="{!ol.Product__c}"/></div></td>
+	                     <td title="{!ol.Quantity__c}"><div><apex:inputField value="{!ol.Quantity__c}"/></div></td>
+	                     <td title="{!ol.Unit_Price__c}"><div><apex:inputField value="{!ol.Unit_Price__c}"/></div></td>
+	                 </tr> 
+	            </apex:repeat>
+	           <tr>
+	             <td align="center">		
+	                <apex:actionRegion >
+					<apex:commandLink action="{!addLine}" status="formActionStatus" rerender="pageMessages, table">
+							<span style="font-size: 30px;">&#x2b;</span>
+							<!-- <span style="display:block; margin-left: 30px; padding-top: 10px;">Add Order Line</span>
+					</apex:commandLink>
+					</apex:actionRegion>
+				 </td>
+	             <td></td>
+	             <td></td>
+	             <td></td>
+	           </tr>
+	           </apex:actionRegion>
+	        </tbody>
+	    </table>
+	    </apex:outputPanel>
+	    </center>
+		</apex:pageBlock>
+	</apex:outputPanel>
+	</apex:form>
+	
+	 -->
+
+</apex:page>

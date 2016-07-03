@@ -1,0 +1,221 @@
+<apex:page controller="eCommazon.CreateShipmentPlanAndShipmentsController" sidebar="false" >
+ <style>
+        .bPageBlock.brandSecondaryBrd.apexDefaultPageBlock.secondaryPalette{background-color:#fff;}
+        .dataGrid th{padding:10px 0;background:#ddd;}
+        .dataGrid td{padding-top:10px;}
+        .pbSubsection .dataCol{padding:0}
+   </style>
+ 
+    <apex:sectionHeader title="Create Inbound Shipment Plan"/> 
+   
+   <apex:form id="theForm">
+     <apex:pageMessages id="pgm" />
+       <apex:pageblock >
+          <apex:pageBlockButtons location="bottom" >
+              <apex:commandButton action="{!SaveRecord}" value="Confirm"/>&nbsp;&nbsp;
+               <apex:commandButton action="{!Cancel}" value="Cancel"/>
+          </apex:pageBlockButtons>
+    <center>    
+       <table style="width:100%">
+           <th>Shipping Plan</th>
+           <th>Ship from</th>
+         <tr><td width="20%">
+               <apex:selectRadio layout="pageDirection" value="{!CreatingOption}">
+                    <apex:selectOptions value="{!RadioOption}"/> <br/>
+                    <apex:actionSupport event="onchange"  action="{!OnChange}"/>
+               </apex:selectRadio>
+              
+               <apex:pageBlockSection id="pgsRow3" columns="2" rendered="{!AND(if(recentPlans.size>0,true,false),NOT(ShowPicklist))}">
+                    <apex:selectList value="{!recentSelectedPlan}" size="1" style="margin-left:38px;">
+                            <apex:selectOptions value="{!recentPlans}" />
+                            <apex:actionSupport event="onchange"  action="{!onChangePlan}"/>
+                     </apex:selectList>
+                            
+               </apex:pageBlockSection> 
+                <apex:inputText value="{!PlanName}" style="margin-left:38px;width:120px;" rendered="{!ShowPicklist}"/><br/>   
+          </td>
+          <td width="40%">
+          <table style="width:100%">
+             <tr><td>First Name:</td><td style="width:75%"><apex:inputField value="{!con.FirstName}" label="First Name" style="Width:75%;"/></td></tr>
+             <tr><td>Last Name:</td><td style="width:75%"><apex:inputField value="{!con.LastName}" label="Last Name" style="Width:75%;"/></td></tr>
+             <tr><td>Street:</td><td style="width:74%"><apex:inputText value="{!MailingStreet}" label="Street" style="Width:75%;"/></td></tr>
+             <tr><td>City:</td><td style="width:75%"><apex:inputField value="{!con.MailingCity}" label="City" style="Width:75%;"/></td></tr>
+             <tr><td>State:</td><td style="width:75%"><apex:inputField value="{!con.MailingState}" label="State" style="Width:75%;"/></td></tr>
+             <tr><td>Postal Code:</td><td style="width:75%"><apex:inputField value="{!con.MailingPostalCode}" label="Postal Code" style="Width:75%;"/></td></tr>
+             <tr><td>Country:</td><td style="width:75%"><apex:inputField value="{!con.MailingCountry}" Label="Country" style="Width:75%;"/></td></tr>
+           </table>
+          </td>  
+      </tr>
+    </table> <br/><br/>  
+  </center>
+    
+     <br/>
+     <center>
+             <apex:pageblock >
+             <apex:outputPanel rendered="{!NOT(ErrorForRemove= null)}"><section class="error">{!ErrorForRemove}</section><!---<Font Size="3"><b>{!DimesionError}</b></Font>---><br/><br/></apex:outputPanel>
+             <table style="width:100%" class="dataGrid" cellspacing="0">
+                        <tr>
+                           <th width="20%" style="text-align:center">Shipment #</th>
+                           <th width="20%" style="text-align:center">Fulfillment Center Id</th>
+                           <th width="20%" style="text-align:center">External Id</th>
+                           <th width="20%" style="text-align:center"># of SKUs</th>
+                           <th width="20%" style="text-align:center"># of Items</th>
+                           <th width="20%" style="text-align:center">Remove</th>
+                         </tr>
+                        <apex:repeat value="{!WrapperShipmentList}" var="wpl">
+                            <tr>
+                                <td width="20%" style="text-align:center">
+                                   <apex:outputtext value="{!wpl.rowWrapNumber}"/>
+                                </td>
+                            
+                                <td width="20%" style="text-align:center">
+                                  <apex:selectList value="{!wpl.SelectedCenterId}" size="1" style="margin-left:38px;">
+                                        <apex:selectOptions value="{!wpl.ExistingFulfillmentCenterId}" />
+                                  </apex:selectList>
+                                </td>
+                                 <td width="20%" style="text-align:center">
+                                   <apex:InputField value="{!wpl.ShippmentWrap.eCommazon__External_Id__c}"/>
+                                </td>
+                                <td width="20%" style="text-align:center">
+                                   <apex:outputText value="{!wpl.ShippmentWrap.FBA_Shipment_Items__r.SIZE}" style="line-height:18px;height:20px;Width:75%;text-align: center;" >
+                                   </apex:outputText>
+                                </td>
+                                <td width="20%" style="text-align:center">
+                                   <apex:inputField value="{!wpl.ShippmentWrap.eCommazon__of_MSKUs__c}" style="line-height:18px;height:20px;Width:75%;text-align: center;" >
+                                   </apex:inputField>
+                                </td>
+                               
+                                <td width="20%" style="text-align:center">
+                                  <apex:commandLink action="{!RemovePackage}" reRender="theForm" tabindex="-1">
+                                   <apex:image id="theImage" value="{!$Resource.eCommazon__RemoveImage}" width="25" height="25"/>
+                                  <apex:param name="rownum" value="{!wpl.rowWrapNumber}" />
+                                  </apex:commandLink>
+                                </td>
+                                
+                               
+                            </tr>
+                           <!-- <tr>
+                            <apex:outputPanel rendered="{!wpl.SelectedCenterId = null}">
+                                <table style="width:80%" class="dataGrid" cellspacing="0">
+                                   
+                                    <tr>
+                                       <th width="15%" style="text-align:center">First Name</th>
+                                       <th width="15%" style="text-align:center">Last Name</th>
+                                       <th width="15%" style="text-align:center">Mailing Street</th>
+                                       <th width="15%" style="text-align:center">Mailing City</th>
+                                       <th width="15%" style="text-align:center">Mailing State</th>
+                                       <th width="15%" style="text-align:center">Mailing PostalCode</th>
+                                       <th width="15%" style="text-align:center">Mailing Country</th>
+                                    </tr>
+                                    <tr>
+                                        <td width="15%" style="text-align:center"><apex:inputField value="{!wpl.FBAAddressContact.FirstName}"/></td>
+                                        <td width="15%" style="text-align:center"><apex:inputField value="{!wpl.FBAAddressContact.LastName}"/></td>
+                                        <td width="15%" style="text-align:center"><apex:inputField value="{!wpl.FBAAddressContact.MailingStreet}"/></td>
+                                        <td width="15%" style="text-align:center"><apex:inputField value="{!wpl.FBAAddressContact.MailingCity}"/></td>
+                                        <td width="15%" style="text-align:center"><apex:inputField value="{!wpl.FBAAddressContact.MailingState}"/></td>
+                                        <td width="15%" style="text-align:center"><apex:inputField value="{!wpl.FBAAddressContact.MailingPostalCode}"/></td>
+                                        <td width="15%" style="text-align:center"><apex:inputField value="{!wpl.FBAAddressContact.MailingCountry}"/></td>
+                                    </tr>
+                            </table>
+                            </apex:outputPanel>
+                            </tr>--->
+                        </apex:repeat>
+                         
+                    </table><br/>
+                </apex:pageblock>
+           </center>
+           <br/>
+           
+          <apex:inputText value="{!totalrow}" style="line-height:16px;height:18px;Width:75px;text-align: center;"/>&nbsp;&nbsp;
+          <apex:commandButton action="{!AddShipment}" value="Add FBA Shipments"/>&nbsp;&nbsp;
+          <br/><br/>
+          <apex:outputPanel rendered="{!ListWrapperAddress.Size > 0}">
+              <apex:outputPanel ><b>FBA Shipment Address</b></apex:outputPanel> <br/>
+              <center>
+                     <table style="width:100%" class="dataGrid" cellspacing="0">
+                            <tr>
+                               <th style="text-align:center">Shipment #</th>
+                               <th style="text-align:center">Fulfilment Center Id</th>
+                                <th style="text-align:center">External Id</th>
+                               <th style="text-align:center">First Name</th>
+                               <th style="text-align:center">Last Name</th>
+                               <th style="text-align:center">Mailing Street</th>
+                               <th style="text-align:center">Mailing City</th>
+                               <th style="text-align:center">Mailing State</th>
+                               <th style="text-align:center">Mailing PostalCode</th>
+                               <th style="text-align:center">Mailing Country</th>
+                            </tr>
+                            <apex:repeat value="{!ListWrapperAddress}" var="wsl">
+                                <tr>
+                                    <td width="12.5%" style="text-align:center">
+                                       <apex:outputtext value="{!wsl.RowNumber}" style="Width:80%;" />
+                                    </td>
+                                    <td width="12.5%" style="text-align:center">
+                                       <apex:Inputtext value="{!wsl.FullfillmentCenter}" style="Width:80%;" />
+                                    </td>
+                                     <td width="12.5%" style="text-align:center">
+                                       <apex:Inputtext value="{!wsl.Externalid}" style="Width:80%;" />
+                                    </td>
+                                    <td width="12.5%" style="text-align:center">
+                                       <apex:Inputtext value="{!wsl.FirstName}" style="Width:80%;" />
+                                   </td>
+                                   <td width="12.5%" style="text-align:center">
+                                        <apex:Inputtext value="{!wsl.LastName}" />
+                                   </td>
+                                   <td width="12.5%" style="text-align:center">
+                                        <apex:Inputtext value="{!wsl.MailingStreet}" style="Width:80%;" />
+                                   </td>
+                                   <td width="12.5%" style="text-align:center">
+                                       <apex:Inputtext value="{!wsl.MailingCity}" style="Width:80%;" />
+                                   </td>
+                                   <td width="12.5%" style="text-align:center">
+                                       <apex:Inputtext value="{!wsl.MailingState}" style="Width:80%;" />
+                                   </td>
+                                   <td width="12.5%" style="text-align:center">
+                                       <apex:Inputtext value="{!wsl.MailingPostalCode}" style="Width:80%;" />
+                                   </td>
+                                   <td width="12.5%" style="text-align:center">
+                                       <apex:Inputtext value="{!wsl.MailingCountry}" style="Width:80%;" />
+                                   </td>
+                                </tr>
+                           </apex:repeat>
+                        </table><br/>
+                       
+             </center>
+            </apex:outputPanel>
+           <br/>
+          <apex:outputPanel rendered="{!NOT(ShowPicklist)}">
+          <apex:outputPanel ><b>FBA Shipment Plan</b></apex:outputPanel> <br/>
+          <center>
+                 <table style="width:100%" class="dataGrid" cellspacing="0">
+                        <tr>
+                           <th style="text-align:center">FBA Shipment Plan</th>
+                           <th style="text-align:center">FBA Ship From Address</th>
+                           <th style="text-align:center">Label Prep Preference</th>
+                           <th style="text-align:center">Status</th>
+                         
+                        </tr>
+                       
+                        <tr>
+                            <td width="33%" style="text-align:center">
+                               <apex:outputtext value="{!selectedExistingFbaPlan.Name}"/>
+                            </td>
+                            <td width="33%" style="text-align:center">
+                               <apex:outputtext value="{!selectedExistingFbaPlan.eCommazon__FBA_Ship_From_Address__r.Name}" />
+                           </td>
+                           <td width="33%" style="text-align:center">
+                                <apex:outputtext value="{!selectedExistingFbaPlan.eCommazon__Label_Prep_Preference__c}" />
+                           </td>
+                           <td width="33%" style="text-align:center">
+                                <apex:outputtext value="{!selectedExistingFbaPlan.eCommazon__Status__c}" />
+                           </td>
+                           
+                        </tr>
+                      
+                    </table><br/>
+                   
+           </center>
+           </apex:outputPanel>
+       </apex:pageblock>
+   </apex:form>
+</apex:page>

@@ -1,0 +1,5 @@
+<apex:page standardController="CloudConversion__RMA_Line__c" >
+   
+    <c:Refund rmaId="{!CloudConversion__RMA_Line__c.Id}"/>
+    
+</apex:page>

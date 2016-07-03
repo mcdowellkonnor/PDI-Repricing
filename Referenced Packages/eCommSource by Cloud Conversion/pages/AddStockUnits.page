@@ -1,0 +1,33 @@
+<apex:page standardController="ECS__eCommSource_Order_Line__c" extensions="CloudConversion.AddStockUnitsController">
+
+	<apex:pageMessages /> 
+	
+	<apex:form id="addStockUnits">
+	 
+     <apex:pageBlock id="pageBlock">
+		<apex:pageBlockButtons >
+		    <apex:commandButton action="{!save}" value="Save"/>
+		    <apex:commandButton action="{!cancel}" value="Cancel"/>
+		</apex:pageBlockButtons>
+        <apex:pageBlockSection id="pgsLines" columns="1">
+						<apex:repeat value="{!StockUnits}" var="su">
+	                         <apex:pageBlockSectionItem id="serialNumberSection">
+	                              <apex:outputLabel value="Serial Number"/> 
+	                              <apex:inputField id="serialNumber" value="{!su.Name}"/> 
+	                         </apex:pageBlockSectionItem>
+                   		</apex:repeat>
+                    <HR/>
+		 </apex:pageBlockSection>
+
+        <apex:pageBlockSection id="pgsAttachments" columns="1">
+        	<apex:pageBlockSectionItem id="serialNumberAttachments">
+		             <apex:outputLabel value="Select Attachments:" for="attachment"/>
+		             <apex:inputFile id="attachment" value="{!attachmentBody}" filename="{!attachmentName}" />
+			</apex:pageBlockSectionItem>
+		 </apex:pageBlockSection>
+		 		 
+	</apex:pageBlock>
+	 
+	 </apex:form>
+
+</apex:page>

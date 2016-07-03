@@ -1,0 +1,11 @@
+<apex:page standardController="ECS__eCommSource_Order__c"  extensions="eCommazon.SendFBAOrdersController" action="{!getOrder}"> 
+  <apex:pageMessages id="pgm" />
+  <apex:form rendered="{!If(MessageList.Size>0,true,false)}">
+      <table border="1" width="70%">
+           <apex:repeat value="{!MessageList}" var="lst">
+              <tr><td><b>{!lst}</b></td></tr>
+           </apex:repeat>
+           
+       </table>
+  </apex:form>
+</apex:page>

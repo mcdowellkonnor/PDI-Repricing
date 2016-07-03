@@ -1,0 +1,5 @@
+<apex:page showHeader="false" standardController="CloudConversion__Message__c" extensions="CloudConversion.DocumentEmailController" action="{!init}">
+
+   <c:Forward />
+
+</apex:page>

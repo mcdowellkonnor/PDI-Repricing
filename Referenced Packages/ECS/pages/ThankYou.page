@@ -1,0 +1,362 @@
+<apex:page standardStylesheets="false" showHeader="false" controller="ECS.ThankYouController" action="{!processPayment}" cache="true" expires="900">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+	
+	<title>{!orderForm.ECS__Title__c}</title>
+	
+	<link rel="stylesheet" type="text/css" href="{!orderForm.ECS__CSS_URL__c}"/>
+	
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+	<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
+
+	<apex:stylesheet value="{!URLFOR($Resource.ECS__bootstrap_cc)}" />
+	
+	<style type="text/css">
+    body, #footer {
+        background: #E6EDF7;
+    }
+    #container {
+        background: url(https://www.marined3.com/images/bg2.jpg) repeat-x 0 0;
+    }
+    #textarea {
+        background: #fff;
+        padding: 0 5px 10px;
+        width: 860px;
+        margin: 0 auto;
+    }
+    .avail {
+        margin: 5px 0;
+        text-align: center;
+        font-size: 15px;
+        font-family: arial, sans-serif;
+        font-weight: bold;
+        color: #C00;
+    }  
+    #header {
+        width: 870px;
+    }
+    #textarea .left {
+        float: left;
+        width: 520px;
+    }
+
+    #textarea p {
+        float: none;
+    }
+
+    #textarea .right {
+        float: right;
+        width: 340px;
+        text-align: center;
+    }
+    #textarea .right h3 {
+        color: #000;
+        font-weight: bold;
+        text-align: center;
+        font-size: 24px;
+        font-family: sans-serif;
+        font-style: normal;
+    }
+
+    #textarea .testimonials{
+        width:910px;
+        clear:both;
+        overflow:auto;
+        margin-top:20px;
+    }
+
+    #textarea .testimonials h3 {
+        color: black;
+        font-size: 34px;
+        text-align: center;
+        margin-top: 67px;
+        text-transform: none;
+        margin-top: 15px;
+        font-style: normal;
+        font-weight: bold;
+        font: bold 34px Arial, Helvetica, sans-serif;
+        margin: 30px 0 18px !important;
+    }
+    #textarea .testimonials ul{
+        margin:0;
+        padding:0;
+    }
+    #textarea .testimonials ul li{
+        width:415px;
+        margin:0 20px 0 0;
+        padding:0;
+        list-style:none;
+        float:left;
+    }
+    #textarea .testimonials ul li.fin{
+        margin:0
+    }
+    #textarea .testimonials ul li p{
+        margin-top:0;
+        font: 13px/1.4 Arial,Helvetica,sans-serif;
+        color: #333;
+    }
+    .footer {
+        text-align: center;
+        padding: 0px 0px 40px 0;
+        margin-top: 70px;
+        width: 910px;
+        margin: 0 auto;
+        font-family: arial;
+    }
+    .footer .container {
+        padding-right: 50px;
+    }
+    .footer p {
+        margin-bottom: 0;
+        color: #000000;
+        font-size:14px;
+        line-height: 16px;
+        font-family: arial;
+        margin-bottom: 16px;
+    }
+    .footer-links {
+        margin: 0px 0;
+    }
+    .footer-links li {
+        display: inline;
+        color:#ffffff;
+        padding: 0 2px;
+        font-family: arial;
+    }
+
+    .footer-links li a{
+        color:#ffffff;
+
+    }
+    .footer-links li:first-child {
+        padding-left: 0;
+    }
+    #menu-footer-menu li:last-child a {
+        border-right: none;
+    }
+    #menu-footer-menu li {
+        border-right: 1px solid #000000;
+
+    }
+
+    #menu-footer-menu li a {
+        text-decoration: none;
+        color: #000000;
+        padding-left: 10px;
+        padding-right: 10px;
+        font-size: 14px;
+        font-family: arial;
+    }
+    .footer ul li {
+        display: inline;
+        font-family: arial;
+    }
+    .footer ul {
+        margin: 0;
+        padding: 0;
+    }
+
+    h1, h3 {
+        color: black !important;
+        font-style: normal !important;
+        text-align: center;
+        font-family: helvetica, arial, sans-serif !important;
+    }
+
+    h1 {
+        margin-top: 20px !important;
+        font-weight: bold;
+        font-size: 50px;
+        margin-top: 0;
+        margin-bottom: 25px;
+        padding: 0;
+
+    }
+
+    #textarea h3 {
+        font-weight: normal;
+        margin-bottom: 25px;
+        font-size: 32px;
+    }
+    #textarea h3 strong {
+        text-decoration: underline;
+    }
+    #textarea h3 a {
+        color: black;
+    }
+	</style>
+	
+	</head>
+	<body>
+	<apex:form >
+		<div id="container">
+	<!-- Main Container start here -->
+			<div id="main_container">
+    	<!-- header start here -->
+				<div id="header">
+					<div id="logo">
+					   <img src="{!orderForm.ECS__Logo_URL__c}" alt="" style="float: left;margin-top: 10px; width: 200px; height:87px;"/>
+					</div>
+					<div id="callorder">
+						<div id="LP_DIV_1350090384789" style="width:340px;height:90px;">
+							<div id="lpchat-container-87274817_ab89f4a6-fe54-4de1-98bd-9a5e06398cca" class="lpchat-container" style="margin: 0px; padding: 0px; width: 340px; height: 90px; border-style: solid; border-width: 0px; outline-style: none; outline-width: 0px; font-style: normal; font-weight: normal; font-variant: normal; list-style: none outside none; letter-spacing: normal; line-height: normal; text-decoration: none; text-align: start; vertical-align: baseline; white-space: normal; word-spacing: normal; z-index: auto; display: block; position: relative; cursor: pointer; background-position: 0% 100%; background-repeat: repeat no-repeat;">
+								<div id="lpchat-container-1396709199491-6" class="lpchat-container" style="margin: 0px; padding: 0px; width: 338px; height: 88px; border: 1px solid transparent; outline-style: none; outline-width: 0px; font-style: normal; font-weight: normal; font-variant: normal; list-style: none outside none; letter-spacing: normal; line-height: normal; text-decoration: none; text-align: start; vertical-align: baseline; white-space: normal; word-spacing: normal; background-color: transparent; border-top-left-radius: 0px; border-top-right-radius: 0px; border-bottom-right-radius: 0px; border-bottom-left-radius: 0px; position: relative; display: none; background-position: 0% 100%; background-repeat: repeat no-repeat;">
+									<img id="lpchat-image-1396709199491-7" class="lpchat-image" src="https://www.marined3.com/liveperson/go-4.png" style="margin: 0px; padding: 0px; width: auto; height: auto; border-style: none; border-width: 0px; outline-style: none; outline-width: 0px; font-style: normal; font-weight: normal; font-variant: normal; list-style: none outside none; letter-spacing: normal; line-height: normal; text-decoration: none; text-align: start; vertical-align: baseline; white-space: normal; word-spacing: normal; position: absolute; left: 0px; top: 0px; z-index: 1020;"/>
+								</div>
+								<div id="lpchat-container-1396709199491-10" class="lpchat-container" style="margin: 0px; padding: 0px; width: 338px; height: 88px; border: 1px solid transparent; outline-style: none; outline-width: 0px; font-style: normal; font-weight: normal; font-variant: normal; list-style: none outside none; letter-spacing: normal; line-height: normal; text-decoration: none; text-align: start; vertical-align: baseline; white-space: normal; word-spacing: normal; background-color: transparent; border-top-left-radius: 0px; border-top-right-radius: 0px; border-bottom-right-radius: 0px; border-bottom-left-radius: 0px; position: relative; display: block; background-position: 0% 100%; background-repeat: repeat no-repeat;">
+								<img id="lpchat-image-1396709199491-11" class="lpchat-image" src="https://www.marined3.com/liveperson/go-4.png" style="margin: 0px; padding: 0px; width: auto; height: auto; border-style: none; border-width: 0px; outline-style: none; outline-width: 0px; font-style: normal; font-weight: normal; font-variant: normal; list-style: none outside none; letter-spacing: normal; line-height: normal; text-decoration: none; text-align: start; vertical-align: baseline; white-space: normal; word-spacing: normal; position: absolute; left: 0px; top: 0px; z-index: 1010;"/>
+								</div>
+							</div>
+						</div>
+            	<!--<b>Order by Phone or Ask Questions</b>
+                <p>Call or click to chat now </p>-->
+					</div>
+				</div>
+        <!-- header end here -->
+        <!-- Main start here -->
+				<div id="main">
+        	<!-- Menu start here -->
+					<div id="menu">
+						<ul>
+							<li><a href="https://www.marined3.com/thankyou/index.html">Home</a></li>
+							<li>I</li>
+							<li><a href="https://www.marined3.com/bp/special1a.php">Our Offer</a></li>
+							<li>I</li>
+							<li><a href="https://www.marined3.com/About-Us.html">About Us</a></li>
+							<li>I</li>
+							<li><a href="https://www.marined3.com/contact-us.html">Contact Us</a></li>
+							<li>I</li>
+							<li><a href="https://www.marined3.com/the-team.html">The Team</a></li>
+							<li>I</li>
+							<li><a href="https://www.marined3.com/faq.html">FAQ</a></li>
+						</ul>
+					</div>
+            <!-- Menu end here -->
+            <!-- Contant start here -->
+					<div id="contant">
+                <!-- textarea start here -->
+						<div id="textarea">
+						
+							<apex:pageMessages /> 
+						
+							<apex:outputPanel rendered="{!displayCCForm}">
+								<table>
+									<tr><td>
+										<apex:outputLabel style="float: left; width: 165px;" for="ccNumber">Credit Card Number</apex:outputLabel>
+										<apex:inputText id="ccNumber" value="{!paymentInfo.creditCardNumber}" ></apex:inputText>
+									</td></tr>
+									<tr><td>
+										<apex:outputLabel style="float: left; width: 165px;" for="cvvNumber">Security Code</apex:outputLabel>
+										<apex:inputText id="cvvNumber" value="{!paymentInfo.cvv}"/>
+									</td></tr>
+									<tr><td>
+										<apex:outputLabel style="float: left; width: 165px;" for="cardTypeSelectList">Card Type</apex:outputLabel>
+										<apex:selectList size="1" id="cardTypeSelectList" multiselect="false" value="{!paymentInfo.cardType}"><apex:selectOptions value="{!cardTypeOptions}" /></apex:selectList>
+									</td></tr>
+									<tr><td>
+										<apex:outputLabel style="float: left; width: 165px;" for="cardExp">Credit Card Expiration</apex:outputLabel>
+										<apex:selectList id="expMonth" value="{!paymentInfo.expirationMonth}" size="1" style="width: 125px"><apex:selectOptions value="{!expMonthOptions}" /></apex:selectList>
+							            <apex:selectList id="expYear" value="{!paymentInfo.expirationYear}" size="1" style="width: 80px; margin-left: 15px;"><apex:selectOptions value="{!expYearOptions}" /></apex:selectList>
+									</td></tr>
+								</table>
+								<div><apex:commandButton style="float: center; clear: both;" styleClass="btn-primary" action="{!save}" value="Update Payment Information" rerender="page-messages" /></div>
+							</apex:outputPanel>
+						
+							<h1>Thank you for your order</h1>
+							<h3>Details about your order will come<br/>from <a href="mailto:support@marined3.com">support@marined3.com</a>.</h3>
+							<h3>Please add this email address to your Contacts to make sure you are kept up to date.</h3>
+							<h3>If you have any questions concerning your order, please<br/>contact us using the orange <strong>Chat</strong> button below or phone us at <strong>1-877-436-3824</strong> and speak to one of our friendly staff.</h3>
+							<div id="LP_DIV_1355346379393" style="width:295px;height:73px;margin: 0 auto; margin-top: -8px;">
+								<div id="lpchat-container-87274817_5261011f-ac37-41b0-8dc0-a37a5383f759" class="lpchat-container" style="margin: 0px; padding: 0px; width: 295px; height: 73px; border-style: solid; border-width: 0px; outline-style: none; outline-width: 0px; font-style: normal; font-weight: normal; font-variant: normal; list-style: none outside none; letter-spacing: normal; line-height: normal; text-decoration: none; text-align: start; vertical-align: baseline; white-space: normal; word-spacing: normal; z-index: auto; display: block; position: relative; cursor: pointer; background-position: 0% 100%; background-repeat: repeat no-repeat;">
+									<div id="lpchat-container-1396709199491-4" class="lpchat-container" style="margin: 0px; padding: 0px; width: 293px; height: 71px; border: 1px solid rgb(0, 0, 0); outline-style: none; outline-width: 0px; font-style: normal; font-weight: normal; font-variant: normal; list-style: none outside none; letter-spacing: normal; line-height: normal; text-decoration: none; text-align: start; vertical-align: baseline; white-space: normal; word-spacing: normal; background-color: rgb(239, 245, 248); border-top-left-radius: 0px; border-top-right-radius: 0px; border-bottom-right-radius: 0px; border-bottom-left-radius: 0px; position: relative; display: none; background-position: 0% 100%; background-repeat: repeat no-repeat;">
+									<img id="lpchat-image-1396709199491-5" class="lpchat-image" src="https://www.marined3.com/images/underorderform.png" style="margin: 0px; padding: 0px; width: auto; height: auto; border-style: none; border-width: 0px; outline-style: none; outline-width: 0px; font-style: normal; font-weight: normal; font-variant: normal; list-style: none outside none; letter-spacing: normal; line-height: normal; text-decoration: none; text-align: start; vertical-align: baseline; white-space: normal; word-spacing: normal; position: absolute; left: -1px; top: -1px; z-index: 1020;"/>
+									</div>
+									<div id="lpchat-container-1396709199491-8" class="lpchat-container" style="margin: 0px; padding: 0px; width: 293px; height: 71px; border: 1px solid rgb(0, 0, 0); outline-style: none; outline-width: 0px; font-style: normal; font-weight: normal; font-variant: normal; list-style: none outside none; letter-spacing: normal; line-height: normal; text-decoration: none; text-align: start; vertical-align: baseline; white-space: normal; word-spacing: normal; background-color: rgb(239, 245, 248); border-top-left-radius: 0px; border-top-right-radius: 0px; border-bottom-right-radius: 0px; border-bottom-left-radius: 0px; position: relative; display: block; background-position: 0% 100%; background-repeat: repeat no-repeat;">
+									<img id="lpchat-image-1396709199491-9" class="lpchat-image" src="https://www.marined3.com/images/underorderform.png" style="margin: 0px; padding: 0px; width: auto; height: auto; border-style: none; border-width: 0px; outline-style: none; outline-width: 0px; font-style: normal; font-weight: normal; font-variant: normal; list-style: none outside none; letter-spacing: normal; line-height: normal; text-decoration: none; text-align: start; vertical-align: baseline; white-space: normal; word-spacing: normal; position: absolute; left: -1px; top: -1px; z-index: 1010;"/>
+									</div>
+								</div>
+							</div>
+							<div style="padding: 0; width: 568px; margin: 0 auto; margin-top: 15px;">
+								<img src="https://www.marined3.com/bp/order/assets/shipping.png" style="float:right; margin-left: 20px;" alt=""/>
+								<h2 style="text-align: left; color: #323436; font-family: helvetica, sans-serif; font-size: 22px;  margin-bottom: 0px; line-height: 22px; margin-top: 10px;margin-bottom: 15px;">Shipping Speed:</h2>
+								<p style="font-size: 16px; color: #323436; font-family: sans-serif; line-height: 1.4em;">
+									All orders Monday-Friday are shipped within 1 business day. Weekend orders are shipped first thing on Monday.
+									<br/><br/>
+									Standard Shipping In United States:<br/>(3 to 5 business days )
+									<br/><br/>
+									International Shipping:  (10-15 business days) <br/><br/>
+									All products are shipped from South Dakota, USA
+								</p>
+							</div>
+							<div class="testimonials">
+								<apex:outputText rendered="{!orderForm.ECS__Testimonials_HTML__c!=null}" escape="false" value="{!orderForm.ECS__Testimonials_HTML__c}"/>
+							</div>
+						</div>
+
+                <script type="text/javascript">
+                    function showIt() { document.getElementById("hid").style.visibility = "visible"; } setTimeout("showIt()", 240000); //     .. 1237000 is 1 second. 
+                </script>    
+
+                <script type="text/javascript" src="https://www.marined3.com/atc-cookie.js"></script> 
+
+                <!-- textarea end here -->
+					</div>
+            <!-- Contant end here -->
+				</div>
+        <!-- Main end here -->
+				<div class="clear"></div>
+			</div>
+    <!-- Main Container end here -->
+		</div>
+<!-- Container end here -->
+<!-- Footer start here -->
+		<div class="footer">
+			<div class="container">
+				<div class="span10">
+					<div class="menu-footer-menu-container">
+						<ul id="menu-footer-menu" style="margin-bottom: 16px; margin-top: 8px;" class="menu">
+							<li id="menu-item-532" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-532"><a target="_blank" href="https://www.marined3.com/our-guarantee.html">Our Guarantee</a></li>
+							<li id="menu-item-537" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-537"><a target="_blank" href="https://www.marined3.com/terms-and-conditions.html">Terms and Conditions</a>
+							</li>
+							<li id="menu-item-536" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-536"><a target="_blank" href="https://www.marined3.com/privacy-policy.html">Privacy Policy</a></li>
+							<li id="menu-item-535" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-535"><a target="_blank" href="https://www.marined3.com/Refund.html">Refund &amp; Return</a></li>
+							<li id="menu-item-534" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-534"><a target="_blank" href="https://www.marined3.com/website-disclaime.html">Website Disclaimer</a></li>
+							<li id="menu-item-533" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-533"><a target="_blank" href="https://www.marined3.com/opt-out.html">Opt Out</a></li>
+							<li id="menu-item-538" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-538" style="border: none;"><a style="border: none;" target="_blank" href="https://www.marined3.com/contact-us.html">Contact Us</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+				<aside id="text-4" class="widget widget_text">
+					<div class="textwidget">
+						<p></p>
+						<div class="span10"><p>1808 W 103rd Street, Chicago Illinois 60643 USA</p></div>
+						<div class="span10"><p>Tel: 1-877-436-3824 | Fax: 1-773-779-3471</p></div>
+						<div class="span10"><p>Copyright 2014 EOK Marketing LLC DBA Marine Essentials. All rights reserved.</p></div>
+					</div>
+				</aside>
+			</div>
+		</div>
+
+		<apex:outputPanel rendered="{!orderForm.ECS__Flash_Variables__c!=null}">
+			<script type="text/javascript" src="https://www.marined3.com/thankyou/wthvideo/wthvideo.js"></script>
+			<style type="text/css">#wthvideo {position:fixed;width:320px;height:320px;margin-left:auto;left:auto;right:0px;top:auto;bottom:0px;z-index:99999;}
+			</style> 
+			
+			<div id="wthvideo">
+				<object id="objvideo" style="outline:none;" type="application/x-shockwave-flash" width="320" height="320" data="https://www.marined3.com/thankyou/wthvideo/wthplayer.swf">
+					<param name="movie" value="https://www.marined3.com/thankyou/wthvideowthvideo/wthplayer.swf"/>
+					<param name="quality" value="high"/>
+					<param name="flashvars" value="{!orderForm.ECS__Flash_Variables__c}"/>
+					<param name="wmode" value="transparent"/>
+					<param name="allowscriptaccess" value="always"/>
+					<param name="swfversion" value="9.0.45.0"/>
+				</object>
+			</div>
+		</apex:outputPanel>
+	</apex:form>
+	</body>
+</html>
+</apex:page>

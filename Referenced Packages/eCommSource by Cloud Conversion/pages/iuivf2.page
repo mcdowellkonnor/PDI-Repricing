@@ -1,0 +1,19 @@
+<!--
+*   Page definition: iuivf
+*   Visualforce template for iUI includes needed for
+*   using the iui framework <http://code.google.com/p/iui/>
+*   in any Visualforce page.
+-->
+
+<apex:page >
+   <meta name="viewport" content="width=320; initial-scale=1.0; maximum-scale=1.0; user scalable=0;"/>
+   <apex:includeScript value="{!URLFOR($Resource.CloudConversion__IUI2, 'iui/iui.js')}" /> 
+   <apex:styleSheet value="{!URLFOR($Resource.CloudConversion__IUI2, 'iui/iui.css')}" />
+    
+   <style> 
+      <apex:insert name="body-content"> 
+         #home { position: relative; top: 0px; } 
+      </apex:insert>
+   </style>
+    
+</apex:page>

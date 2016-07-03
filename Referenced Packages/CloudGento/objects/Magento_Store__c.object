@@ -1,0 +1,286 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Follow</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <deprecated>false</deprecated>
+    <enableActivities>true</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>true</enableHistory>
+    <enableReports>true</enableReports>
+    <enableSearch>true</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <fields>
+        <fullName>Account__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Account</label>
+        <referenceTo>Account</referenceTo>
+        <relationshipLabel>Magento Stores</relationshipLabel>
+        <relationshipName>Magento_Stores</relationshipName>
+        <relationshipOrder>1</relationshipOrder>
+        <reparentableMasterDetail>false</reparentableMasterDetail>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>MasterDetail</type>
+        <writeRequiresMasterRead>false</writeRequiresMasterRead>
+    </fields>
+    <fields>
+        <fullName>External_Id__c</fullName>
+        <caseSensitive>false</caseSensitive>
+        <deprecated>false</deprecated>
+        <externalId>true</externalId>
+        <label>External Id</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>true</unique>
+    </fields>
+    <fields>
+        <fullName>Magento_Setting__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Magento Setting</label>
+        <referenceTo>Magento_Setting__c</referenceTo>
+        <relationshipLabel>Magento Stores</relationshipLabel>
+        <relationshipName>Magento_Stores</relationshipName>
+        <relationshipOrder>0</relationshipOrder>
+        <reparentableMasterDetail>false</reparentableMasterDetail>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>MasterDetail</type>
+        <writeRequiresMasterRead>false</writeRequiresMasterRead>
+    </fields>
+    <fields>
+        <fullName>Magento_Website__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Magento Website</label>
+        <referenceTo>Magento_Website__c</referenceTo>
+        <relationshipLabel>Magento Stores</relationshipLabel>
+        <relationshipName>Magento_Stores</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Next_Order__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Next Order</label>
+        <length>30</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Order_Import_Active__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Order Import Active</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Order_Setting__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Order Setting</label>
+        <referenceTo>ECS__Order_Setting__c</referenceTo>
+        <relationshipLabel>Magento Stores</relationshipLabel>
+        <relationshipName>Magento_Stores</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Orders_Per_Import_Pull__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Orders Per Import Pull</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Sales_Channel__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Sales Channel</label>
+        <referenceTo>ECS__Sales_Channel__c</referenceTo>
+        <relationshipLabel>Magento Stores</relationshipLabel>
+        <relationshipName>Magento_Stores</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Store_Id__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Store Id</label>
+        <precision>3</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>true</unique>
+    </fields>
+    <label>Magento Store</label>
+    <listViews>
+        <fullName>All</fullName>
+        <columns>Store_Id__c</columns>
+        <columns>NAME</columns>
+        <columns>Account__c</columns>
+        <columns>Magento_Setting__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+    </listViews>
+    <nameField>
+        <label>Magento Store Name</label>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+    </nameField>
+    <pluralLabel>Magento Stores</pluralLabel>
+    <searchLayouts>
+        <listViewButtons>Delete</listViewButtons>
+        <searchResultsAdditionalFields>Magento_Setting__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Magento_Website__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Store_Id__c</searchResultsAdditionalFields>
+        <searchResultsCustomButtons>Delete</searchResultsCustomButtons>
+    </searchLayouts>
+    <sharingModel>ControlledByParent</sharingModel>
+    <webLinks>
+        <fullName>Delete</fullName>
+        <availability>online</availability>
+        <displayType>massActionButton</displayType>
+        <linkType>javascript</linkType>
+        <masterLabel>Delete</masterLabel>
+        <openType>onClickJavaScript</openType>
+        <protected>false</protected>
+        <requireRowSelection>true</requireRowSelection>
+        <url>{!REQUIRESCRIPT(&quot;/soap/ajax/15.0/connection.js&quot;)} 
+{!REQUIRESCRIPT(&quot;/soap/ajax/15.0/apex.js&quot;)} 
+
+var IdsToDelete, successes, errors, successS, errorS, results, msg, subIdsToDelete, subIndex 
+IdsToDelete = {!GetRecordIDs($ObjectType.Magento_Store__c)} 
+if(IdsToDelete.length == 0) 
+alert(&apos;Error:\n\nYou must choose at least one stone to delete.&apos;) 
+delRecords = false 
+if(IdsToDelete.length &gt; 0) 
+delRecords = confirm(&apos;Warning:\n\nYou are about to delete &apos;+IdsToDelete.length+&apos; record&apos;+ 
+(IdsToDelete.length==1?&apos;&apos;:&apos;s&apos;)+&apos;.\n\nAre you certain you wish to continue?&apos;) 
+results = null 
+successes = errors = subIndex = 0 
+if(delRecords) 
+{ while(subIndex &lt;= IdsToDelete.length) 
+{ subIdsToDelete = IdsToDelete.slice(subIndex, Math.min(subIndex+200,IdsToDelete.length)) 
+results = sforce.connection.deleteIds(subIdsToDelete) 
+while(results.length) 
+if(results.pop().getBoolean(&apos;success&apos;)) 
+successes++ 
+else 
+errors++ 
+subIndex += 200 
+} 
+msg = &apos;&apos; 
+successS = successes==1?&apos; was&apos;:&apos;s were&apos; 
+errorS = errors==1?&apos; was&apos;:&apos;s were&apos; 
+if(successes &gt; 0) 
+msg += successes+&apos; record&apos;+successS+&apos; deleted&apos; 
+if(errors &gt; 0) 
+{ if(msg != &apos;&apos;) 
+msg += &apos;, and &apos; 
+msg += errors+&apos; record&apos;+errorS+&apos; NOT deleted&apos; 
+} 
+msg += &apos;.&apos; 
+alert(msg) 
+window.location.reload(); 
+}</url>
+    </webLinks>
+    <webLinks>
+        <fullName>Get_Next_Orders</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <height>600</height>
+        <linkType>page</linkType>
+        <masterLabel>Get Next Orders</masterLabel>
+        <openType>sidebar</openType>
+        <page>GetNextOrders</page>
+        <protected>false</protected>
+    </webLinks>
+    <webLinks>
+        <fullName>Upload_Store_Info</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <height>600</height>
+        <linkType>page</linkType>
+        <masterLabel>Upload Store Info</masterLabel>
+        <openType>sidebar</openType>
+        <page>UploadStoreInfo</page>
+        <protected>false</protected>
+    </webLinks>
+</CustomObject>

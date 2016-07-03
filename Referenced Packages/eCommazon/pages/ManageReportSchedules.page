@@ -1,0 +1,86 @@
+<apex:page standardController="eCommazon__Amazon_Setting__c" extensions="eCommazon.ManageReportSchedulesController"> 
+   <apex:pagemessages />
+   <apex:sectionHeader title="Manage Amazon Reports"/>
+   <apex:form id="theForm">
+     <apex:pageBlock >
+     <apex:pageBlockButtons >
+        <apex:commandButton action="{!requestReport}" value="Request Report"/>
+        <apex:commandButton action="{!scheduleReport}" value="Schedule Report"/>
+        <apex:commandButton action="{!getReportList}" value="Get Report List"/>
+     </apex:pageBlockButtons>
+     
+     <apex:outputPanel rendered="{!If(reports.size>0,true,false)}">
+         <table border="1" Width="100%">
+             <th align="Center">Name</th>
+             <th align="Center" Width="10%">Completed Date</th>
+             <th align="Center" Width="10%">Start Date</th>
+             <th align="Center" Width="10%">End Date</th>
+             <th align="Center" Width="10%">Report ID</th>
+             <apex:repeat value="{!reports}" var="rep">
+                 <tr>
+                   <td>{!rep.Name}</td>
+                   <td><apex:outputText value="{0,date,MM'/'dd'/'yyyy}">
+                        <apex:param value="{!rep.eCommazon__Completed_Date__c}" /> 
+                    </apex:outputText></td>
+                   <td><apex:outputText value="{0,date,MM'/'dd'/'yyyy}">
+                        <apex:param value="{!rep.eCommazon__Start_Date__c}" /> 
+                     </apex:outputText></td>
+                   <td><apex:outputText value="{0,date,MM'/'dd'/'yyyy}">
+                        <apex:param value="{!rep.eCommazon__End_Date__c}" /> 
+                     </apex:outputText></td>
+                   <td>{!rep.eCommazon__Report_Id__c}</td>
+                 </tr>
+             </apex:repeat>
+         </table>
+     </apex:outputPanel>
+     <apex:actionRegion >
+        <apex:pageBlockSection columns="1" id="inputFields">
+           <!-- apex:pageBlockSectionItem >
+             <apex:outputLabel value="Call Type" for="callType"/>   
+             <apex:selectList size="1" id="callType" value="{!callType}">
+               <apex:actionSupport event="onchange" action="{!handleCallOptions}" rerender="options" />
+               <apex:selectOptions value="{!ebaycalloptions}"/>
+             </apex:selectList>
+           </apex:pageBlockSectionItem> -->
+           <apex:outputPanel id="options"> 
+             <apex:pageBlockSection columns="1">
+               <apex:pageBlockSectionItem >
+                 <apex:outputLabel value="Report" for="report"/> 
+                 <apex:selectList size="1" id="report" value="{!report}">
+                   <apex:selectOptions value="{!reportOptions}">
+                   	 <apex:actionSupport event="onchange" rerender="options" />
+                   </apex:selectOptions>
+                 </apex:selectList>
+               </apex:pageBlockSectionItem> 
+               <apex:pageBlockSectionItem >
+                 <apex:outputLabel value="Schedule" for="schedule"/> 
+                 <apex:selectList size="1" id="schedule" value="{!schedule}">
+                   <apex:selectOptions value="{!scheduleOptions}"/>
+                 </apex:selectList>
+               </apex:pageBlockSectionItem>
+
+	           <!-- <apex:outputPanel rendered="{!report=='_GET_XML_BROWSE_TREE_DATA_'}" id="bni"> -->
+		         <apex:pageBlockSectionItem >
+		            <apex:outputLabel value="Browse Node Id" for="browseNodeId"/> 
+		            <apex:inputText id="browseNodeId" value="{!browseNodeId}"/>
+		         </apex:pageBlockSectionItem>
+	           <!-- </apex:outputPanel> -->
+             
+             </apex:pageBlockSection>
+             
+             <apex:pageBlockSection columns="2">
+               <apex:pageBlockSectionItem >
+                 <apex:outputLabel value="Start Date" for="startDate"/> 
+                 <apex:inputField id="startDate" value="{!order.ECS__Ship_Date__c}"/>
+               </apex:pageBlockSectionItem> 
+               <apex:pageBlockSectionItem >
+                 <apex:outputLabel value="End Date" for="endDate"/> 
+                 <apex:inputField id="endDate" value="{!order.ECS__Cancel_Date__c}"/>
+               </apex:pageBlockSectionItem>
+               </apex:pageBlockSection>
+           </apex:outputPanel>
+        </apex:pageBlockSection>
+        </apex:actionRegion>
+    </apex:pageBlock>
+   </apex:form>
+</apex:page>

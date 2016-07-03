@@ -1,0 +1,5 @@
+<apex:page standardController="ECS__FTP_Setting__c" extensions="ECS.FTPSettingController" action="{!validate}">
+
+	<apex:pageMessages />
+	
+</apex:page>

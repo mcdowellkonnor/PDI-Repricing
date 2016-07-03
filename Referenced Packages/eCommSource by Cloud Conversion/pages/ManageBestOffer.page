@@ -1,0 +1,59 @@
+<apex:page id="page" extensions="CloudConversion.ManageOffersController" standardController="CloudConversion__Best_Offer__c">
+
+	<ECS:Analytics event="INFO" app="eCommSource" />
+	
+	<script type="text/javascript"> 
+		function appendSolution() { 
+		   var solutionIdAndNote = document.getElementById("page:theForm:pageBlock:pgsSolutions:pgsiSolutions:pgsiSolution:solution").value;
+		   var temp = new Array();
+		   temp = solutionIdAndNote.split('*-*',2);
+		   var newSolutionId = temp[0];
+		   var solution = temp[1];
+		   var response = document.getElementById("page:theForm:pageBlock:pgsResponse:pgsiResponse:response").value;
+		   var solutionIds = document.getElementById("page:theForm:pageBlock:pgsSolutions:pgsiSolutions:pgsiSolution:solutionIds").value;
+		   if(solution!=undefined) {
+		      document.getElementById("page:theForm:pageBlock:pgsSolutions:pgsiSolutions:pgsiSolution:solutionIds").value = solutionIds+','+newSolutionId;
+		      document.getElementById("page:theForm:pageBlock:pgsResponse:pgsiResponse:response").value = solution +'\n\n'+ response;
+		      //sz(document.getElementById("page:theForm:pageBlock:pgsResponse:pgsiResponse:response"));
+		   }
+		}
+	</script>
+
+   <apex:pagemessages />
+   <apex:form id="theForm">
+   <apex:pageBlock id="pageBlock" >
+      <apex:pageBlockButtons location="bottom">
+        <apex:commandButton action="{!counter}" value="Counter"/>
+        <apex:commandButton action="{!accept}" value="Accept"/> 
+        <apex:commandButton action="{!decline}" value="Decline"/>
+      </apex:pageBlockButtons>
+      <apex:outputPanel id="outputPanelSelectBoxes">
+      <table border="0" cellpadding="0" cellspacing="0" width="100%">
+        <tr>
+         <td nowrap="true"> 
+	           <apex:outputPanel id="outputPanelResponse">      
+	               <apex:pageBlockSection id="counterInfo" columns="2">
+			           <apex:pageBlockSectionItem id="counterResponsePrice">
+			             <apex:outputLabel value="Counteroffer Price" for="counterPrice"/>
+			             <apex:inputText id="counterPrice" value="{!counterPrice}" />
+			           </apex:pageBlockSectionItem>
+			           <apex:pageBlockSectionItem id="counterResponseQty">
+			             <apex:outputLabel value="Counteroffer Quantity" for="counterQty"/>
+			             <apex:inputText id="counterQty" value="{!counterQuantity}" />
+			           </apex:pageBlockSectionItem>
+	        	   </apex:pageBlockSection>
+	               <apex:pageBlockSection id="pgsResponse" columns="1">
+			           <apex:pageBlockSectionItem id="pgsiResponse">
+			             <apex:outputLabel value="Message" for="response"/>
+			             <apex:inputTextarea id="response" value="{!response}" cols="100" rows="3" />  <!-- onchange="sz(this);" onclick="sz(this);" onkeydown="sz(this);" onkeyup="sz(this);" onmousedown="sz(this);" -->
+			             <!-- <apex:inputTextarea id="response" value="{!response}" cols="100" rows="5" onchange="handleTextAreaElementChange('response', 1000, 'remaining', 'over limit');" onclick="handleTextAreaElementChange('response', 1000, 'remaining', 'over limit');" onkeydown="handleTextAreaElementChange('response', 1000, 'remaining', 'over limit');" onkeyup="handleTextAreaElementChange('response', 1000, 'remaining', 'over limit');" onmousedown="handleTextAreaElementChange('response', 1000, 'remaining', 'over limit');" />  -->
+			           </apex:pageBlockSectionItem>
+	        	   </apex:pageBlockSection>
+	           </apex:outputPanel>
+	         </td>
+	        </tr>
+	        </table>
+	      </apex:outputPanel>
+    </apex:pageBlock>
+   </apex:form>
+</apex:page>

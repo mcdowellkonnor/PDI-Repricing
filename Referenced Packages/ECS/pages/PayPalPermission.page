@@ -1,0 +1,6 @@
+<apex:page controller="ECS.PayPalPermissionController" action="{!request}">
+
+	<c:Analytics event="INFO" app="ECS" />
+	
+	<apex:pageMessages />
+</apex:page>

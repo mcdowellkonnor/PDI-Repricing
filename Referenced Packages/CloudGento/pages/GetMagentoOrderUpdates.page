@@ -1,0 +1,2 @@
+<apex:page action="{!getOrder}" standardController="ECS__eCommSource_Order__c" extensions="CloudGento.GetMagentoOrdersController">
+</apex:page>

@@ -1,0 +1,3 @@
+<apex:page showHeader="false" renderAs="pdf" standardController="ECS__eCommSource_Order__c">
+	<c:Invoice type="Commercial" />
+</apex:page>

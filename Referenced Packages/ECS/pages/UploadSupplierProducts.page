@@ -1,0 +1,29 @@
+<apex:page controller="ECS.UploadSupplierProductsController">
+
+	<c:Analytics event="INFO" app="ECS" />
+	
+	<apex:pageMessages /> 
+	
+	<apex:form id="details">
+	
+	<apex:outputPanel id="all">
+     <apex:pageBlock id="pageBlock">
+		<apex:pageBlockButtons location="bottom">
+		    <apex:commandButton action="{!upload}" value="Upload"/>
+		</apex:pageBlockButtons>
+		
+        <apex:pageBlockSection id="details" columns="1">
+        	<apex:pageBlockSectionItem id="Instructions">
+		       <apex:outputLabel value="{!instructions}" for="Instructions"/> 
+			</apex:pageBlockSectionItem> 
+        	<apex:pageBlockSectionItem id="Attachments">
+		       <apex:outputLabel value="Select File" for="attachment"/>
+		       <apex:inputFile id="attachment" value="{!attachmentBody}" filename="{!attachmentName}" contentType="{!mimeType}"/> 
+			</apex:pageBlockSectionItem> 
+		</apex:pageBlockSection>
+		
+	 </apex:pageBlock>
+	</apex:outputPanel>
+	</apex:form>
+
+</apex:page>

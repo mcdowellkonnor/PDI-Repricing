@@ -1,0 +1,3 @@
+<apex:page showHeader="false" standardStylesheets="false" id="page" controller="ECS.OrderFormController" cache="true" expires="900" action="{!createCart}">
+	<c:OrderForm2 id="orderForm" topController="{!theController}" />
+</apex:page>

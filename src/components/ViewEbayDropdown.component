@@ -1,0 +1,161 @@
+<apex:component allowDML="true">
+	<apex:attribute name="ebay_id" type="String" required="true" description="The product ebay_id"/>
+	<apex:attribute name="price" type="String" required="true" description="The price of the eBay item."/>
+	<apex:attribute name="shipping" type="String" required="true" description="The shipping of the eBay item."/>
+	<apex:attribute name="raw_price" type="String" required="true" description="The combined price and shipping price of the item."/>
+	<apex:attribute name="label" type="String" required="true" description="The label of the owner of the item (i.e. AMA)"/>
+	<apex:attribute name="partslink" type="String" required="true" description="The partslink of the item."/>
+	<apex:attribute name="store" type="String" required="true" description="The eBay store associated with the part."/>
+	<apex:attribute name="lowest_price" type="String" required="true" description="If the item search should search for the lowest price or not. TRUE will result in a lowest price search."/>
+	<apex:attribute name="competitor" type="String" required="true" description="A, B, or C?"/>
+	<apex:attribute name="repricing" type="PDI_Repricing__Repricing_Info__c"  required="true" description="The repricing object currently processed."/>
+		
+	<script>
+		function checkForNAeBay(ebay_id, partslink, store) {
+			var a = "http://google.com";
+			
+			if (ebay_id === "NA" || ebay_id === null || ebay_id === "") {
+				a = "http://stores.ebay.com/" + store + "?_dmd=2&_nkw=" + partslink;
+			} else {
+				a = "http://www.ebay.com/itm/" + ebay_id;
+			}
+			
+			return a;
+		}
+		
+		function checkForNAeBayLowest(id, partslink) {
+			var a = "http://google.com";
+			
+			if (id === "NA" || id === null || id === ""){
+				a = "http://www.ebay.com/sch/i.html?_from=R40&_sacat=0&_nkw=" + partslink + "&_sop=15";
+			} else {
+				a = "http://www.ebay.com/itm/" + id;
+			}
+			
+			return a;
+		}
+	</script>
+	
+	<div class="dropdown" style="display:{!If(AND(ebay_id != null,AND(price != null, shipping != null, raw_price != '')),'','none')}">
+		<p class="clickablefont">
+			{!raw_price}
+		</p>
+		<div class="dropdown-content">
+			<p>{!label}</p>
+			<p>Price: {!price}</p>	
+			<p>Shipping: {!shipping}</p>
+			<a href="javascript:window.open(checkForNAeBay('{!ebay_id}', '{!partslink}', '{!store}'));">
+				View Product
+			</a>
+		</div>
+	</div>
+	<div class="dropdown" style="display:{!If(AND(ebay_id != null, AND(price == null, shipping == null, raw_price == '')),'','none')}">
+		<p class="clickablefont">
+			<img src="http://i.imgur.com/mkW4M8v.png" width="15" height="15" class="clickable"/>
+		</p>
+		<div class="dropdown-content">
+			<p>Missing Data! Rerun Batch!</p>
+		</div>
+	</div>
+	<div class="dropdown" style="display:{!If(AND(ebay_id != null, price == 'NA'),'','none')}">
+		<p class="clickablefont">
+			<img src="http://www.iconarchive.com/download/i90882/icons8/windows-8/Healthcare-Skull.ico" width="20" height="20" class="clickable"/>
+		</p>
+		<div class="dropdown-content">
+			<p>Could not get data.</p>
+		</div>
+	</div>
+	<div class="dropdown" style="display:{!If(ebay_id == null,'','none')}">
+		<img src="http://icons.iconarchive.com/icons/custom-icon-design/mono-general-1/512/alert-icon.png" width="20" height="20" class="clickable"/>
+		<div class="dropdown-content">
+			<p>No Item ID found!</p>
+			
+			<div style="display:{!If(competitor == 'A', '', 'none')}">
+				<apex:inputField value="{!repricing.PDI_Repricing__Competitor_A_eBay_ID__c}" html-placeholder="As eBay ID"/>
+			</div>
+			
+			<div style="display:{!If(competitor == 'B', '', 'none')}">
+				<apex:inputField value="{!repricing.PDI_Repricing__Competitor_B_eBay_ID__c}" html-placeholder="Bs eBay ID"/>
+			</div>
+			
+			<div style="display:{!If(competitor == 'C', '', 'none')}">
+				<apex:inputField value="{!repricing.PDI_Repricing__Competitor_C_eBay_ID__c}" html-placeholder="Cs eBay ID"/>
+			</div>
+			
+			<div style="display:{!If(competitor == 'Uzooka', '', 'none')}">
+				<apex:inputField value="{!repricing.PDI_Repricing__Our_eBay_ID_Uzooka__c}" html-placeholder="Uzooka eBay ID"/>
+			</div>
+			
+			<div style="display:{!If(competitor == 'Depot', '', 'none')}">
+				<apex:inputField value="{!repricing.PDI_Repricing__Our_eBay_ID_Depot__c}" html-placeholder="Depot eBay ID"/>
+			</div>
+	
+			<button type="button" onclick="updateAll()">
+			Update
+			</button>
+			
+			<div style="display:{!If(lowest_price == 'FALSE', '', 'none')}">
+				<a href="javascript:window.open(checkForNAeBay('{!ebay_id}', '{!partslink}', '{!store}'));">
+					Find ID
+				</a>
+			</div>
+			<div style="display:{!If(lowest_price == 'FALSE', 'none', '')}">
+				<a href="javascript:window.open(checkForNAeBayLowest('{!id}', '{!partslink}'));">
+					Find ID
+    			</a>
+			</div>
+		</div>
+	</div>
+	
+	<style type="text/css">
+	
+	.clickablefont {
+        font-size: 12px;
+        font-family: "Roboto", sans-serif;
+        cursor: pointer;
+    }
+    
+    /* Dropdown Content (Hidden by Default) */
+	.dropdown-content {
+   		display: none;
+   		position: absolute;
+   		z-index:1;
+   		background-color: #f9f9f9;
+  			min-width: 160px;
+   		box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+   		right: 0;
+	}
+
+	/* Links inside the dropdown */
+	.dropdown-content a {
+   		color: black;
+   		padding: 12px 16px;
+   		text-decoration: none;
+   		display: block;
+	}
+	
+	.dropdown-content p {
+		color: black;
+   		padding: 0px 16px;
+   		text-decoration: none;
+   		display: block;
+	}
+	
+	.dropdown-content input {
+		width: 75%;
+	}
+
+	/* Change color of dropdown links on hover */
+	.dropdown-content a:hover {background-color: #f1f1f1}
+
+	/* Show the dropdown menu on hover */
+	.dropdown:hover .dropdown-content {
+   		display: block;
+	}
+	
+	input[type=text]:focus {
+   		border: 3px solid #555;
+	}
+	
+	</style>
+</apex:component>

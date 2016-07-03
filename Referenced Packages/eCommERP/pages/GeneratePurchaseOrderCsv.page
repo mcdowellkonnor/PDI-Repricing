@@ -1,0 +1,3 @@
+<apex:page showHeader="false" standardController="serp__Purchase_Order__c" contentType="text/csv#PO.csv" applyhtmltag="false">
+<c:GeneratePurchaseOrderCsv purchaseOrderId="{!serp__Purchase_Order__c.Id}" />
+</apex:page>

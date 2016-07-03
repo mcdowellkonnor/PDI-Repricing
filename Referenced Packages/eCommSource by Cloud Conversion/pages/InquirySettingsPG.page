@@ -1,0 +1,65 @@
+<apex:page standardController="CloudConversion__Inquiry_Setting__c" extensions="CloudConversion.InquirySettingsController">
+   
+	<div class="cc">
+	<apex:stylesheet value="{!URLFOR($Resource.ECS__bootstrap_cc)}" />
+	<link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.9.0/themes/base/jquery-ui.css"></link> 
+	
+   <apex:pagemessages />
+   
+   <apex:form id="theForm">
+   <apex:outputPanel rendered="{!renderChannelSelection}">
+   	   <apex:sectionHeader title="Select Channel"/>
+   	    <table width="80%">
+   	      <tr>
+           <td align="center"><apex:commandlink action="{!chooseEBayAsChannel}" id="ebay"><apex:image url="{!$Resource.CloudConversion__ebay_logo}" style="margin: -5px; border:0px" id="ebay_logo" width="100"/></apex:commandlink></td>
+           <td align="center"><apex:commandlink action="{!chooseOtherChannel}" id="amazon"><apex:image url="{!$Resource.CloudConversion__amazon_logo}" style="margin: -5px; border:0px" id="amazon_logo" width="100"/></apex:commandlink></td>
+           <td align="center"><apex:commandlink action="{!chooseOtherChannel}" id="email"><apex:image url="{!$Resource.CloudConversion__email_icon}" style="margin: -5px; border:0px" id="email_icon" width="100"/></apex:commandlink></td>
+          </tr>
+        </table>
+   </apex:outputPanel>
+   <apex:outputPanel rendered="{!!renderChannelSelection}">
+   
+	   <apex:sectionHeader title="Connect New eBay Account"/>
+	   
+	     <apex:pageBlock >
+	        <apex:pageBlockSection columns="1">
+	           <apex:pageBlockSectionItem id="pgsiReasons">
+	                <apex:outputLabel value="eBay Site" for="eBaySite"/>
+	                <apex:pageBlockSectionItem >
+	                  <apex:selectList size="1" id="eBaySite" value="{!inquirySetting.CloudConversion__eBay_Site__c}">
+	                     <apex:selectOptions value="{!eBaySiteOptions}"/>
+	                  </apex:selectList>
+	                </apex:pageBlockSectionItem>
+	           </apex:pageBlockSectionItem>
+	           <apex:pageBlockSectionItem >
+	             <apex:outputLabel value="eBay User Id" for="eBayUserId"/>            
+	             <apex:inputText id="eBayUserId" value="{!inquirySetting.CloudConversion__eBay_User_Id__c}"/>
+	           </apex:pageBlockSectionItem> 
+	           <apex:pageBlockSectionItem >
+	             <apex:outputLabel value=""/>
+	             <apex:commandButton action="{!doAuthAndAuth}" value="Next" styleClass="btn btn-success" rendered="{!eBayURL==''}"/>
+	           </apex:pageBlockSectionItem> 
+	        </apex:pageBlockSection>
+	        <apex:outputPanel id="redirectToEBay" rendered="{!eBayURL!=''}">
+		        <apex:pageBlockSection columns="1">
+		           <apex:pageBlockSectionItem >
+		             <apex:outputLabel value="eBay Redirect URL" for="eBayURL"/>            
+		             <apex:outputLink id="eBayURL" target="_blank" value="{!eBayURL}">Redirect to eBay</apex:outputLink>
+		           </apex:pageBlockSectionItem> 
+		        </apex:pageBlockSection>
+	        </apex:outputPanel>
+	        <apex:outputPanel id="authComplete" rendered="{!displayAuthComplete}">
+		        <apex:pageBlockSection columns="1">
+		           <apex:pageBlockSectionItem >
+		             <apex:outputLabel value=""/>            
+		             <apex:commandButton action="{!generateToken}" styleClass="btn btn-success" value="eBay Authentication Complete.  Save."/>
+		           </apex:pageBlockSectionItem> 
+		        </apex:pageBlockSection>        
+	        </apex:outputPanel>
+	    </apex:pageBlock>
+	</apex:outputPanel>
+	</apex:form>
+	
+	</div>
+	
+</apex:page>

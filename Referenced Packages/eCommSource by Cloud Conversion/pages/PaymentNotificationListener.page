@@ -1,0 +1,3 @@
+<apex:page controller="CloudConversion.PaymentNotificationListener" action="{!processPaymentNotification}" showHeader="false"> 
+
+</apex:page>

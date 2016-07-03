@@ -1,0 +1,9 @@
+<apex:page controller="eCommazon.ProcessAmazonQueueController" action="{!ProcessAmazonQueue}">
+    <apex:pageMessages id="pgm" />
+    <apex:form >
+        <!--<Font size='4'><b><apex:messages/></b></Font>--->
+        <center>
+            <apex:commandButton value="Go Back" action="{!GoBack}"/>
+        </center>
+    </apex:form>
+</apex:page>

@@ -1,0 +1,7 @@
+<apex:page standardController="serp__Purchase_Order__c" extensions="serp.PurchaseOrderCloneController" action="{!cloneWithItems}">
+	
+	<ECS:Analytics event="INFO" app="ERP" />
+	   
+	<apex:pageMessages />
+
+</apex:page>

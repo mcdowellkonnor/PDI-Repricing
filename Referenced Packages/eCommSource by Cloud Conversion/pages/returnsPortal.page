@@ -1,0 +1,36 @@
+<apex:page controller="CloudConversion.returnPortalController" showHeader="false" standardStylesheets="false" sidebar="false" applyHtmlTag="false" applyBodyTag="false" docType="html-5.0">    
+
+<html lang="en" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<head>
+  <title>Returns Portal</title>
+  <apex:stylesheet value="{!URLFOR($Resource.CloudConversion__SLDS100, 'assets/styles/salesforce-lightning-design-system-vf.css')}" /> 
+  <link rel="stylesheet" type="text/css" href="//dl.dropbox.com/s/mzsetcxl0vwk8l1/returnsStyles-v2.css" />
+  <link rel="stylesheet" type="text/css" href="//dl.dropboxusercontent.com/s/sl0xm26d32se40a/remodal.css" />
+  <link rel="stylesheet" type="text/css" href="//dl.dropboxusercontent.com/s/qy9ljoj6oxenj8y/remodal-default-theme.css" />
+  <link rel="stylesheet" type="text/css" href="//dl.dropboxusercontent.com/s/dd1kax5pbi2buhs/bootstrap.min.css" />
+  <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" />
+  <link href="https://ajax.googleapis.com/ajax/libs/jqueryui/1/themes/flick/jquery-ui.css" type="text/css" rel="stylesheet" />
+  
+<style>
+	.slds {
+		background-color: {!rrs.RMA_Style_Settings_Background_Color__c} !important;
+	}
+</style>
+	
+    
+  
+</head>
+<body class="slds">
+	<c:returnsPortalComponent />
+	<c:returnsPortalPoweredByTitle />
+	<script>
+		//Initialize modal:
+	  	$('[html-data-remodal-id=modal]').remodal({
+	    	modifier: 'with-default-theme'
+	  	});
+	</script>
+
+</body>
+</html>
+
+</apex:page>

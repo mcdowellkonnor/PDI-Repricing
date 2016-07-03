@@ -1,0 +1,7 @@
+<apex:page standardController="ECS__Payment_Detail__c" extensions="ECS.VoidTransactionController" action="{!voidTxn}">
+
+	<c:Analytics event="INFO" app="ECS" />
+
+	<apex:pageMessages />
+
+</apex:page>

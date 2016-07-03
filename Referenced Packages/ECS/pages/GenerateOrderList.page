@@ -1,0 +1,11 @@
+<apex:page controller="ECS.GenerateOrderListController" action="{!download}">
+
+	<c:Analytics event="INFO" app="ECS" />
+	
+	<apex:pageMessages />
+
+	<apex:repeat var="l" value="{!lineList}">
+		<apex:outputText value="{!l}" /><br/>
+	</apex:repeat>
+
+</apex:page>

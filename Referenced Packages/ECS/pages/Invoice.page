@@ -1,0 +1,4 @@
+<apex:page showHeader="false" renderAs="pdf" standardController="ECS__eCommSource_Order__c">
+	<apex:stylesheet value="{!URLFOR($Resource.ECS__invoicestyle, 'invoicestyle.css')}" /> 
+	<c:Invoice type="Invoice" />
+</apex:page>

@@ -1,0 +1,5 @@
+<apex:page standardController="ECS__Cart__c" >
+   
+   <c:CreateCase /> <!-- cartId="{!ECS__Cart__c.Id}"/> --> 
+    
+</apex:page>

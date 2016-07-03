@@ -1,0 +1,144 @@
+<apex:page standardController="ECS__eCommSource_Order__c" extensions="ECS.ManageCreditMemoController"> 
+
+	<c:Analytics event="INFO" app="ECS" />
+		
+	<div class="cc">
+	<apex:stylesheet value="{!URLFOR($Resource.ECS__bootstrap_cc)}" />
+	<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.9.0/themes/base/jquery-ui.css"></link> 
+
+   <apex:sectionHeader title="Create Credit Memo for Order {!order.Name}"/>
+   		
+	<apex:pageMessages id="pageMessages" />
+	<apex:form >
+	
+	<apex:pageBlock id="pageBlock">
+	
+	<!-- <apex:outputPanel id="credit-memo-panel">
+		<apex:outputPanel >
+			<div>
+				<table>
+					<tr>
+						<td>
+							<apex:outputLabel style="width: 165px; float: left; margin-left: 35px;">Adjustment Reason</apex:outputLabel>
+						</td>
+						<td>
+							<apex:selectList value="{!adjustmentReason}" size="1">
+								<apex:selectOptions value="{!adjustmentReasonOptions}"/>
+							</apex:selectList>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<apex:outputLabel style="width: 165px; float: left; margin-left: 35px;">Group Name</apex:outputLabel> 
+						</td>
+						<td>
+							<apex:inputText value="{!groupName}" size="60" />
+						</td>
+					</tr>
+					
+          			<apex:repeat value="{!$ObjectType.Inventory_Adjustment_Group__c.FieldSets.Create_Adjustment_Group}" var="fs">
+					  	<tr><td><apex:outputLabel style="float: left; margin-left: 35px; width: 165px;" value="{!fs.Label}" /></td><td><apex:inputField value="{!iag[fs]}" required="{!OR(fs.required, fs.dbrequired)}" /></td></tr>
+          			</apex:repeat>
+				</table>
+			</div>
+			<div style="border: 1px solid #DDD; margin-top: 15px; margin-bottom: 15px;"></div>
+		</apex:outputPanel>
+	</apex:outputPanel> -->
+	
+	<apex:outputPanel id="products-panel2">
+		<table id="products-container" style="width: 95%; margin-left: 12px;">
+			<thead>
+				<tr>
+					<th style="width: 20px;"></th>
+					<th style="width: 240px;">
+						<apex:outputLabel value="Product" />
+					</th>
+					<th style="width: 70px;">
+						<apex:outputLabel value="Quantity" />
+					</th>
+					<th style="width: 70px;">
+						<apex:outputLabel value="Total Amount" />
+					</th>
+					<th style="width: 70px;">
+						<apex:outputLabel value="Type" />
+					</th>
+					<!-- <apex:repeat value="{!$ObjectType.Inventory_Adjustment__c.FieldSets.Manage_Adjustments}" var="fs">
+						<th style="text-wrap: unrestricted;"><apex:outputLabel style="text-wrap: unrestricted; float: left;" value="{!fs.Label}" /></th>
+					</apex:repeat>-->
+				</tr>
+			</thead>
+			<tbody>
+				<apex:repeat id="credit-memo-lines" value="{!items}" var="cmi">
+					<tr>
+						<td>
+							<apex:actionRegion >
+								<apex:commandLink rendered="{!items.size > 1}" action="{!removeLine}" status="formActionStatus">
+									<apex:param name="lineToRemove" value="{!cmi.lineNum}" />
+									<span style="font-size: 30px;">&#xd7;</span>
+								</apex:commandLink>
+							</apex:actionRegion>
+						</td>
+						<td>
+							<div class="sku-container">
+								<apex:outputPanel >
+									<apex:inputField style="width: 200px;" value="{!cmi.creditMemoItem.ECS__Product__c}" id="productname" />
+								</apex:outputPanel>
+							</div>
+						</td>
+						<td>
+							<div class="qty-container">
+								<apex:outputPanel >
+									<apex:inputField style="width: 100px;" value="{!cmi.creditMemoItem.ECS__Quantity__c}" id="qty" />
+								</apex:outputPanel>
+							</div>
+						</td>
+						<td>
+							<div class="amt-container">
+								<apex:outputPanel >
+									<apex:inputField style="width: 100px;" value="{!cmi.creditMemoItem.ECS__Amount__c}" id="amt" />
+								</apex:outputPanel>
+							</div>
+						</td>
+						<td>
+							<div class="type-container">
+								<apex:outputPanel >
+									<apex:inputField value="{!cmi.creditMemoItem.ECS__Type__c}" id="type" />
+								</apex:outputPanel>
+							</div>
+						</td>
+						<!-- <apex:repeat value="{!$ObjectType.Inventory_Adjustment__c.FieldSets.Manage_Adjustments}" var="fs">
+							<td><apex:inputField value="{!a[fs]}" /></td>
+					    </apex:repeat> -->
+					</tr>
+				</apex:repeat>
+			</tbody>
+		</table>
+		<apex:outputPanel >
+			<apex:actionRegion >
+				<div id="add-line-link" style="padding-left: 12px;">
+					<apex:commandLink action="{!addLine}" status="formActionStatus">
+						<span style="font-size: 30px; display:block; float: left;">&#x2b;</span>
+						<span style="display:block; margin-left: 30px; padding-top: 10px;">Add Line</span>
+					</apex:commandLink>
+				</div>
+			</apex:actionRegion>
+		</apex:outputPanel>
+		
+        <apex:pageBlockSection id="Comment" columns="1">
+            <apex:pageBlockSectionItem id="pgsiComment">
+               <apex:outputLabel value="Comment" for="Comment"/>
+               <apex:inputTextarea id="Comment" value="{!creditMemo.ECS__Comment__c}" cols="80" rows="5" />
+            </apex:pageBlockSectionItem>
+        </apex:pageBlockSection>
+		
+	</apex:outputPanel>
+	
+	<div style="clear: both; text-align: center; margin-top: 15px;">
+		<apex:commandButton style="text-align: center; clear: both;" styleClass="btn-primary" action="{!create}" value="Create Credit Memo" status="formActionStatus" rerender="pageMessages" />
+		<apex:commandButton action="{!cancel}" value="Cancel" status="formActionStatus" rerender="pageMessages" />
+		<p>&nbsp;</p>
+	</div>
+    </apex:pageBlock>		
+	</apex:form>
+	</div>
+</apex:page>

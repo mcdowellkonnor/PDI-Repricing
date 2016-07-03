@@ -1,0 +1,48 @@
+<apex:page standardController="ECS__Template__c" extensions="ECS.EditTemplateController">
+	
+	<apex:stylesheet value="{!URLFOR($Resource.ECS__jqueryUiBaseCss)}" />
+	
+ 	<apex:includeScript value="{!URLFOR($Resource.ECS__jQueryUI)}" />
+
+	<apex:includeScript value="{!URLFOR($Resource.ECS__templateEditor)}" />
+	
+<!-- 	<script src="//code.jquery.com/jquery-1.10.2.js"></script> -->
+<!-- 	<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script> -->
+
+	<apex:pageMessages />
+	
+	<apex:form >
+	
+		<div id="accordion">
+			<div>
+				<h3>CSS</h3>
+				<apex:inputTextArea value="{!template.ECS__CSS__c}" cols="100" rows="50"/>
+			</div>
+			<div>
+				<h3>Header Content</h3>
+				<apex:inputTextArea value="{!template.ECS__Header__c}" cols="100" rows="50"/>
+			</div>
+			<div>
+				<h3>Items Header</h3>
+				<apex:inputTextArea value="{!template.ECS__Items_Header__c}" cols="100" rows="50"/>
+			</div>
+			<div>
+				<h3>Items</h3>
+				<apex:inputTextArea value="{!template.ECS__Items__c}" cols="100" rows="50"/>
+			</div>
+			<div>
+				<h3>Footer</h3>
+				<apex:inputTextArea value="{!template.ECS__Footer__c}" cols="100" rows="50"/>
+			</div>
+		</div>
+	
+		<apex:commandButton style="float: left; clear: bo	th;" styleClass="btn-primary" action="{!save}" value="Save" />
+	
+	</apex:form>
+
+	<script >
+	
+		
+
+	</script>
+</apex:page>

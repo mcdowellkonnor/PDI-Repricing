@@ -1,0 +1,248 @@
+<apex:page controller="CloudConversion.ReturnRequestController" showHeader="false" cache="false">
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js" type="text/javascript"></script>
+	<script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.8.1/jquery.validate.min.js"></script>
+    <script type="text/javascript">
+        // This function is necessary to use jQuery because the colons and periods
+ 		// need to be escaped in CSS selectors
+ 		function esc(myid) {
+   			return '#' + myid.replace(/(:|\.)/g,'\\\\$1');
+ 		}
+    
+        var formID = "{!$Component.return_request_form}";
+    	var submitLinkID = "{!$Component.return_request_form.saveLink}";
+    	
+       var formValidator;
+	   $(document).ready(function() {
+	     formValidator = $(esc(formID)).validate({
+	       rules: {
+	         "{!$Component.return_request_form.first_name}": {
+	           required: true,
+	         },
+	         "{!$Component.return_request_form.last_name}": {
+	           required: true,
+	         },
+	         "{!$Component.return_request_form.order_number}": {
+	           required: true,
+	         },
+	         "{!$Component.return_request_form.emailAddress}": {
+	           required: true,
+	           email: true,
+	         },
+	         "{!$Component.return_request_form.phone}": {
+	           required: true,
+	           minlength: 10,
+	         },
+	         "{!$Component.return_request_form.ReturnType}": {
+	           required: true,
+	         },
+	         "{!$Component.return_request_form.DesiredResolution}": {
+	           required: true,
+	         },
+	         "{!$Component.return_request_form.confirm}": {
+	           required: true,
+	         }
+	       },
+	       messages: {
+	         "{!$Component.return_request_form.first_name}": {
+	           required: "Please enter your first name",
+	         },
+	         "{!$Component.return_request_form.last_name}": {
+	           required: "Please enter your last name",
+	         },
+	         "{!$Component.return_request_form.order_number}": {
+	           required: "Please enter your order number",
+	         },
+	         "{!$Component.return_request_form.emailAddress}": {
+	           required: "Please enter your email address",
+	           email: "Please enter a valid email address",
+	         },
+	         "{!$Component.return_request_form.phone}": {
+	           required: "Please enter your phone number",
+	           minlength: "Please enter a valid phone number",
+	         },
+	         "{!$Component.return_request_form.ReturnType}": {
+	           required: "Please select return reason",
+	         },
+	         "{!$Component.return_request_form.DesiredResolution}": {
+	           required: "Please select desired resolution",
+	         },
+	         "{!$Component.return_request_form.confirm}": {
+	           required: "Please confirm terms and conditions",
+	         }
+	       },
+	       errorPlacement: function (error, element) {
+	         element.parent().append(error);
+	       }
+	     });
+	   });
+	   
+	   function submitForm() {
+	   		if (formValidator.form()) {
+	   		  $(esc(submitLinkID)).click();
+	   		  return true;
+	   		}
+	   		return false;
+	   }
+    </script>
+    
+    <style type="text/css">
+    	label.error {
+    	  color: #F00;
+    	  padding-left: 5px;
+    	}
+    </style>
+    
+    <table border="0" width="612"  cellpadding="0" cellspacing="0" align="center">
+        <tr>
+            <td valign="top">
+            
+                <apex:image id="returnsBanner" rendered="{!ISNULL(rrs.CloudConversion__Banner_URL__c)}" value="{!$Resource.CloudConversion__ReturnsBanner}" width="660" height="60"/>
+                <apex:image id="returnsBannerCustom" rendered="{!!ISNULL(rrs.CloudConversion__Banner_URL__c)}" value="{!rrs.CloudConversion__Banner_URL__c}" width="660" height="60"/>
+                <table width="612" cellpadding="0" cellspacing="0">
+                    <tr>
+                        <td align="left">
+                            <table width="590" cellpadding="0" cellspacing="0">
+                                <tr>
+                                    <td><br/>
+                                        <table cellpadding="0" cellspacing="0">
+                                            <tr>
+                                                <td><apex:outputText escape="false" value="{!rrs.CloudConversion__Introduction__c}"/>
+                                                </td>
+                                                <td>
+                                                    <apex:image id="customerServiceRep" rendered="{!ISNULL(rrs.CloudConversion__Return_Image_URL__c)}" 
+                                                                     value="{!$Resource.CloudConversion__ReturnCustomerServiceImage}" width="234" height="167"/>
+                                                    <apex:image id="customerServiceRepCustom" rendered="{!!ISNULL(rrs.CloudConversion__Return_Image_URL__c)}" value="{!rrs.CloudConversion__Return_Image_URL__c}" width="234" height="167"/>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                        <table width="612" cellpadding="0" cellspacing="0">
+                                            <tr>
+                                                <td align="left">
+                                                    <table width="590" cellpadding="5" cellspacing="0">
+                                                        <tr>
+                                                            <td>
+                                                                <table cellpadding="0" cellspacing="0" width="590" border="1"  bordercolor="#EFEFEF">
+                                                                    <tr>
+                                                                        <td>
+                                                                            <table cellpadding="5" cellspacing="0" width="590" >
+                                                                                <tr>
+                                                                                    <td bgcolor="#EFEFEF" class="orangefont2"><a  name="form"><strong>Return Request Form</strong></a></td>
+                                                                                </tr>
+                                                                            </table>
+                                                                            <table cellpadding="0" cellspacing="0" width="590" >
+                                                                                <tr>
+                                                                                    <td style="border:0;background-image:url('{!$Resource.CloudConversion__DashesRule}');">
+                                                                                        <apex:image id="spacerRule" value="{!$Resource.CloudConversion__SpacerRule}" width="50" height="1" />
+                                                                                    </td>
+                                                                                </tr>
+                                                                            </table>
+                                                                            <apex:form id="return_request_form">
+                                                                                <table bgcolor="#FFFFFF" cellpadding="5" cellspacing="0" width="590">
+                                                                                    <tr>
+                                                                                        <td align="right" colspan="3">
+                                                                                            <div style="color: red; text-align: right;">* Required Information</div>
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <td colspan="3"><apex:pageMessages /></td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <td nowrap="true" ><span style="color: red;">*&nbsp;&nbsp;</span><b>First Name:</b></td>
+                                                                                        <td colspan="2"><apex:inputText value="{!contact.FirstName}" maxlength="80" id="first_name"/></td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <td nowrap="true" ><span style="color: red;">*&nbsp;&nbsp;</span><b>Last Name:</b></td>
+                                                                                        <td colspan="2"><apex:inputText value="{!contact.LastName}" maxlength="80" id="last_name"/></td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <td nowrap="true" ><span style="color: red;">*&nbsp;&nbsp;</span><b>Order Number:</b></td>
+                                                                                        <td colspan="2"><apex:inputText value="{!orderNumber}" id="order_number"/></td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <td ></td>
+                                                                                        <td  colspan="2">Located on your invoice or order emails.</td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <td  nowrap="true"><span style="color: red;">*&nbsp;&nbsp;</span><b>Email Address:</b></td>
+                                                                                        <td colspan="2"><apex:inputField id="emailAddress" value="{!contact.Email}"/></td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <td  nowrap="true"><span style="color: red;">*&nbsp;&nbsp;</span><b>Phone:</b></td>
+                                                                                        <td colspan="2"><apex:inputField id="phone" value="{!contact.Phone}"/></td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <td ></td>
+                                                                                        <td  colspan="2">Please use the email address on record with this purchase.</td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <td  nowrap="true"><span style="color: red;">*&nbsp;&nbsp;</span><b>Reason for Return:</b></td>
+                                                                                        <td colspan="2">
+                                                                                            <apex:selectList id="ReturnType" value="{!returnReason}" size="1">
+                                                                                                <apex:selectOptions value="{!returnreasonoptions}"/>
+                                                                                            </apex:selectList>
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <td  nowrap="true"><span style="color: red;">*&nbsp;&nbsp;</span><b>Desired Resolution:</b></td>
+                                                                                        <td colspan="2">
+                                                                                            <apex:selectList id="DesiredResolution" value="{!desiredResolution}" title="Desired Resolution" size="1">
+                                                                                                <apex:selectOptions value="{!returnresolutionoptions}"/>
+                                                                                            </apex:selectList>
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <td nowrap="true"><span style="color: red;">*&nbsp;&nbsp;</span><b>Subject:</b></td>
+                                                                                        <td colspan="2"><apex:inputText id="subject" size="40" value="{!subject}"/></td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <td nowrap="true"><span style="color: red;">*&nbsp;&nbsp;</span><b>Comments:</b></td>
+                                                                                        <td colspan="2"><apex:inputTextarea id="description" value="{!message}" rows="3" cols="40"/></td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <td colspan="3"><span style="color: red;">*&nbsp;&nbsp;</span><strong>Confirmation:</strong>
+                                                                                            <apex:inputCheckbox id="confirm" value="{!confirmation}"/><span>I have read and agree to the terms and conditions of the return policy. The item I am returning is the exact item that I purchased.</span>
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <td  align="center" colspan="3">
+															   								<apex:commandlink action="{!save}" id="save_link" onclick="return submitForm();"><apex:image url="{!$Resource.CloudConversion__RequestRMAButton}" style="margin: -5px; border:0px" id="requestRMAButton" rendered="{!ISNULL(rrs.CloudConversion__Request_RMA_Button_URL__c)}" /><apex:image url="{!rrs.CloudConversion__Request_RMA_Button_URL__c}" style="margin: -5px; border:0px" id="requestRMAButtonCustom" rendered="{!!ISNULL(rrs.CloudConversion__Request_RMA_Button_URL__c)}" /></apex:commandlink><br/><br/>
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                </table>
+                                                                            </apex:form>
+                                                                        </td>
+                                                                    </tr>
+                                                                </table>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                    <table width="612" cellpadding="0" cellspacing="0">
+                                                        <tr>
+                                                            <td align="left">
+                                                                <table width="590">
+                                                                    <tr>
+                                                                        <td>
+                                                                            <apex:outputText escape="false" value="{!rrs.CloudConversion__Return_Instructions__c}"/>
+                                                                            <br/>
+                                                                            <br /><br/>
+                                                                            <apex:image id="orangeRule" value="{!$Resource.CloudConversion__OrangeRule}" width="600" height="7"/><br /><br />
+                                                                            <apex:outputText escape="false" value="{!rrs.CloudConversion__Policies__c}"/>
+                                                                        </td>
+                                                                    </tr>
+                                                                </table>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</apex:page>

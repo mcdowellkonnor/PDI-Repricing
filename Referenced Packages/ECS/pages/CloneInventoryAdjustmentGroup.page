@@ -1,0 +1,3 @@
+<apex:page standardController="ECS__Inventory_Adjustment_Group__c">
+	<c:ManageInventoryAdjustments />
+</apex:page>

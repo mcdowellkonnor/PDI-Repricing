@@ -1,0 +1,5 @@
+<apex:page showHeader="False" standardController="Case">
+	<apex:form >
+		<apex:inputTextarea id="html" richText="True" value="{!case.Description}" disabled="True" cols="50" rows="100"/>
+	</apex:form>
+</apex:page>

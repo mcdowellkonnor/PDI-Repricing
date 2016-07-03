@@ -1,0 +1,46 @@
+<apex:page standardController="eCommazon__Amazon_Setting__c" extensions="eCommazon.AmazonOrdersController">
+
+  <apex:sectionHeader title="Get Amazon Orders for {!settingName}"/>  
+      
+   <apex:pageMessages />
+   <apex:form id="theForm">
+     <center>
+     <apex:pageBlock id="pageBlock">
+      <apex:pageBlockButtons >
+        <apex:commandButton action="{!getOrders}" value="Get Orders"/> 
+        <apex:commandButton action="{!cancel}" value="Cancel"/> 
+      </apex:pageBlockButtons>
+      <apex:outputPanel id="outputPanelSelectBoxes">
+      <table border="0" cellpadding="0" cellspacing="0" width="90%">
+          <tr>
+	         <td nowrap="true"> 
+			        <apex:pageBlockSection id="pgsRow1" columns="1">
+			            <apex:pageBlockSectionItem id="pgsiOrderNumber">
+			                <apex:outputLabel value="Order Numbers" for="orderNum"/>
+					        <apex:inputTextarea id="orderNum" value="{!orderNumbers}" cols="100" rows="10"/>
+			            </apex:pageBlockSectionItem>
+			        </apex:pageBlockSection>
+			        <apex:pageBlockSection id="pgsRow3" columns="2">
+			            <apex:pageBlockSectionItem >
+			              <apex:outputLabel value="Updated since" for="startDay"/> 
+			              <apex:inputText id="startDay" value="{!startDay}"/>
+			            </apex:pageBlockSectionItem> 
+			            <apex:pageBlockSectionItem >
+			              <apex:outputLabel value="End Day" for="endDay"/>            
+			              <apex:inputText id="endDay" value="{!endDay}"/>
+			            </apex:pageBlockSectionItem>
+			        </apex:pageBlockSection>
+			        <apex:pageBlockSection id="pgsRow4" columns="1">
+			        	<apex:pageBlockSectionItem >
+			            	<apex:outputText value="Format the dates as yyyy-MM-dd HH:mm:ss" />
+			            </apex:pageBlockSectionItem>
+			        </apex:pageBlockSection>
+	         </td>
+	        </tr>
+	        </table>
+	      </apex:outputPanel>
+    </apex:pageBlock>
+    </center>
+   </apex:form>
+
+</apex:page>

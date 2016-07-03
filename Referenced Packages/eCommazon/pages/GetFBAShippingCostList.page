@@ -1,0 +1,3 @@
+<apex:page Controller="eCommazon.GetFBAShippingCostController" action="{!UpdateShippingCostList}" sidebar="False" >
+
+</apex:page>

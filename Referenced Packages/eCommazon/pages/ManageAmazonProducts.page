@@ -1,0 +1,278 @@
+<apex:page doctype="html-5.0" standardStylesheets="false" showHeader="false" standardController="ECS__Product__c" extensions="eCommazon.ManageAmazonProductsController">
+
+	<apex:pageMessages />
+	
+	<apex:stylesheet value="https://www.sellerstoolbox.com/assets/styles/css/app.css"/>
+	
+	<apex:form id="details">
+	
+	<apex:outputPanel id="all">
+     <apex:pageBlock id="pageBlock">
+		<apex:pageBlockButtons location="top"> 
+		    <apex:commandButton action="{!getProductInfo}" value="Get Product Info"/>
+		    <apex:commandButton action="{!updateAmazon}" rendered="{!displayCreateProduct}" value="Update Product Data"/>
+		    <apex:commandButton action="{!updateQty}" rendered="{!displayCreateProduct}" value="Update Quantity"/>
+		    <apex:commandButton action="{!updatePrice}" rendered="{!displayCreateProduct}" value="Update Price"/> 
+		    <apex:commandButton action="{!updateImages}" rendered="{!displayCreateProduct}" value="Update Images"/> 
+		    <apex:commandButton action="{!getFeedInfo}" rendered="{!feedId!=null}" value="Get Feed Info"/>
+		</apex:pageBlockButtons>
+
+		
+
+		<apex:outputPanel id="searchPanel">
+	        ASIN / ISBN / EAN / UPC / GTIN: <apex:inputText id="identifier" value="{!identifier}"/> 
+		</apex:outputPanel>
+		
+		<apex:outputText rendered="{!product!=null}" value="SKU: {!product.ECS__External_Product_ID__c}"/><br/><br/>
+		
+		<apex:outputText rendered="{!product!=null}" value="Title: {!product.ECS__Title__c}"/> 
+		
+	</apex:pageBlock>
+
+		<apex:outputPanel id="detailPanel">
+			<div class="large-6 columns">
+				<div class="row collapse">
+					<div class="large-12 columns">
+						<div class="row collapse">
+							<div class="large-3 small-3 columns">
+								<a href="{!mp.imageURL}" rel="prettyPhoto"><img src="{!mp.imageURL}" border="0"/></a>
+							</div>
+							<div class="large-9 small-9 columns">
+								<h5>{!mp.asin}</h5>
+								<a href="http://www.amazon.com/dp/{!mp.asin}" target="_blank">{!mp.title}</a><br />
+								<table class="responsive" border="1" cellspacing="0" cellpadding="4">
+									<tbody>
+										<tr>
+											<th class="has-tip tip-top" title="Item's sales rank in group<br/>Ranking by percent">Sales<br/>Rank</th>
+											<th class="has-tip tip-top" title="Number of sellers on Amazon">Sellers</th>
+											<th class="has-tip tip-top" title="Item's weight<br/>(Shipping weight)">Weight<br/>(Ship)</th>
+											<th class="has-tip tip-top" title="Item's Classification<br/><i>Shipping Credit</i>">Category<br/><i>$ Credit</i></th>
+										</tr>
+										<tr>
+											<td align="center" ><span data-options="disable-for-touch:true" class="has-tip" title="41,610 : lawn_and_garden<br/>159,306 : home_garden<br/>73 : 3742111">41,610</span><br/><span class="bold neversold" style="font-size:120%;">--</span>
+											</td>
+											<td>10 new<br/>1 used</td>
+											<td>1.46 lbs<br/>(2.00 lbs)</td>
+											<td>Lawn_and_garden<br/><i>$5.99</i></td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row collapse">
+					<div class="large-12 columns">
+						<br/>
+						<a href="http://www.camelcamelcamel.com/products?sq={!mp.asin}" target="camel" title="CamelCamelCamel" class="button primary small"><i class="icon-camel"></i></a>
+						<a href="http://www.bookscouter.com/prices.php?isbn={!mp.asin}" target="bookscouter" title="Book Scouter" class="button primary small"><i class="icon-books"></i></a>
+						<a href="http://www.amazon.com/dp/{!mp.asin}" target="amazon" title="Amazon" class="button primary small"><i class="icon-amazon"></i></a>
+						<a href="http://www.ebay.com/sch/i.html?_nkw=Rib+Rack&LH_Complete=1&LH_Sold=1&rt=nc" target="ebay" title="Ebay" class="button primary small"><i class="icon-ebay"></i></a>
+						<a href="http://www.pricegrabber.com/search_request.php?form_keyword=Rib+Rack" target="pricegrabber" title="Price Grabber" class="button primary small"><i class="icon-tag"></i></a>
+						<a href="http://www.rakuten.com/sr/searchresults.aspx?qu=Rib+Rack" target="rakuten" title="Rakuten" class="button primary small"><i class="icon-rakuten"></i></a>
+						<a href="http://www.newegg.com/Product/ProductList.aspx?Submit=ENE&DEPA=0&Order=BESTMATCH&Description=Rib+Rack&N=-1&isNodeId=1" target="newegg" title="Newegg" class="button primary small"><i class="icon-newegg"></i></a>
+						<a href="https://www.google.com/search?num=20&newwindow=1&hl=en&tbm=shop&q=Rib+Rack&N=-1&isNodeId=1" target="google" title="Google Shopping" class="button primary small"><i class="icon-googleshopping"></i></a>
+					</div>
+				</div>
+			</div>
+			<div class="large-6 columns">
+				<table class="responsive" border="1" cellspacing="0" cellpadding="4">
+					<tr class="header">
+						<th scope="col" class="has-tip tip-top" title="The lowest price at this condition">Pricing</th>
+						<th scope="col" class="has-tip tip-top" title="This is the price that Amazon is selling the product" alt="This is the price that Amazon is selling the product">AZ</th>
+						<th scope="col" class="has-tip tip-top"
+			                title="<span class='orange'>From Amazon - New:</span> Just like it sounds. A brand-new, unused, unopened item in its original packaging, with all original packaging materials included. Original protective wrapping, if any, is intact. Original manufacturer's warranty, if any, still applies, with warranty details included in the listing comments." alt="From Amazon - New: Just like it sounds. A brand-new, unused, unopened item in its original packaging, with all original packaging materials included. Original protective wrapping, if any, is intact. Original manufacturer's warranty, if any, still applies, with warranty details included in the listing comments.">N</th>
+						<th scope="col" class="has-tip tip-top"
+			                title="<span class='orange'>From Amazon - Like New:</span> An apparently untouched item in perfect condition. Original protective wrapping may be missing, but the original packaging is intact and pristine. There are absolutely no signs of wear on the item or its packaging. Instructions are included. Item is suitable for presenting as a gift." alt="From Amazon - Like New: An apparently untouched item in perfect condition. Original protective wrapping may be missing, but the original packaging is intact and pristine. There are absolutely no signs of wear on the item or its packaging. Instructions are included. Item is suitable for presenting as a gift.">LN</th>
+						<th scope="col" class="has-tip tip-top"
+			                title="<span class='orange'>From Amazon - Very Good:</span> A well-cared-for item that has seen limited use but remains in great condition. The item is complete, unmarked, and undamaged, but may show some limited signs of wear. Item works perfectly." alt="From Amazon - Very Good: A well-cared-for item that has seen limited use but remains in great condition. The item is complete, unmarked, and undamaged, but may show some limited signs of wear. Item works perfectly.">VG</th>
+						<th scope="col" class="has-tip tip-top"
+			                title="<span class='orange'>From Amazon - Good:</span> Use only if noted in the Category-Specific Condition Guidelines. The item shows wear from consistent use, but it remains in good condition and works perfectly. It may be marked, have identifying markings on it, or show other signs of previous use." alt="From Amazon - Good: Use only if noted in the Category-Specific Condition Guidelines. The item shows wear from consistent use, but it remains in good condition and works perfectly. It may be marked, have identifying markings on it, or show other signs of previous use.">G</th>
+						<th scope="col" class="has-tip tip-top"
+			                title="<span class='orange'>From Amazon - Acceptable:</span> Use only if noted in the Category-Specific Condition Guidelines. The item is fairly worn but continues to work perfectly. Signs of wear can include aesthetic issues such as scratches, dents, and worn corners. The item may have identifying markings on it or show other signs of previous use." alt="From Amazon - Acceptable: Use only if noted in the Category-Specific Condition Guidelines. The item is fairly worn but continues to work perfectly. Signs of wear can include aesthetic issues such as scratches, dents, and worn corners. The item may have identifying markings on it or show other signs of previous use.">A</th>
+						<th scope="col"  class="has-tip tip-top" title="Lowest price across all of the columns"
+			                alt="Lowest price across all of the columns">LOW</th>
+					</tr>
+					<tr class="fba">
+						<td>FBA</td>
+						<td>-</td>
+						<td>17.99</td>
+						<td>-</td>
+						<td>-</td>
+						<td>-</td>
+						<td>-</td>
+						<td>17.99</td>
+					</tr>
+					<tr class="add">
+						<td>Other Merchants</td>
+						<td>-</td>
+						<td>17.99</td>
+						<td>-</td>
+						<td>-</td>
+						<td>-</td>
+						<td>-</td>
+						<td>17.99</td>
+					</tr>
+					<tr class="addPrice">
+						<td> Your Price</td>
+						<td>-</td>
+						<td>17.99</td>
+						<td>-</td>
+						<td>-</td>
+						<td>-</td>
+						<td>-</td>
+						<td>17.99</td>
+					</tr>
+					<tr class="sub">
+						<td>- Fees</td>
+						<td>3.48</td>
+						<td>6.18</td>
+						<td>-</td>
+						<td>-</td>
+						<td>-</td>
+						<td>-</td>
+						<td>6.18</td>
+					</tr>
+					<tr class="total">
+						<td>= Net</td>
+						<td>-</td>
+						<td>11.81</td>
+						<td>-</td>
+						<td>-</td>
+						<td>-</td>
+						<td>-</td>
+						<td>11.81</td>
+					</tr>
+				</table>
+			</div>
+			<div class="row">
+				<div class="large-6 columns">
+					<table class="responsive" border="1" cellspacing="0" cellpadding="4">
+						<tr>
+							<th class="header has-tip tip-left" title="Number of<br/>product onhand">On Hand</th>
+							<td>9</td>
+						</tr>
+						<tr>
+							<th class="header has-tip tip-left" title="Number of product<br/>heading to Amazon">Inbound</th>
+							<td>0</td>
+						</tr>
+						<tr>
+							<th class="header has-tip tip-left" title="Items damaged in some<br/>way that cannot be sold">Unsellable</th>
+							<td>0</td>
+						</tr>
+						<tr>
+							<th class="header has-tip tip-left" title="Items sold, but not yet paid,<br/>or items being moved">Reserved</th>
+							<td>0</td>
+						</tr>
+						<tr>
+							<th class="header has-tip tip-left" title="Merchant SKU">Merchant Sku</th>
+							<td>PARAS-MAN-V9-FBA</td>
+						</tr>
+						<tr>
+							<th class="header has-tip tip-left" title="Current selling price">Current Price</th>
+							<td id="PARAS-MAN-V9-FBA" class="editable_price" title="Click to edit"
+			                    >19.50</td>
+						</tr>
+						<tr>
+							<th class="header has-tip tip-left" title="Current cost">Cost</th>
+							<td id="PARAS-MAN-V9-FBA" class="editable_cost" title="Click to edit">10.17</td>
+						</tr>
+						<tr>
+							<th class="header has-tip tip-left" title="Number sold">Total Sold</th>
+							<td>15</td>
+						</tr>
+						<tr>
+							<th class="header has-tip tip-left" title="Date of last sale">Last Sale</th>
+							<td>2014-05-03 14:07:14.0</td>
+						</tr>
+						<tr>
+							<th class="header has-tip tip-left" title="Price of last sale">Last Price</th>
+							<td>$20.59</td>
+						</tr>
+						<tr>
+							<th class="header" style="text-align:right" colspan="2">Sold / Returned / $ Average</th>
+						</tr>
+						<tr>
+							<th>30 days</th>
+							<td>1
+								/ 0
+								/ $20.59
+							</td>
+						</tr>
+						<tr>
+							<th>90 days</th>
+							<td>1
+								/ 0
+								/ $20.59
+							</td>
+						</tr>
+					</table>
+				</div>
+				<div class="large-6 columns">
+					<table class="info orange-table" border="1" cellspacing="0" cellpadding="4">
+						<tr class="header">
+							<th scope="col" class="has-tip tip-top" title="Condition"></th>
+							<th scope="col" class="has-tip tip-top" title="Lowest price at this condition">Price</th>
+							<th scope="col" class="has-tip tip-top" title="Lowest seller at this condition">Seller Name</th>
+							<th scope="col" class="has-tip tip-top" title="Feedback amount">FB</th>
+							<th scope="col" class="has-tip tip-top" title="Feedback rating">%</th>
+						</tr>
+						<tr>
+							<td>AZ</td>
+							<td>-</td>
+							<td>Amazon.com</td>
+							<td>-</td>
+							<td>-</td>
+						</tr>
+						<tr>
+							<td>FBA</td>
+							<td>17.99</td>
+							<td nowrap="true"></td>
+							<td>36,271</td>
+							<td>100</td>
+						</tr>
+						<tr>
+							<td>N</td>
+							<td>17.99</td>
+							<td nowrap="true"></td>
+							<td>36,271</td>
+							<td>100</td>
+						</tr>
+						<tr>
+							<td>LN</td>
+							<td>-</td>
+							<td nowrap="true">-</td>
+							<td>-</td>
+							<td>-</td>
+						</tr>
+						<tr>
+							<td>VG</td>
+							<td>-</td>
+							<td nowrap="true">-</td>
+							<td>-</td>
+							<td>-</td>
+						</tr>
+						<tr>
+							<td>G</td>
+							<td>-</td>
+							<td nowrap="true">-</td>
+							<td>-</td>
+							<td>-</td>
+						</tr>
+						<tr>
+							<td>A</td>
+							<td>-</td>
+							<td nowrap="true">-</td>
+							<td>-</td>
+							<td>-</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+
+		</apex:outputPanel>
+
+	</apex:outputPanel>
+	
+	</apex:form>
+</apex:page>

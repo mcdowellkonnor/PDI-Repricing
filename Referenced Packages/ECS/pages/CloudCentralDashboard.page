@@ -1,0 +1,42 @@
+<apex:page controller="ECS.CloudCentralController" sidebar="false">
+    
+	<div class="cc slds">
+	
+		<!-- SPINNER -->
+	    <!-- <div class="spinner--overlay" style="display:none">
+	        <div class="slds-modal slds-fade-in-open" aria-hidden="false" role="dialog">
+	            
+	                <div class="slds-spinner_container">
+	                    <div class="slds-spinner--inverse slds-spinner slds-spinner--medium" aria-hidden="false" role="alert">
+	                        <div class="slds-spinner__dot-a"></div>
+	                        <div class="slds-spinner__dot-b"></div>
+	                    </div>
+	                </div>
+	            
+	        </div>
+	        <div class="slds-backdrop slds-backdrop--open"></div>
+	    </div> -->
+
+		<!-- Nav tabs -->
+		<ul class="nav nav-tabs" role="tablist" id="cctickets">
+			<li role="presentation" class="active">
+				<a href="#support-web" aria-controls="home" role="tab" data-toggle="tab" id="supportportalhome">Support Portal</a>
+			</li>
+			<li role="presentation">
+				<a href="#tickets" aria-controls="profile" role="tab" data-toggle="tab" id="ticketshome">Manage Support Tickets</a>
+			</li>
+		</ul>
+		
+		<!-- Tab panes -->
+		<div class="tab-content">
+			<div role="tabpanel" class="tab-pane active" id="support-web">
+		  		<apex:iFrame src="https://cloudconversion.secure.force.com/CloudConversion__SupportPortal2" scrolling="true" width="100%" height="3000"/>
+		  	</div>
+		  	<div role="tabpanel" class="tab-pane" id="tickets">
+		  		<c:SupportPortal apiTokenStr="{!apiToken}" apiEndpointStr="{!apiEndpoint}" loadJsStr="false" loadCssStr="false"/>
+		  	</div>
+		</div>
+
+	</div>
+    
+</apex:page>

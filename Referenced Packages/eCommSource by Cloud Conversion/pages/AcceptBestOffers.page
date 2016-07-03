@@ -1,0 +1,5 @@
+<apex:page controller="CloudConversion.ManageBestOffersController" action="{!accept}">
+
+	<apex:pageMessages />
+
+</apex:page>

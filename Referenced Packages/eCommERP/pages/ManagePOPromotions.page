@@ -1,0 +1,78 @@
+<apex:page standardController="serp__Purchase_Order__c"
+	extensions="serp.ManagePOPromotionsController">
+
+	<apex:pageMessages />
+
+	<apex:form id="managePromotionDetails">
+
+		<apex:pageBlock id="pageBlock">
+			<apex:pageBlockButtons location="bottom">
+				<apex:commandButton action="{!createPromos}"
+					value="Create New Promo Codes" />
+				<apex:commandButton action="{!cancel}" value="Cancel" />
+			</apex:pageBlockButtons>
+
+			<apex:pageBlockSection id="details" columns="2">
+				<apex:pageBlockSectionItem id="po">
+					<apex:outputLabel value="Purchase Order" for="po" />
+					<apex:inputField id="po" value="{!promo.serp__Purchase_Order__c}" />
+				</apex:pageBlockSectionItem>
+				<apex:pageBlockSectionItem id="numberOfPromos">
+					<apex:outputLabel value="# of Promo Codes" for="numberOfPromos" />
+					<apex:inputText id="numberOfPromos" value="{!numberOfPromos}"
+						size="6" />
+				</apex:pageBlockSectionItem>
+				<apex:pageBlockSectionItem id="textToPrepend">
+					<apex:outputLabel value="Text to Prepend" for="textToPrepend" />
+					<apex:inputText id="prepend" value="{!prepend}" size="6" />
+				</apex:pageBlockSectionItem>
+				<apex:pageBlockSectionItem id="textToAppend">
+					<apex:outputLabel value="Text to Append" for="textToAppend" />
+					<apex:inputText id="append" value="{!append}" size="6" />
+				</apex:pageBlockSectionItem>
+				<!--<apex:pageBlockSectionItem id="amount">
+		        <apex:outputLabel value="Amount" for="amount"/>
+				<apex:inputField id="numberOfPromos" value="{!promo.Amount__c}"/>			
+			</apex:pageBlockSectionItem>
+        	<apex:pageBlockSectionItem id="expire">
+		        <apex:outputLabel value="Expiration Date" for="expire"/>
+				<apex:inputField id="expire" value="{!promo.Expire_Date__c}"/>			
+			</apex:pageBlockSectionItem>-->
+
+
+				<!-- <apex:pageBlockSectionItem id="product">
+		        <apex:outputLabel value="Product" for="product"/>
+				<apex:inputField id="product" value="{!promo.Product__c}"/>			
+			</apex:pageBlockSectionItem>
+							
+			<apex:selectList value="{!orderSettingId}" size="1">
+				<apex:selectOptions value="{!orderSettingOptions}" />
+				<apex:actionSupport event="onchange" action="{!refreshOrderSetting}" status="formActionStatus" rerender="totals-panel, pageMessages, shipping-panel, price-book-panel" />
+			</apex:selectList>-->
+
+			</apex:pageBlockSection>
+
+		</apex:pageBlock>
+
+		<apex:pageBlock id="pageBlock2">
+			<apex:pageBlockButtons location="bottom">
+				<apex:commandButton action="{!upload}"
+					value="Upload Promotion Codes" />
+				<apex:commandButton action="{!cancel}" value="Cancel" />
+			</apex:pageBlockButtons>
+
+			<apex:pageBlockSection id="details2" columns="2">
+
+				<apex:pageBlockSectionItem id="serialNumberAttachments">
+					<apex:outputLabel value="Select Attachment:" for="attachment" />
+					<apex:inputFile id="attachment" value="{!attachmentBody}"
+						filename="{!attachmentName}" />
+				</apex:pageBlockSectionItem>
+
+			</apex:pageBlockSection>
+
+		</apex:pageBlock>
+
+	</apex:form>
+
+</apex:page>

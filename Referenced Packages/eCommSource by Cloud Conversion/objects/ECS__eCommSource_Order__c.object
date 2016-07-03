@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <enableEnhancedLookup>true</enableEnhancedLookup>
+    <fields>
+        <fullName>Shipworks_Downloaded__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Shipworks Downloaded</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>eBay_Order_Number__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>eBay Order Number</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <webLinks>
+        <fullName>Cancel_Txn</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <height>400</height>
+        <linkType>page</linkType>
+        <masterLabel>Cancel Txn</masterLabel>
+        <openType>sidebar</openType>
+        <page>CancelTransaction</page>
+        <protected>false</protected>
+    </webLinks>
+    <webLinks>
+        <fullName>Create_Case</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <height>600</height>
+        <linkType>page</linkType>
+        <masterLabel>Create Case</masterLabel>
+        <openType>sidebar</openType>
+        <page>CreateCaseFromOrder</page>
+        <protected>false</protected>
+    </webLinks>
+    <webLinks>
+        <fullName>Create_Cases</fullName>
+        <availability>online</availability>
+        <displayType>massActionButton</displayType>
+        <linkType>javascript</linkType>
+        <masterLabel>Create Cases</masterLabel>
+        <openType>onClickJavaScript</openType>
+        <protected>false</protected>
+        <requireRowSelection>true</requireRowSelection>
+        <url>var ids= {!GETRECORDIDS($ObjectType.ECS__eCommSource_Order__c)}; if(ids.length &lt; 1 ) alert(&apos;Please select at least one order.&apos;); else if(ids.length &gt; 10 ) alert(&apos;Please select only 10 orders.&apos;); else var mywin = window.open(&apos;/apex/CloudConversion__CreateCaseFromOrder?ids=&apos;+ids.join(&apos;,&apos;));</url>
+    </webLinks>
+    <webLinks>
+        <fullName>Email_Invoice</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <linkType>javascript</linkType>
+        <masterLabel>Email Invoice</masterLabel>
+        <openType>onClickJavaScript</openType>
+        <protected>false</protected>
+        <url>{!requireScript(&quot;/soap/ajax/20.0/connection.js&quot;)}
+{!requireScript(&quot;/soap/ajax/20.0/apex.js&quot;)}
+
+var qr = sforce.connection.query(&quot;select id from emailtemplate where DeveloperName=&apos;Email_Invoice&apos;&quot;);
+
+if(qr.size &lt; 1 ) {
+   alert(&apos;Please contact your SF Administrator to create the Email Invoice Template&apos;);
+} else {
+var templatedId = qr.getArray(&quot;records&quot;)[0].Id;
+location.replace(&apos;/email/author/emailauthor.jsp?retURL=/{!ECS__eCommSource_Order__c.Id}&amp;p3_lkid={!ECS__eCommSource_Order__c.Id}&amp;rtype=003&amp;p2_lkid={!ECS__eCommSource_Order__c.ECS__CustomerId__c}&amp;template_id=&apos; + templatedId + &apos;&amp;new_template=1&apos;);
+}</url>
+    </webLinks>
+    <webLinks>
+        <fullName>Email_Packing_Slip</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <linkType>javascript</linkType>
+        <masterLabel>Email Packing Slip</masterLabel>
+        <openType>onClickJavaScript</openType>
+        <protected>false</protected>
+        <url>{!requireScript(&quot;/soap/ajax/20.0/connection.js&quot;)}
+{!requireScript(&quot;/soap/ajax/20.0/apex.js&quot;)}
+
+var qr = sforce.connection.query(&quot;select id from emailtemplate where DeveloperName=&apos;Email_Packing_Slip&apos;&quot;);
+
+if(qr.size &lt; 1 ) {
+   alert(&apos;Please contact your SF Administrator to create the Email Invoice Template&apos;);
+} else {
+var templatedId = qr.getArray(&quot;records&quot;)[0].Id;
+location.replace(&apos;/email/author/emailauthor.jsp?retURL=/{!ECS__eCommSource_Order__c.Id}&amp;p3_lkid={!ECS__eCommSource_Order__c.Id}&amp;rtype=003&amp;p2_lkid={!ECS__eCommSource_Order__c.ECS__CustomerId__c}&amp;template_id=&apos; + templatedId + &apos;&amp;new_template=1&apos;);
+}</url>
+    </webLinks>
+    <webLinks>
+        <fullName>Issue_RMA</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <height>600</height>
+        <linkType>page</linkType>
+        <masterLabel>Issue RMA</masterLabel>
+        <openType>sidebar</openType>
+        <page>CreateRMAFromOrder</page>
+        <protected>false</protected>
+    </webLinks>
+    <webLinks>
+        <fullName>Refund</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <height>600</height>
+        <linkType>page</linkType>
+        <masterLabel>Refund</masterLabel>
+        <openType>noSidebar</openType>
+        <page>RefundOrder</page>
+        <protected>false</protected>
+    </webLinks>
+    <webLinks>
+        <fullName>Send_Invoice</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <height>600</height>
+        <linkType>page</linkType>
+        <masterLabel>Send Invoice</masterLabel>
+        <openType>sidebar</openType>
+        <page>SendInvoice</page>
+        <protected>false</protected>
+    </webLinks>
+    <webLinks>
+        <fullName>View_Invoice</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <hasMenubar>false</hasMenubar>
+        <hasScrollbars>true</hasScrollbars>
+        <hasToolbar>false</hasToolbar>
+        <height>700</height>
+        <isResizable>true</isResizable>
+        <linkType>page</linkType>
+        <masterLabel>View Invoice</masterLabel>
+        <openType>newWindow</openType>
+        <page>Invoice</page>
+        <position>none</position>
+        <protected>false</protected>
+        <showsLocation>false</showsLocation>
+        <showsStatus>false</showsStatus>
+        <width>700</width>
+    </webLinks>
+    <webLinks>
+        <fullName>View_Invoices</fullName>
+        <availability>online</availability>
+        <displayType>massActionButton</displayType>
+        <linkType>javascript</linkType>
+        <masterLabel>View Invoices</masterLabel>
+        <openType>onClickJavaScript</openType>
+        <protected>false</protected>
+        <requireRowSelection>true</requireRowSelection>
+        <url>var ids= {!GETRECORDIDS($ObjectType.ECS__eCommSource_Order__c)}; if(ids.length &lt; 1 ) alert(&apos;Please select at least one order.&apos;); else var mywin = window.open(&apos;/apex/CloudConversion__ViewInvoices?ids=&apos;+ids.join(&apos;,&apos;));</url>
+    </webLinks>
+    <webLinks>
+        <fullName>View_Packing_Slip</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <hasMenubar>false</hasMenubar>
+        <hasScrollbars>true</hasScrollbars>
+        <hasToolbar>false</hasToolbar>
+        <height>600</height>
+        <isResizable>true</isResizable>
+        <linkType>page</linkType>
+        <masterLabel>View Packing Slip</masterLabel>
+        <openType>newWindow</openType>
+        <page>PackingSlip</page>
+        <position>none</position>
+        <protected>false</protected>
+        <showsLocation>false</showsLocation>
+        <showsStatus>false</showsStatus>
+    </webLinks>
+    <webLinks>
+        <fullName>View_Packing_Slips</fullName>
+        <availability>online</availability>
+        <displayType>massActionButton</displayType>
+        <linkType>javascript</linkType>
+        <masterLabel>View Packing Slips</masterLabel>
+        <openType>onClickJavaScript</openType>
+        <protected>false</protected>
+        <requireRowSelection>true</requireRowSelection>
+        <url>var ids= {!GETRECORDIDS($ObjectType.ECS__eCommSource_Order__c)}; if(ids.length &lt; 1 ) alert(&apos;Please select at least one order.&apos;); else var mywin = window.open(&apos;/apex/CloudConversion__ViewPackingSlips?ids=&apos;+ids.join(&apos;,&apos;));</url>
+    </webLinks>
+</CustomObject>

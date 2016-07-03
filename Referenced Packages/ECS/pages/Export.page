@@ -1,0 +1,111 @@
+<apex:page controller="ECS.ExportController" sidebar="true" doctype="html-5.0">
+
+
+	<c:Analytics event="INFO" app="ECS" />
+	
+	<apex:pageMessages /> 
+	
+	<apex:form id="details">
+	
+	<apex:outputPanel id="all">
+     <apex:pageBlock id="pageBlock">
+		<apex:pageBlockButtons location="bottom">
+		    <apex:commandButton action="{!upload}" value="Upload & Export" rendered="{!!headersProcessed}"/>
+		    <!-- <apex:commandButton action="{!exportDetails}" value="Export" rendered="{!headersProcessed}"/>
+		    <apex:commandButton action="{!saveTemplate}" value="Update Template" rendered="{!headersProcessed && multipleTemplates}"/>
+		    <apex:commandButton action="{!saveNewTemplate}" value="Save New Template" rendered="{!headersProcessed}"/>
+		    <apex:commandButton action="{!renameTemplate}" value="Rename Template" rendered="{!headersProcessed}"/>
+		    <apex:commandButton action="{!deleteTemplate}" value="Delete Template" rendered="{!headersProcessed}"/> -->
+		</apex:pageBlockButtons>
+
+		<apex:outputPanel id="detailPanel">
+		
+	        <apex:pageBlockSection id="details" columns="1" rendered="{!!headersProcessed}">
+	        	<apex:pageBlockSectionItem id="Attachments">
+			       <apex:outputLabel value="Select File" for="attachment"/>
+			       <apex:inputFile id="attachment" value="{!attachmentBody}" filename="{!attachmentName}" contentType="{!mimeType}"/> 
+				</apex:pageBlockSectionItem> 
+			</apex:pageBlockSection>
+			
+			<apex:pageBlockSection id="downloadLink" columns="1" rendered="{!headersProcessed}">
+				<a href="/servlet/servlet.FileDownload?file={!attachment.id}" download="{!attachment.name}">{!attachment.name}</a>
+				<!--<apex:outputLink value="{!URLFOR($Action.Attachment.Download, attachment.id)}" target="_blank">{!attachment.name}</apex:outputLink>-->
+			</apex:pageBlockSection>
+			
+			<!-- <apex:pageBlockSection id="templates" columns="1" rendered="{!headersProcessed && multipleTemplates}">
+		        <apex:pageBlockSectionItem id="Templates">
+				    <apex:outputLabel value="Template Name" for="template"/>
+					<apex:selectList value="{!templateName}" size="1">
+						<apex:selectOptions value="{!templateOptions}" />
+						<apex:actionSupport event="onchange" action="{!upload}" status="formActionStatus" rerender="detail, detailPanel, pageMessages" />
+					</apex:selectList>
+				</apex:pageBlockSectionItem>
+			</apex:pageBlockSection>	
+			<apex:outputPanel id="detail">
+		        <apex:pageBlockSection id="details2" columns="5" rendered="{!headersProcessed}"> 
+		            <apex:outputText style="font-weight:bold;" value="Header"/>
+		            <apex:outputText style="font-weight:bold;" value="Sample Value"/>
+		            <apex:outputText style="font-weight:bold;" value="Object Type"/>
+		            <apex:outputText style="font-weight:bold;" value="Field to Map"/>
+		            <apex:outputText style="font-weight:bold;" value="String Value"/>
+		            <apex:repeat var="header" value="{!headers}">
+			        	<apex:outputText value="{!header.headerName}"/>
+					    <apex:outputText value="{!header.sampleVal}"/>
+						<apex:selectList value="{!header.objType}" size="1">
+							<apex:selectOptions value="{!typeOptions}" /> 
+							<apex:actionSupport event="onchange" status="formActionStatus" rerender="lineDetail, pageMessages" />
+						</apex:selectList>
+					    <apex:outputPanel id="lineDetail">
+							<apex:selectList value="{!header.headerMappedTo}" size="1" rendered="{!header.objType='Customer'}">
+								<apex:selectOptions value="{!customerFieldOptions}" />
+								<apex:actionSupport event="onchange" status="formActionStatus" rerender="lineDetail, pageMessages" />
+							</apex:selectList>
+							<apex:selectList value="{!header.headerMappedTo}" size="1" rendered="{!header.objType='Order'}">
+								<apex:selectOptions value="{!orderFieldOptions}" />
+								<apex:actionSupport event="onchange" status="formActionStatus" rerender="lineDetail, pageMessages" />
+							</apex:selectList>
+							<apex:selectList value="{!header.headerMappedTo}" size="1" rendered="{!header.objType='Order Lines'}">
+								<apex:selectOptions value="{!orderLineFieldOptions}" />
+								<apex:actionSupport event="onchange" status="formActionStatus" rerender="lineDetail, pageMessages" />
+							</apex:selectList>
+							<apex:selectList value="{!header.headerMappedTo}" size="1" rendered="{!header.objType='Products'}">
+								<apex:selectOptions value="{!productFieldOptions}" />
+								<apex:actionSupport event="onchange" status="formActionStatus" rerender="lineDetail, pageMessages" />
+							</apex:selectList>
+							<apex:selectList value="{!header.headerMappedTo}" size="1" rendered="{!header.objType='Shipping Info'}">
+								<apex:selectOptions value="{!shippingFieldOptions}" />
+								<apex:actionSupport event="onchange" status="formActionStatus" rerender="lineDetail, pageMessages" />
+							</apex:selectList>
+						</apex:outputPanel>
+						<apex:inputText value="{!header.overrideValue}"/> 
+					</apex:repeat>
+					<apex:actionRegion >
+						<div id="add-line-link" style="padding-left: 12px;">
+							<apex:commandLink action="{!addLine}" status="formActionStatus" rerender="detail, pageMessages">
+								<span style="font-size: 30px; display:block; float: left;">&#x2b;</span>
+								<span style="display:block; margin-left: 30px; padding-top: 10px;">Add Line</span>
+							</apex:commandLink>
+						</div>
+					</apex:actionRegion>
+				</apex:pageBlockSection>
+	
+		        <apex:pageBlockSection id="renderNewTemplateNameEntrySection" columns="1" rendered="{!renderNewTemplateNameEntry}">
+		        	<apex:pageBlockSectionItem id="templateTypeSection">
+				       <apex:outputLabel value="Template Type" for="templateType"/>
+					   <apex:selectList id="templateType" value="{!newTemplateType}" size="1">
+					   	   <apex:selectOptions value="{!templateTypeOptions}" />
+					   </apex:selectList>
+					</apex:pageBlockSectionItem>	        
+		        	<apex:pageBlockSectionItem id="renderNewTemplateNameEntry">
+				       <apex:outputLabel value="Template Name" for="templateName"/> 
+				       <apex:inputText id="templateName" value="{!newTemplateName}" />
+					</apex:pageBlockSectionItem>
+				</apex:pageBlockSection>
+			</apex:outputPanel> -->
+		</apex:outputPanel>
+	 </apex:pageBlock>
+	</apex:outputPanel>
+	
+	</apex:form>
+	
+</apex:page>

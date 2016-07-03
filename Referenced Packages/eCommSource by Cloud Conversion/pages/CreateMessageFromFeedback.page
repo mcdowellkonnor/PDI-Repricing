@@ -1,0 +1,5 @@
+<apex:page standardController="CloudConversion__Feedback__c" >
+   
+   <c:CreateCase feedbackId="{!CloudConversion__Feedback__c.Id}"/>
+    
+</apex:page>

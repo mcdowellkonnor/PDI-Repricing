@@ -1,0 +1,749 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Follow</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <deprecated>false</deprecated>
+    <enableActivities>true</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableEnhancedLookup>true</enableEnhancedLookup>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>true</enableHistory>
+    <enableReports>true</enableReports>
+    <enableSearch>true</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <fields>
+        <fullName>Account__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Account</label>
+        <referenceTo>Account</referenceTo>
+        <relationshipLabel>Shipping Details</relationshipLabel>
+        <relationshipName>Shipping_Details</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Actual_Tracking_URL__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Actual Tracking URL</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Url</type>
+    </fields>
+    <fields>
+        <fullName>Carrier__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Carrier</label>
+        <picklist>
+            <picklistValues>
+                <fullName>FedEx</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>UPS</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>USPS</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Class__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Class</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Express</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Ground</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Next Day</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Priority</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Priority International</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Second Day</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Converted_Shipping_Amount__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Converted Shipping Amount</label>
+        <precision>13</precision>
+        <required>false</required>
+        <scale>3</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Customer__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Customer</label>
+        <referenceTo>Contact</referenceTo>
+        <relationshipLabel>Shipping Details</relationshipLabel>
+        <relationshipName>Shipping_Details</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Delivery_Date_Time__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Delivery Date/Time</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>Editable_Shipping_Address__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Shipping Address</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>Estimated_Delivery__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Estimated Delivery</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>External_Id__c</fullName>
+        <caseSensitive>false</caseSensitive>
+        <deprecated>false</deprecated>
+        <externalId>true</externalId>
+        <label>External Id</label>
+        <length>50</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>true</unique>
+    </fields>
+    <fields>
+        <fullName>Lowest_Rate_Carrier__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Lowest Rate Carrier</label>
+        <picklist>
+            <picklistValues>
+                <fullName>USPS</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>FedEx</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>UPS</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>DHL</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Lowest_Rate_Class__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Lowest Rate Class</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Ground</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>2-Day</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Priority</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>First-Class</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Overnight</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Priority Mail International</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>First-Class Mail International</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Order_Origin__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <formula>Order__r.Origin__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Order Origin</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Order__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Order</label>
+        <referenceTo>eCommSource_Order__c</referenceTo>
+        <relationshipLabel>Shipping Details</relationshipLabel>
+        <relationshipName>Shipping_Details</relationshipName>
+        <relationshipOrder>0</relationshipOrder>
+        <reparentableMasterDetail>false</reparentableMasterDetail>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>MasterDetail</type>
+        <writeRequiresMasterRead>false</writeRequiresMasterRead>
+    </fields>
+    <fields>
+        <fullName>Origin__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Origin</label>
+        <picklist>
+            <picklistValues>
+                <fullName>API</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>ChannelAdvisor</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>ExactShip</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Manual</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Package_Type__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Package Type</label>
+        <length>60</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Quoted_Shipping_Rate__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Quoted Shipping Rate</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Reason_Delivery_Not_Completed__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Reason Delivery Not Completed</label>
+        <length>50</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Recommended_Action__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Recommended Action</label>
+        <length>40</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Ship_From_Address__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Ship From Address</label>
+        <referenceTo>Address__c</referenceTo>
+        <relationshipLabel>Shipping Details (Ship From Address)</relationshipLabel>
+        <relationshipName>Shipping_Details</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Shipment_Identification_Number__c</fullName>
+        <deprecated>false</deprecated>
+        <description>The identification number of the shipment.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>The identification number of the shipment.</inlineHelpText>
+        <label>Shipment Identification Number</label>
+        <length>50</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Shipment_Updated__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Shipment Updated</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>Shipped_Time__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Shipped Time</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>Shipping_Address__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Shipping Address</label>
+        <referenceTo>Address__c</referenceTo>
+        <relationshipLabel>Shipping Details</relationshipLabel>
+        <relationshipName>Shipping_Information</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Shipping_Amount__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>Amount customer paid for shipping</inlineHelpText>
+        <label>Shipping Amount</label>
+        <precision>7</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Shipping_Carrier__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Shipping Carrier</label>
+        <picklist>
+            <picklistValues>
+                <fullName>USPS</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>FedEx</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>UPS</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>DHL</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>US Postal Service</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Shipping_Class__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Shipping Class</label>
+        <length>200</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Shipping_Cost__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Shipping Cost</label>
+        <precision>10</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Shipping_Detail_External_Id__c</fullName>
+        <caseSensitive>false</caseSensitive>
+        <deprecated>false</deprecated>
+        <externalId>true</externalId>
+        <label>Shipping Detail External Id</label>
+        <length>60</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>true</unique>
+    </fields>
+    <fields>
+        <fullName>Shipping_Instructions__c</fullName>
+        <deprecated>false</deprecated>
+        <description>1000</description>
+        <externalId>false</externalId>
+        <label>Shipping Instructions</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>Shipping_Status_Icon__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <formula>CASE (  Status_of_Shipment__c, 
+&quot;Shipped&quot;, IMAGE(&quot;https://merchant.channeladvisor.com/images/am/icon/small/icon_shipped.gif&quot;,&quot;Shipped&quot;),
+&quot;Not Shipped&quot;, IMAGE(&quot;https://merchant.channeladvisor.com/images/am/icon/small/icon_shipped_gy.gif&quot;,&quot;Not Shipped&quot;),
+&quot;UnShipped&quot;, IMAGE(&quot;https://merchant.channeladvisor.com/images/am/icon/small/icon_shipped_gy.gif&quot;,&quot;Not Shipped&quot;),
+&quot;&quot;
+)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Shipping Status</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Signature_Required__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Signature Required?</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Signed_for_By__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Signed for By</label>
+        <length>100</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Status_of_Delivery__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Status of Delivery</label>
+        <picklist>
+            <picklistValues>
+                <fullName>In Transit</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Arrived</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Departed</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Out for Delivery</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Held for Pickup</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Delivered</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Status_of_Shipment__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Status of Shipment</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Not Shipped</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Partially Shipped</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Shipped</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Tracking_Number__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Tracking Number</label>
+        <length>50</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Tracking_URL__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <formula>HYPERLINK( 
+IF( ISPICKVAL(Shipping_Carrier__c, &quot;US Postal Service&quot;), &quot;https://tools.usps.com/go/TrackConfirmAction?qtc_tLabels1=&quot;, 
+IF( ISPICKVAL( Shipping_Carrier__c, &quot;UPS Mail Innovations&quot;), &quot;http://www.ups-mi.net/packageID/default.aspx#&quot;,
+IF( ISPICKVAL( Shipping_Carrier__c, &quot;DHL&quot;), &quot;http://webtrack.dhlglobalmail.com/?trackingnumber=&quot;, 
+IF( ISPICKVAL( Shipping_Carrier__c, &quot;Royal Mail&quot;), &quot;http://www.royalmail.com/portal/rm/track?trackNumber=&quot;, 
+IF( ISPICKVAL( Shipping_Carrier__c, &quot;Parcelforce&quot;), &quot;http://www.parcelforce.com/portal/pw/track?trackNumber=&quot;, 
+IF( ISPICKVAL( Shipping_Carrier__c, &quot;Australia Post&quot;), &quot;http://auspost.com.au/track&quot;, 
+IF( CONTAINS(LOWER(TEXT(Shipping_Carrier__c)), &quot;fedex&quot;), &quot;http://www.fedex.com/Tracking?action=track&amp;tracknumbers=&quot;,
+IF( CONTAINS(LOWER(TEXT(Shipping_Carrier__c)), &quot;ups&quot;), &quot;http://wwwapps.ups.com/WebTracking/processRequest?tracknum=&quot;, 
+IF( CONTAINS(LOWER(TEXT(Shipping_Carrier__c)), &quot;usps&quot;), &quot;https://tools.usps.com/go/TrackConfirmAction?qtc_tLabels1=&quot;, 
+IF(BEGINS(Tracking_Number__c, &quot;1Z&quot;), &quot;http://wwwapps.ups.com/WebTracking/processRequest?tracknum=&quot;, 
+IF(BEGINS(Tracking_Number__c, &quot;LN&quot;), &quot;https://tools.usps.com/go/TrackConfirmAction?qtc_tLabels1=&quot;, 
+IF(BEGINS(Tracking_Number__c, &quot;E&quot;), &quot;https://tools.usps.com/go/TrackConfirmAction?qtc_tLabels1=&quot;, 
+IF(BEGINS(Tracking_Number__c, &quot;CJ&quot;), &quot;https://tools.usps.com/go/TrackConfirmAction?qtc_tLabels1=&quot;, 
+IF(BEGINS(Tracking_Number__c, &quot;CQ&quot;), &quot;https://tools.usps.com/go/TrackConfirmAction?qtc_tLabels1=&quot;, 
+IF(LEN(Tracking_Number__c)==22, &quot;https://tools.usps.com/go/TrackConfirmAction?qtc_tLabels1=&quot;, 
+IF(BEGINS(Tracking_Number__c, &quot;84BF&quot;), &quot;http://hdnl.co.uk/UPI-Tracking-Details/?upi=&quot;, 
+IF(BEGINS(Tracking_Number__c, &quot;RJ&quot;), &quot;http://www.royalmail.com/portal/rm/track?trackNumber=&quot;, 
+IF(BEGINS(Tracking_Number__c, &quot;AH&quot;), &quot;http://www.parcelforce.com/portal/pw/track?trackNumber=&quot;,
+IF(BEGINS(Tracking_Number__c, &quot;DV&quot;), &quot;http://www.royalmail.com/portal/rm/track?trackNumber=&quot;, 
+IF(BEGINS(Tracking_Number__c, &quot;SZ&quot;), &quot;http://www.royalmail.com/portal/rm/track?trackNumber=&quot;, 
+IF(BEGINS(Tracking_Number__c, &quot;LY&quot;), &quot;http://www.royalmail.com/portal/rm/track?trackNumber=&quot;, 
+IF(BEGINS(Tracking_Number__c, &quot;JJ&quot;), &quot;http://www.packagetrackr.com/track/&quot;, 
+IF(BEGINS(Tracking_Number__c, &quot;PBHC&quot;), &quot;http://www.parcelforce.com/portal/pw/track?trackNumber=&quot;, 
+IF(BEGINS(Tracking_Number__c, &quot;HC&quot;), &quot;http://www.parcelforce.com/portal/pw/track?trackNumber=&quot;, 
+IF(BEGINS(Tracking_Number__c, &quot;EE&quot;), &quot;http://www.parcelforce.com/portal/pw/track?trackNumber=&quot;, 
+IF(BEGINS(Tracking_Number__c, &quot;BR&quot;), &quot;http://www.parcelforce.com/portal/pw/track?trackNumber=&quot;, 
+IF(LEN(Tracking_Number__c)==12, &quot;http://www.fedex.com/Tracking?action=track&amp;tracknumbers=&quot;, 
+IF(LEN(Tracking_Number__c)==10, &quot;http://www.dhl.com/publish/g0/en/eshipping/track.high.html%3FpageToInclude%3DRESULTS%26type%3Dtrackindex%26brand%3DDHL%26AWB%3D&quot;, 
+IF(LEN(Tracking_Number__c)==15,&quot;http://www.fedex.com/Tracking?action=track&amp;tracknumbers=&quot;, 
+IF(LEN(Tracking_Number__c)==20, &quot;http://www.interlinkexpress.com/tracking/trackingSearch.do?search.searchType=0&amp;search.parcelNumber=&quot;,&quot;http://wwwapps.ups.com/WebTracking/processRequest?tracknum=&quot;) 
+))))))))))))))))))))))))))))) 
++Tracking_Number__c, Tracking_Number__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Tracking URL</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Tracking_Uploaded__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Tracking Uploaded?</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Weight__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Weight</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <label>Shipping Detail</label>
+    <listViews>
+        <fullName>All</fullName>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+    </listViews>
+    <listViews>
+        <fullName>Shipping_Details_w_Tracking</fullName>
+        <columns>NAME</columns>
+        <columns>Shipping_Carrier__c</columns>
+        <columns>Shipping_Class__c</columns>
+        <columns>Status_of_Shipment__c</columns>
+        <columns>Tracking_Number__c</columns>
+        <columns>Tracking_URL__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Tracking_Number__c</field>
+            <operation>notEqual</operation>
+        </filters>
+        <label>Shipping Details w/ Tracking</label>
+    </listViews>
+    <nameField>
+        <label>Contact Name</label>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+    </nameField>
+    <pluralLabel>Shipping Details</pluralLabel>
+    <searchLayouts/>
+    <sharingModel>ControlledByParent</sharingModel>
+</CustomObject>

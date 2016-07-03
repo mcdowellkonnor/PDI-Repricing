@@ -1,0 +1,34 @@
+<apex:page standardController="serp__Purchase_Order__c"
+	extensions="serp.CreateOrderFromPOController">
+	<apex:pageMessages id="pageMessages" />
+
+	<apex:form >
+		<apex:pageBlock id="pageBlock">
+			<apex:pageBlockButtons location="bottom">
+				<apex:commandButton action="{!createOrder}" value="Create" />
+				<apex:commandButton action="{!cancel}" value="Cancel" />
+			</apex:pageBlockButtons>
+		
+		Customer <apex:inputField value="{!po.Master_Plan__r.serp__Primary_Contact__c}" required="true" />
+
+			<table cellspacing="3" cellpadding="3" border="0" width="90%">
+				<thead>
+					<tr>
+						<td><span><b>SKU</b></span></td>
+						<td><span><b>Title</b></span></td>
+						<td><span><b>Quantity</b></span></td>
+					</tr>
+				</thead>
+				<tbody>
+					<apex:repeat value="{!po.serp__Purchase_Order_Lines__r}" var="pol">
+						<tr>
+							<td><span><apex:outputField value="{!pol.serp__B2C_Product__r.Name}" /></span></td>
+							<td><span><apex:outputField value="{!pol.serp__B2C_Product__r.ECS__Title__c}" /></span></td>
+							<td><span><apex:outputField value="{!pol.serp__Reserved_Quantity_Available__c}" /></span></td>
+						</tr>
+					</apex:repeat>
+				</tbody>
+			</table>
+		</apex:pageBlock>
+	</apex:form>
+</apex:page>

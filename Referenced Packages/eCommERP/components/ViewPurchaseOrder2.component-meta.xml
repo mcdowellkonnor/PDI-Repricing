@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ApexComponent xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>28.0</apiVersion>
+    <description>Component for Viewing Purchase Order.</description>
+    <label>ViewPurchaseOrder2</label>
+    <packageVersions>
+        <majorNumber>10</majorNumber>
+        <minorNumber>12</minorNumber>
+        <namespace>CloudConversion</namespace>
+    </packageVersions>
+    <packageVersions>
+        <majorNumber>4</majorNumber>
+        <minorNumber>35</minorNumber>
+        <namespace>ECS</namespace>
+    </packageVersions>
+</ApexComponent>

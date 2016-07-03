@@ -1,0 +1,25 @@
+<apex:page id="page" extensions="CloudGento.CancelOrderController" standardController="ECS__eCommSource_Order__c"> 
+   <apex:pagemessages />
+   <apex:sectionHeader title="Cancel Order {!order.Name}"/>
+   <apex:form id="theForm">
+     <apex:pageBlock id="pageBlock"> 
+        <apex:pageBlockButtons >
+          <apex:commandButton action="{!cancelOrder}" value="Cancel Order"/> 
+          <apex:commandButton action="{!cancel}" value="Back"/> 
+        </apex:pageBlockButtons>
+        <apex:outputPanel id="outputPanelSelectBoxes">
+            <!-- Todo: allow customer to Refund the order here too and Issue Magento Credit Memo -->
+	        <apex:pageBlockSection id="pgsReasons" columns="1">
+	           <apex:pageBlockSectionItem id="pgsiReasons">
+	                <apex:outputLabel value="Cancel Reason" for="cancelReason"/>
+	                <apex:pageBlockSectionItem >
+	                  <apex:selectList size="1" id="cancelReason" value="{!cancelReason}">
+	                     <apex:selectOptions value="{!cancelOrderOptions}"/>
+	                  </apex:selectList>
+	                </apex:pageBlockSectionItem>
+	           </apex:pageBlockSectionItem>
+	        </apex:pageBlockSection>
+	   </apex:outputPanel>
+    </apex:pageBlock>
+  </apex:form>
+</apex:page>

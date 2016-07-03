@@ -1,0 +1,5 @@
+<apex:page controller="CloudConversion.ManageEBayReturnsController" action="{!approveReturns}">
+
+   <apex:pagemessages />
+
+</apex:page>

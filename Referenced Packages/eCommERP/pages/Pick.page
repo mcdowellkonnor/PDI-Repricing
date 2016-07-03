@@ -1,0 +1,97 @@
+<apex:page standardController="ECS__eCommSource_Order__c"
+	extensions="serp.PickController">
+
+	<script
+		src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+	<script type="text/javascript">
+$(document).ready(function () {
+  $("[data-sort=\"1\"]").first().focus();
+  $('.serialNumberInput').click(function (event) { $(this).select(); });
+  $('.serialNumberInput').keydown(function(event) { 
+    if (event.keyCode == 13) {
+        var currentField = $(this).data('sort');
+        $("[data-sort=\"" + (parseInt(currentField) + 1)+"\"]").first().focus();
+        return false;
+    }
+  });
+});
+
+function copySerialNumbers() {
+	$('.serialNumberInput').each(function() {
+		var inputNum = $(this).data('sort');
+		$(this).parent().find('[type=hidden]').val($(this).val());
+	});
+}
+
+</script>
+   
+   <ECS:Analytics event="INFO" app="ERP" />
+   
+	<apex:pageMessages id="pageMessages" />
+
+	<apex:form >
+		<apex:pageBlock id="pageBlock">
+			<apex:pageBlockButtons location="bottom">
+				<apex:commandButton action="{!save}" value="Save"
+					onClick="copySerialNumbers();" />
+				<apex:commandButton action="{!cancel}" value="Cancel" />
+			</apex:pageBlockButtons>
+			<center>
+
+				<!-- TODO: Accept & Validate Pre-Defined Serial Numbers, UPC (12 digit) & EAN (13 digit) Barcodes  -->
+
+				<apex:outputPanel id="table">
+					<table cellspacing="3" cellpadding="3" border="0" width="90%">
+						<thead>
+							<tr>
+								<td><span><b>Order #</b></span></td>
+								<td><span><b>SKU</b></span></td>
+								<td><span><b>Quantity</b></span></td>
+								<td><span><b>Location</b></span></td>
+								<apex:outputPanel rendered="{!serializeInventory}">
+									<td><span><b>Serial Number</b></span></td>
+								</apex:outputPanel>
+								<apex:outputPanel rendered="{!!serializeInventory}">
+									<td><span><b>UPC</b></span></td>
+								</apex:outputPanel>
+							</tr>
+						</thead>
+						<tbody>
+							<apex:outputPanel id="detail">
+								<apex:repeat value="{!allocationDetails}" var="detail">
+									<tr id="{!detail.name}">
+										<td><div>
+												<apex:outputText value="{!detail.orderNumber}" />
+											</div></td>
+										<td title="{!detail.sku}"><div>{!detail.sku}</div></td>
+										<td title="qty"><div>
+												<apex:outputText value="{!detail.quantity}" />
+											</div></td>
+										<td title="loc"><div>
+												<apex:outputText value="{!detail.location}" />
+											</div></td>
+										<apex:outputPanel rendered="{!serializeInventory}">
+											<td title="serialNumber"><div>
+													<apex:inputHidden value="{!detail.enteredSerialNumber}" />
+													<input data-sort="{!detail.srt}" type="text"
+														value="{!detail.enteredSerialNumber}"
+														class="serialNumberInput" size="20" />
+												</div></td>
+										</apex:outputPanel>
+										<apex:outputPanel rendered="{!!serializeInventory}">
+											<td title="upc"><div>
+													<apex:inputHidden value="{!detail.upc}" />
+													<input data-sort="{!detail.srt}" type="text"
+														value="{!detail.upc}" class="upcInput" size="20" />
+												</div></td>
+										</apex:outputPanel>
+									</tr>
+								</apex:repeat>
+							</apex:outputPanel>
+						</tbody>
+					</table>
+				</apex:outputPanel>
+			</center>
+		</apex:pageBlock>
+	</apex:form>
+</apex:page>

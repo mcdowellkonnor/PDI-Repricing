@@ -1,0 +1,6 @@
+<apex:page standardController="ECS__FTP_Setting__c" extensions="ECS.GetFtpFileListController" action="{!getFileList}">
+
+	<c:Analytics event="INFO" app="ECS" />
+	
+	<apex:pageMessages /> 
+</apex:page>

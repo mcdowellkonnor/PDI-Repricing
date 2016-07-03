@@ -1,0 +1,5 @@
+<apex:page controller="eCommazon.ManageAmazonResearchItemsController" action="{!create}">
+	
+	<apex:pageMessages /> 
+	
+</apex:page>

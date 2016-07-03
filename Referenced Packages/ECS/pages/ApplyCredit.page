@@ -1,0 +1,63 @@
+<apex:page standardController="ECS__eCommSource_Order__c" extensions="ECS.ApplyCreditController">
+
+
+	<c:Analytics event="INFO" app="ECS" />
+	
+	<div class="cc">
+	<apex:stylesheet value="{!URLFOR($Resource.ECS__bootstrap_cc)}" />
+	<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.9.0/themes/base/jquery-ui.css"></link> 
+		
+	<apex:pageMessages id="pageMessages" />
+	
+    <apex:sectionHeader title="Apply Credits to Order {!order.Name}"/>
+   
+	<apex:form >
+	<apex:outputPanel id="zero-balance-panel" rendered="{!renderNoBalanceDue}">
+		There is no balance due on this order.&nbsp;&nbsp;&nbsp;<apex:commandButton action="{!cancel}" value="Cancel" status="formActionStatus" rerender="pageMessages" />
+	</apex:outputPanel>	
+	<apex:outputPanel id="no-credits-panel" rendered="{!!renderProcessCredits && !renderNoBalanceDue}">
+		Sorry, unable to locate any customer credits!&nbsp;&nbsp;&nbsp;<apex:commandButton action="{!cancel}" value="Cancel" status="formActionStatus" rerender="pageMessages" />
+	</apex:outputPanel>	
+	<apex:outputPanel id="apply-credit-panel" rendered="{!renderProcessCredits && !renderNoBalanceDue}">
+		<apex:outputPanel >
+			<div>
+				<table>
+					<tr>
+						<td>
+							<apex:outputLabel style="width: 165px; float: left; margin-left: 35px;">Balance Due</apex:outputLabel>
+						</td>
+						<td>
+							<apex:outputField value="{!order.ECS__Balance_Due__c}" />
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<apex:outputLabel style="width: 165px; float: left; margin-left: 35px;">Available Credits</apex:outputLabel>
+						</td>
+						<td>
+							<apex:outputField value="{!customer.ECS__Total_Credits__c}"/>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<apex:outputLabel style="width: 165px; float: left; margin-left: 35px;">Credit to Apply</apex:outputLabel>
+						</td>
+						<td>
+							<apex:inputText value="{!creditToApply}" size="60" />
+						</td>
+					</tr>
+				</table>
+			</div>
+			<div style="border: 1px solid #DDD; margin-top: 15px; margin-bottom: 15px;"></div>
+		</apex:outputPanel>
+		<div style="clear: both; text-align: center; margin-top: 15px;">
+			<apex:commandButton style="text-align: center; clear: both;" styleClass="btn-primary" action="{!apply}" value="Apply Credit" status="formActionStatus" rerender="pageMessages" />
+			<apex:commandButton action="{!cancel}" value="Cancel" status="formActionStatus" rerender="pageMessages" />
+			<p>&nbsp;</p>
+		</div>
+	</apex:outputPanel>				
+	</apex:form>
+	
+	</div>
+
+</apex:page>

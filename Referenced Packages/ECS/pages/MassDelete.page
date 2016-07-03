@@ -1,0 +1,10 @@
+<apex:page controller="ECS.MassDeleteController">
+	<apex:pageMessages id="pageMessages" />
+	<apex:form >
+		Query: <apex:inputText value="{!query}" size="100"/><br/> 
+		<!-- Field: <apex:inputText value="{!fieldName}" size="50"/><br/>
+		Operator: <apex:inputText value="{!operator}" size="10"/><br/>
+		Date: <apex:inputField value="{!order.Order_Time__c}"/><br/>  -->
+		<apex:commandButton action="{!runDelete}" value="Delete"/>
+	</apex:form>
+</apex:page>

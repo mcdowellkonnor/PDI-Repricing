@@ -1,0 +1,3 @@
+<apex:page standardController="ECS__eCommSource_Order__c" extensions="eCommazon.SendFBAOrdersController" action="{!cancelOrder}">
+	<apex:pageMessages id="page-messages" />
+</apex:page>

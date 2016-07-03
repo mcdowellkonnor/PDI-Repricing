@@ -1,0 +1,6 @@
+<apex:page controller="ECS.AssignFulfillmentPartnersController" action="{!assign}">
+
+	<c:Analytics event="INFO" app="ECS" />
+	
+	<apex:pageMessages /> 
+</apex:page>

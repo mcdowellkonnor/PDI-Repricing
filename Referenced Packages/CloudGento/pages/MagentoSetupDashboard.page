@@ -1,0 +1,61 @@
+<apex:page >
+<!-- 
+	<h1 style="font-size: 30px; margin-top: 15px; margin-bottom: 20px;">Salesforce for Magento Setup Dashboard</h1>
+	<apex:outputPanel id="contentContainer">
+	<apex:pageMessages />
+	<apex:form >
+	<apex:pageBlock id="authenticateMagentoBlock">
+      <apex:pageBlockButtons location="bottom">
+        <apex:commandButton action="{!onboardMagento}" value="Authenticate & Save" status="formActionStatus" rerender="contentContainer"/>
+        <apex:commandButton action="{!cancel}" value="Cancel"/> 
+      </apex:pageBlockButtons>
+		<h1 style="font-size: 20px; padding-left: 10px">Authenticate with Magento</h1>
+		<apex:outputPanel id="authenticateMagentoStep" >
+				<apex:pageBlockSection columns="1">
+				    <apex:pageBlockSectionItem >
+						<apex:outputText >Website URL</apex:outputText>
+						<apex:inputText value="{!mageCreds.endpointUrl}" size="75"></apex:inputText>
+					</apex:pageBlockSectionItem>
+					<apex:pageBlockSectionItem >
+						<apex:outputText >Username</apex:outputText>
+						<apex:inputText value="{!mageCreds.username}" size="75"></apex:inputText>
+					</apex:pageBlockSectionItem>
+					<apex:pageBlockSectionItem >
+						<apex:outputText >Password</apex:outputText>
+						<apex:inputText value="{!mageCreds.password}" size="75"></apex:inputText>
+					</apex:pageBlockSectionItem>
+					
+					<apex:actionStatus id="formActionStatus">
+						<apex:facet name="start">
+							<apex:image value="{!URLFOR($Resource.CloudGento__SpinnerImage)}" alt="Working... this process may take up to 1 minute" style="height:17px;"/>
+							Working... this process may take up to 1 minute
+						</apex:facet>
+					</apex:actionStatus>
+					
+				</apex:pageBlockSection>
+			
+		</apex:outputPanel>
+	</apex:pageBlock>
+	</apex:form>
+
+	<apex:pageBlock id="emailServiceBlock">
+		<h1 style="font-size: 20px; padding-left: 10px">Setup Customer Service Email</h1>
+		<apex:outputPanel id="emailServiceStep" >
+				<apex:pageBlockSection columns="1">
+					<apex:outputText >
+						In order to use this product, you need to forward your e-commerce emails to a Salesforce email service.
+						The email address you should use is listed below. 
+						Instructions for many popular email programs can be found <a href="http://wiki.cloudconversion.com/ecommsource-setup/setting-up-email-forwarding">here.</a>
+						If you don't see an email listed below, please contact customer support.
+					</apex:outputText>
+				</apex:pageBlockSection>
+				<apex:outputPanel rendered="{!customerServiceEmail!=null}">
+					<apex:pageBlockSection columns="1">
+						<apex:outputText >{!customerServiceEmail}</apex:outputText> 
+					</apex:pageBlockSection>
+				</apex:outputPanel>
+		</apex:outputPanel>
+	</apex:pageBlock>
+	</apex:outputPanel>-->
+	
+</apex:page>

@@ -1,0 +1,13 @@
+<apex:page sidebar="false" action="{!init}" controller="serp.CreatePOController" >
+	<c:CreatePO topController="{!theController}" 
+	    displayLineDollarPromoName="true"
+		displayDollarPromoName="true" displayLinePercentPromoName="true" 
+		displayPercentPromoName="true" productReadOnlyName="false"
+		priceReadOnlyName="false" quantityReadOnlyName="false"
+		displaySupplierSearchName="true" displayLineShippingName="false"
+		displayOrderTypeName="true" displayPromoCodeName="false"
+		displayShippingOptionsName="true" displayAddressesName="true"
+		displayNotesName="true" displayPricebooksName="true"
+		displayRecurringOrderName="true" displayAddOrderLineName="true" 
+		displayOrderSettingsName="true" />
+</apex:page>

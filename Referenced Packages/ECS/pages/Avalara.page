@@ -1,0 +1,16 @@
+<apex:page standardController="ECS__Order_Setting__c" extensions="ECS.AvalaraController" showHeader="false" sidebar="false">
+
+	<c:Analytics event="INFO" app="ECS" />
+		
+	<apex:pageMessages id="page-messages"/>
+	
+	<apex:form >
+		<apex:pageBlock >
+			<apex:pageBlockSection >
+				<apex:pageBlockSectionItem >
+					<apex:commandButton value="Test Avalara Authorization" action="{!testAuth}" rerender="page-messages" />
+				</apex:pageBlockSectionItem>
+			</apex:pageBlockSection>
+		</apex:pageBlock>
+	</apex:form>
+</apex:page>

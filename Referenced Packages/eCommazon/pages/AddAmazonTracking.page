@@ -1,0 +1,40 @@
+<apex:page standardController="ECS__eCommSource_Order__c" extensions="eCommazon.AddAmazonTrackingController">
+
+  <apex:sectionHeader title="Add Amazon Tracking"/>  
+      
+   <apex:pageMessages />
+   
+   <apex:form id="theForm">
+     <center>
+     <apex:pageBlock id="pageBlock">
+      <apex:pageBlockButtons >
+        <apex:commandButton action="{!addTracking}" value="Add Tracking"/> 
+        <apex:commandButton action="{!cancel}" value="Cancel"/> 
+      </apex:pageBlockButtons>
+      <apex:outputPanel id="outputPanelSelectBoxes">
+      <table border="0" cellpadding="0" cellspacing="0" width="90%">
+          <tr>
+	         <td nowrap="true"> 
+			        <apex:pageBlockSection id="pgsRow1" columns="1">
+			            <apex:pageBlockSectionItem id="pgsiCarrier">
+			                <apex:outputLabel value="Carrier" for="Carrier"/>
+					        <apex:inputText id="Carrier" value="{!sd.ECS__Shipping_Carrier__c}"/>
+			            </apex:pageBlockSectionItem>
+			            <apex:pageBlockSectionItem id="pgsiClass">
+			                <apex:outputLabel value="class" for="class"/>
+					        <apex:inputText id="class" value="{!sd.ECS__Shipping_Class__c}"/>
+			            </apex:pageBlockSectionItem>
+			            <apex:pageBlockSectionItem id="pgsiTrackingNumber">
+			                <apex:outputLabel value="Tracking Number" for="tracking"/>
+					        <apex:inputText id="tracking" value="{!sd.ECS__Tracking_Number__c}"/>
+			            </apex:pageBlockSectionItem>
+			        </apex:pageBlockSection>
+	         </td>
+	        </tr>
+	        </table>
+	      </apex:outputPanel>
+    </apex:pageBlock>
+    </center>
+   </apex:form>
+
+</apex:page>

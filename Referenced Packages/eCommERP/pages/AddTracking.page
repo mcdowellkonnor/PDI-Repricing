@@ -1,0 +1,72 @@
+<apex:page standardController="serp__Purchase_Order__c" extensions="serp.ManageInvoicesController">
+
+	<ECS:Analytics event="INFO" app="ERP" />
+
+	<apex:pageMessages id="pageMessages" />
+
+	<apex:form >
+		<apex:pageBlock id="pageBlock">
+			<apex:pageBlockButtons location="top">
+				<apex:commandButton action="{!addTracking}" value="Add Tracking" />
+				<apex:commandButton action="{!cancel}" value="Cancel" />
+			</apex:pageBlockButtons>
+
+			<apex:outputPanel id="table">
+
+				<apex:repeat value="{!invoiceDetails}" var="inv">
+					<table cellspacing="3" cellpadding="3" border="0" width="90%">
+						<tr>
+							<td nowrap="true"><div>
+									<b>PO:</b> {!inv.po.Name}
+								</div></td>
+							<td><div>
+									<b>Payment Type:</b>
+									<apex:selectList size="1" value="{!inv.po.serp__Payment_Type__c}">
+										<apex:selectOptions value="{!paymentTypes}" />
+									</apex:selectList>
+								</div></td>
+							<td><div>
+									<b>Freight Charges:</b>
+									<apex:inputText size="7" value="{!inv.po.serp__Freight_Charges__c}" />
+								</div></td>
+							<td><div>
+									<b>Supplier Discount:</b>
+									<apex:inputText size="7" value="{!inv.po.serp__Supplier_Discount__c}" />
+								</div></td>
+							<td><div>
+									<b>Dropship Fee:</b>
+									<apex:inputText size="7" value="{!inv.po.serp__Dropship_Fee__c}" />
+								</div></td>
+						</tr>
+						<apex:outputPanel rendered="{!inv.po.serp__Order__c!=null}">
+							<tr>
+								<td></td>
+								<td><div>
+										<b>Tracking Number:</b>
+										<apex:inputText size="25" value="{!inv.trackingNumber}" />
+									</div></td>
+								<td><div>
+										<b>Ship Date:</b>
+										<apex:inputField value="{!inv.po.serp__Shipped_Date__c}" />
+									</div></td>
+								<td><div>
+										<b>Shipping Carrier:</b>
+										<apex:selectList size="1" value="{!inv.shippingCarrier}">
+											<apex:selectOptions value="{!shippingCarriers}" />
+										</apex:selectList>
+									</div></td>
+								<td><div>
+										<b>Shipping Class:</b>
+										<apex:inputText size="20" value="{!inv.shippingClass}" />
+										<!--  <apex:selectList size="1" value="{!inv.shippingClass}">
+								    <apex:selectOptions value="{!shippingClasses}"/> 
+							    </apex:selectList> -->
+									</div></td>
+							</tr>
+						</apex:outputPanel>
+					</table>
+				</apex:repeat>
+			</apex:outputPanel>
+		</apex:pageBlock>
+	</apex:form>
+</apex:page>

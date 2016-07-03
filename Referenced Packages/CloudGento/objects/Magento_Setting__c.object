@@ -1,0 +1,371 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Follow</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <deprecated>false</deprecated>
+    <enableActivities>true</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>true</enableHistory>
+    <enableReports>true</enableReports>
+    <enableSearch>true</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <fields>
+        <fullName>API_Endpoint__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Your Magento API endpoint URL.</description>
+        <externalId>false</externalId>
+        <label>API Endpoint</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Url</type>
+    </fields>
+    <fields>
+        <fullName>API_Key__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>API Key</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Account__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Account</label>
+        <referenceTo>Account</referenceTo>
+        <relationshipLabel>Magento Settings</relationshipLabel>
+        <relationshipName>Magento_Settings</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Created_Data_Only__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>Use the Magento created_at field instead of updated_at when pulling data from Magento.</inlineHelpText>
+        <label>Created Data Only</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Enabled__c</fullName>
+        <defaultValue>true</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Enabled</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Last_Pulled_Order_Num__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Last Pulled Order #</label>
+        <length>20</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Number_of_Batches__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Number of Batches</label>
+        <precision>4</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Order_Number_Sync__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Order Number Sync</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Order_Setting__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Order Setting</label>
+        <referenceTo>ECS__Order_Setting__c</referenceTo>
+        <relationshipLabel>Magento Settings</relationshipLabel>
+        <relationshipName>Magento_Settings</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Order_Sync_Offset__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>Minutes to go back when syncing orders.  Default is 12 and should always coincide with the scheduled jobs.</inlineHelpText>
+        <label>Order Sync Offset</label>
+        <precision>3</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Products_per_Batch__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Products per Batch</label>
+        <precision>3</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Sales_Channel__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Sales Channel</label>
+        <referenceTo>ECS__Sales_Channel__c</referenceTo>
+        <relationshipLabel>Magento Settings</relationshipLabel>
+        <relationshipName>Magento_Settings</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Unique_Identifier__c</fullName>
+        <caseSensitive>false</caseSensitive>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Unique Identifier</label>
+        <length>10</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>true</unique>
+    </fields>
+    <fields>
+        <fullName>Username__c</fullName>
+        <deprecated>false</deprecated>
+        <description>The Magento API username.</description>
+        <externalId>false</externalId>
+        <label>Username</label>
+        <length>100</length>
+        <required>true</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <label>Magento Setting</label>
+    <listViews>
+        <fullName>All</fullName>
+        <columns>NAME</columns>
+        <columns>Account__c</columns>
+        <columns>Username__c</columns>
+        <columns>API_Key__c</columns>
+        <columns>API_Endpoint__c</columns>
+        <columns>Enabled__c</columns>
+        <columns>LAST_UPDATE</columns>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+    </listViews>
+    <nameField>
+        <label>Magento Account Name</label>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+    </nameField>
+    <pluralLabel>Magento Settings</pluralLabel>
+    <searchLayouts/>
+    <sharingModel>ReadWrite</sharingModel>
+    <validationRules>
+        <fullName>Validate_Endpoint_URL</fullName>
+        <active>true</active>
+        <errorConditionFormula>AND(!BEGINS(API_Endpoint__c, &quot;http://&quot;),
+    !BEGINS(API_Endpoint__c, &quot;https://&quot;))</errorConditionFormula>
+        <errorDisplayField>API_Endpoint__c</errorDisplayField>
+        <errorMessage>Endpoint must start with http:// or https://</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Validate_Endpoint_URL_Ends_With_v2_soap</fullName>
+        <active>true</active>
+        <errorConditionFormula>!CONTAINS(RIGHT(API_Endpoint__c, 7), &quot;v2_soap&quot;)</errorConditionFormula>
+        <errorDisplayField>API_Endpoint__c</errorDisplayField>
+        <errorMessage>Endpoint must end with /api/v2_soap</errorMessage>
+    </validationRules>
+    <webLinks>
+        <fullName>Get_Attribute_Sets</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <height>600</height>
+        <linkType>page</linkType>
+        <masterLabel>Get Attribute Sets</masterLabel>
+        <openType>sidebar</openType>
+        <page>GetMagentoAttributeSets</page>
+        <protected>false</protected>
+    </webLinks>
+    <webLinks>
+        <fullName>Get_Catalog_Attributes</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <height>600</height>
+        <linkType>page</linkType>
+        <masterLabel>Get Catalog Attributes</masterLabel>
+        <openType>sidebar</openType>
+        <page>GetMagentoCategoryAttributes</page>
+        <protected>false</protected>
+    </webLinks>
+    <webLinks>
+        <fullName>Get_Categories</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <height>600</height>
+        <linkType>page</linkType>
+        <masterLabel>Get Categories</masterLabel>
+        <openType>sidebar</openType>
+        <page>GetMagentoCategories</page>
+        <protected>false</protected>
+    </webLinks>
+    <webLinks>
+        <fullName>Get_Customer_Groups</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <height>600</height>
+        <linkType>page</linkType>
+        <masterLabel>Get Customer Groups</masterLabel>
+        <openType>sidebar</openType>
+        <page>GetMagentoCustomerGroups</page>
+        <protected>false</protected>
+    </webLinks>
+    <webLinks>
+        <fullName>Get_Customers</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <height>600</height>
+        <linkType>page</linkType>
+        <masterLabel>Get Customers</masterLabel>
+        <openType>noSidebar</openType>
+        <page>GetMagentoCustomers</page>
+        <protected>false</protected>
+    </webLinks>
+    <webLinks>
+        <fullName>Get_Inventory</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <height>600</height>
+        <linkType>page</linkType>
+        <masterLabel>Get Inventory</masterLabel>
+        <openType>sidebar</openType>
+        <page>GetMagentoInventoryFromSetting</page>
+        <protected>false</protected>
+    </webLinks>
+    <webLinks>
+        <fullName>Get_Orders</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <height>600</height>
+        <linkType>page</linkType>
+        <masterLabel>Get Orders</masterLabel>
+        <openType>sidebar</openType>
+        <page>GetMagentoOrdersFromSetting</page>
+        <protected>false</protected>
+    </webLinks>
+    <webLinks>
+        <fullName>Get_Store_Info</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <height>600</height>
+        <linkType>page</linkType>
+        <masterLabel>Get Store Info</masterLabel>
+        <openType>sidebar</openType>
+        <page>GetMagentoStoreInfo</page>
+        <protected>false</protected>
+    </webLinks>
+    <webLinks>
+        <fullName>Update_Products_to_Magento</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <height>600</height>
+        <linkType>page</linkType>
+        <masterLabel>Update Products to Magento</masterLabel>
+        <openType>sidebar</openType>
+        <page>UpdateMagentoProductsFromSetting</page>
+        <protected>false</protected>
+    </webLinks>
+</CustomObject>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fields>
+        <fullName>Price_Decimal_Places__c</fullName>
+        <defaultValue>2</defaultValue>
+        <deprecated>false</deprecated>
+        <description>Number of Visible Decimal Places for Price fields.</description>
+        <externalId>false</externalId>
+        <fieldManageability>SubscriberControlled</fieldManageability>
+        <inlineHelpText>Number of Visible Decimal Places for Price fields.</inlineHelpText>
+        <label>Price Decimal Places</label>
+        <precision>4</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Quantity_Decimal_Places__c</fullName>
+        <defaultValue>0</defaultValue>
+        <deprecated>false</deprecated>
+        <description>Number of Visible Decimal Places for Quantity fields.</description>
+        <externalId>false</externalId>
+        <fieldManageability>SubscriberControlled</fieldManageability>
+        <inlineHelpText>Number of Visible Decimal Places for Quantity fields.</inlineHelpText>
+        <label>Quantity Decimal Places</label>
+        <precision>4</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <label>Cloud Conversion Setting</label>
+    <pluralLabel>Cloud Conversion Settings</pluralLabel>
+    <visibility>Public</visibility>
+</CustomObject>

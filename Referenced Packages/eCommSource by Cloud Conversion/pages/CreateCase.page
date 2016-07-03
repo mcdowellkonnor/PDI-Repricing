@@ -1,0 +1,3 @@
+<apex:page controller="CloudConversion.ProcessSitesController" action="{!createCase}" showHeader="false"> 
+
+</apex:page>

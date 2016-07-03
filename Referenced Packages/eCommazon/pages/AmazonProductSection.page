@@ -1,0 +1,357 @@
+<apex:page doctype="html-5.0" standardStylesheets="false" showHeader="false" sidebar="true" standardController="ECS__Product__c" extensions="eCommazon.AmazonProductSectionController" >
+    <apex:stylesheet value="https://www.sellerstoolbox.com/assets/styles/css/app.css"/>
+    <Script>
+      function myfunction()
+      {
+       callfunction();
+      }
+      
+      function myfunction2()
+      {
+       callfunction2();
+      }
+    
+        $(document).ready(function(){  
+           $(".list tr").click(function(){
+               $(this).find("a").click();           
+           });        
+        });
+        
+       
+   </Script>
+   <style>
+         .outer {
+            width: 60%;
+            height:315px;
+            color: navy;
+            background-color: #403C3C;
+            border: 1px solid darkblue;
+            margin-left: 1cm;
+         }
+         .yellowRow{
+             background-color:#FF6;
+         }
+         .brownRow{
+             background-color:#EA6;
+         }
+         .greenRow{
+             background-color:#5D6;
+         }
+    </style> 
+     
+   
+       
+    <apex:form id="details">
+        <apex:actionFunction name="callfunction" action="{!ListMatchingProducts}" />
+        <apex:actionFunction name="callfunction2" action="{!callfunction}" reRender="panel" />
+        <apex:outputPanel id="all">
+        <apex:pageBlock id="pageBlock">
+        <apex:outputPanel id="searchPanel">
+        <br/><apex:outputPanel style="margin-left: 1cm;" id="panel"> Search Text<br/><br/>
+            <apex:inputText value="{!QueryString}" onkeydown="if(event.keyCode==13){myfunction();this.blur();}" onchange="myfunction2();" style="width:60%;margin-left: 1cm;" /><br/><apex:outputPanel style="margin-left: 1cm;"> ASIN &nbsp;<apex:inputCheckbox value="{!IsAsinValue}"  label="ASIN" id="myCheck" /></apex:outputPanel> </apex:outputPanel>
+        &nbsp;&nbsp;&nbsp;
+        <apex:outputPanel rendered="{!AND(NOT(showResponse),identifier = null)}">
+        <div class="outer" style="font-weight: bold">
+           <br/>
+           <div style="margin-left: 10px;">
+               <Font color="Yellow">ASIN - </Font><Font color="White">10 Character alfanumeric unique identifier assigned by Amazon.com </Font><br/><br/>
+               <Font color="Yellow">ISBN - </Font><Font color="White">13 Character Unique identifier for Books </Font><br/><br/>
+               <Font color="Yellow">EAN - </Font><Font color="White">13 Digits (12 data and 1 check) barcoding standard</Font><br/><br/>
+               <Font color="Yellow">UPC - </Font><Font color="White">12 numerical deigits,Which are Uniquely assigned to each trade items </Font><br/><br/>
+               <Font color="Yellow">GTIN - </Font><Font color="White">14 digits identifiers for trade items </Font><br/><br/>
+               <Font color="Yellow">URL - </Font><Font color="White">Paste a URL containing an ASIN </Font><br/><br/>
+               <Font color="Yellow">SKU - </Font><Font color="White">Your product lisiting SKU</Font><br/><br/>
+               <Font color="Yellow">FNSKU - </Font><Font color="White">Amazon fulfillment network SKU </Font><br/><br/>
+               <Font color="Yellow">Plain Text - </Font><Font color="White">Basic Amazon Search if unable to match search type above </Font><br/>
+           </div>
+        </div>
+        </apex:outputPanel>
+        <apex:outputPanel rendered="{!AND(showResponse,identifier = null,ErrorMsg = '')}">
+             <!---<apex:pageMessages /> ------->
+             <div style="width:60%;margin-left: 1cm;">
+             <Table  class="responsive" border="1" cellspacing="0" cellpadding="4" style="border:1px solid white;">
+                 <th style="text-align: center;">Image</th>
+                 <th>Title</th>
+                 <th style="text-align: center;">ASIN</th>
+                 <th style="text-align: center;">Sales Rank</th>
+                 
+                 <apex:repeat value="{!ProductDetailList}" var="pdl">
+                     
+                      <tr>
+                         <td style="text-align: center;width:75px;height:75px;">
+                             <apex:outputLink value="/apex/AmazonProductSection?asin={!pdl.Asin}"><apex:image url="{!pdl.imageURL}" /></apex:outputLink>
+                         </td>
+                         <td>
+                             <apex:outputLink value="/apex/AmazonProductSection?asin={!pdl.Asin}"><apex:outputText value="{!pdl.Title}"></apex:outputText></apex:outputLink>
+                         </td>
+                         <td style="text-align: center;">
+                             <apex:outputLink value="/apex/AmazonProductSection?asin={!pdl.Asin}"><apex:outputText value="{!pdl.Asin}"></apex:outputText></apex:outputLink>
+                         </td>
+                         <td style="text-align: center;">
+                             <apex:outputLink value="/apex/AmazonProductSection?asin={!pdl.Asin}"><apex:outputText value="{!pdl.SalesRank}"></apex:outputText></apex:outputLink>
+                         </td>
+                     
+                    </tr>
+                 </apex:repeat>
+                
+             </table>
+            </div>
+        </apex:outputPanel>
+        <apex:outputPanel rendered="{!ErrorMsg != ''}" ><br/><Apex:outputText value="{!ErrorMsg}" style="margin-left: 1cm;"></Apex:outputText> </apex:outputPanel>
+        <apex:outputPanel rendered="{!AND(identifier != null,NOT(showResponse))}">
+            <!--<apex:pageblock >
+                <apex:pageBlockButtons location="top">
+                     <apex:commandButton value="Competitive Pricing For ASIN" action="{!CompetitivePricingForASINANDMatchingProduct}"/>
+                    <!---<apex:commandButton value="Matching Product" action="{!getMatchingProduct}"/>--->
+                  <!---<apex:commandButton value="Lowest Offer Listings For ASIN" action="{!getLowestOfferListingsForASIN}"/>
+                </apex:pageBlockButtons>
+            </apex:pageblock>--->
+           
+            
+          <apex:outputPanel id="detailPanel">
+                                <br/>
+                                        <a href="http://www.camelcamelcamel.com/products?sq={!mp.asin}" target="camel" title="CamelCamelCamel" class="button primary small"><i class="icon-camel"></i></a>
+                                        <a href="http://www.bookscouter.com/prices.php?isbn={!mp.asin}" target="bookscouter" title="Book Scouter" class="button primary small"><i class="icon-books"></i></a>
+                                        <a href="http://www.amazon.com/dp/{!mp.asin}" target="amazon" title="Amazon" class="button primary small"><i class="icon-amazon"></i></a>
+                                        <a href="http://www.ebay.com/sch/i.html?_nkw=Rib+Rack&LH_Complete=1&LH_Sold=1&rt=nc" target="ebay" title="Ebay" class="button primary small"><i class="icon-ebay"></i></a>
+                                        <a href="http://www.pricegrabber.com/search_request.php?form_keyword=Rib+Rack" target="pricegrabber" title="Price Grabber" class="button primary small"><i class="icon-tag"></i></a>
+                                        <a href="http://www.rakuten.com/sr/searchresults.aspx?qu=Rib+Rack" target="rakuten" title="Rakuten" class="button primary small"><i class="icon-rakuten"></i></a>
+                                        <a href="http://www.newegg.com/Product/ProductList.aspx?Submit=ENE&DEPA=0&Order=BESTMATCH&Description=Rib+Rack&N=-1&isNodeId=1" target="newegg" title="Newegg" class="button primary small"><i class="icon-newegg"></i></a>
+                                        <a href="https://www.google.com/search?num=20&newwindow=1&hl=en&tbm=shop&q=Rib+Rack&N=-1&isNodeId=1" target="google" title="Google Shopping" class="button primary small"><i class="icon-googleshopping"></i></a>
+                                <br/> 
+                                 
+                                <table class="responsive" border="1" cellspacing="0" cellpadding="4" style="width:90%;border:1px solid white;">
+                                    <tbody>
+                                        <tr>
+                                            <th class="has-tip tip-top" title="Item's Image">Image</th>
+                                            <th class="has-tip tip-top" title="Item's asin">ASIN</th>
+                                            <th class="has-tip tip-top" title="Item's sales rank in group<br/>Ranking by percent">Sales<br/>Rank</th>
+                                            <th class="has-tip tip-top" title="Number of sellers on Amazon">Sellers</th>
+                                            <th class="has-tip tip-top" title="Manufacturer">Manufacturer</th>
+                                            <th class="has-tip tip-top" title="PackageDimensions">Dimensions W x L x H</th>
+                                            <th class="has-tip tip-top" title="Item's weight<br/>(Shipping weight)">Weight<br/>(Ship)</th>
+                                            <th class="has-tip tip-top" title="ProductGroup">Product Group</th>
+                                            <th class="has-tip tip-top" title="Item's Classification<br/><i>Shipping Credit</i>">Category</th>
+                                            <th class="has-tip tip-top" title="Item's Title">Title</th>
+                                            <th class="has-tip tip-top" title="Item's Brand">Brand</th>
+                                           
+                                        </tr>
+                                
+                                        <tr>
+                                            <td style="text-align: center;"><apex:image url="{!cpmp.imageURL}" /></td>
+                                            <td style="text-align: center;"><apex:outputText value="{!cpmp.asin}"></apex:outputText></td>
+                                            <td align="center" ><span data-options="disable-for-touch:true" class="has-tip" title="41,610 : lawn_and_garden<br/>159,306 : home_garden<br/>73 : 3742111"><apex:outputText value="{!cpmp.SalesRank}"></apex:outputText></span><br/><span class="bold neversold" style="font-size:120%;">--</span>
+                                            </td>
+                                            <td style="text-align: center;"><apex:outputText value="{!cpmp.SellersNew}"></apex:outputText><br/><apex:outputText value="{!cpmp.SellersUsed}"></apex:outputText></td>
+                                            <td style="text-align: center;"><apex:outputText value="{!cpmp.Manufacturer}"></apex:outputText></td>
+                                            <td style="text-align: center;">{!cpmp.Length}&nbsp;x&nbsp;{!cpmp.Width}&nbsp;x&nbsp;{!cpmp.Height}</td>
+                                            <td style="text-align: center;"><apex:outputText value="{!cpmp.Weight}"></apex:outputText></td>
+                                            <td style="text-align: center;"><apex:outputText value="{!cpmp.ProductGroup}"></apex:outputText></td>
+                                            <td style="text-align: center;"><apex:outputText value="{!cpmp.Category}"></apex:outputText></td>
+                                            <td><apex:outputText value="{!cpmp.title}"></apex:outputText></td>
+                                            <td style="text-align: center;"><apex:outputText value="{!cpmp.Brand}"></apex:outputText></td>
+                                            
+                                        </tr>
+                                    </tbody>
+                                </table>
+                        
+                        <br/>
+                
+           <br/> <br/>
+                  <!--- <apex:outputPanel rendered="{!ProductsDetail.size>0}">  --->
+                          <table class="responsive" border="1" cellspacing="0" cellpadding="4" style="width: 50% !important;float: right;border:1px solid white;">
+                    <tr class="header">
+                        <th scope="col" class="has-tip tip-top" title="The lowest price at this condition">Pricing</th>
+                        <th scope="col" class="has-tip tip-top" title="This is the price that Amazon is selling the product" alt="This is the price that Amazon is selling the product">AZ</th>
+                        <th scope="col" class="has-tip tip-top"
+                            title="<span class='orange'>From Amazon - New:</span> Just like it sounds. A brand-new, unused, unopened item in its original packaging, with all original packaging materials included. Original protective wrapping, if any, is intact. Original manufacturer's warranty, if any, still applies, with warranty details included in the listing comments." alt="From Amazon - New: Just like it sounds. A brand-new, unused, unopened item in its original packaging, with all original packaging materials included. Original protective wrapping, if any, is intact. Original manufacturer's warranty, if any, still applies, with warranty details included in the listing comments.">N</th>
+                        <th scope="col" class="has-tip tip-top"
+                            title="<span class='orange'>From Amazon - Like New:</span> An apparently untouched item in perfect condition. Original protective wrapping may be missing, but the original packaging is intact and pristine. There are absolutely no signs of wear on the item or its packaging. Instructions are included. Item is suitable for presenting as a gift." alt="From Amazon - Like New: An apparently untouched item in perfect condition. Original protective wrapping may be missing, but the original packaging is intact and pristine. There are absolutely no signs of wear on the item or its packaging. Instructions are included. Item is suitable for presenting as a gift.">LN</th>
+                        <th scope="col" class="has-tip tip-top"
+                            title="<span class='orange'>From Amazon - Very Good:</span> A well-cared-for item that has seen limited use but remains in great condition. The item is complete, unmarked, and undamaged, but may show some limited signs of wear. Item works perfectly." alt="From Amazon - Very Good: A well-cared-for item that has seen limited use but remains in great condition. The item is complete, unmarked, and undamaged, but may show some limited signs of wear. Item works perfectly.">VG</th>
+                        <th scope="col" class="has-tip tip-top"
+                            title="<span class='orange'>From Amazon - Good:</span> Use only if noted in the Category-Specific Condition Guidelines. The item shows wear from consistent use, but it remains in good condition and works perfectly. It may be marked, have identifying markings on it, or show other signs of previous use." alt="From Amazon - Good: Use only if noted in the Category-Specific Condition Guidelines. The item shows wear from consistent use, but it remains in good condition and works perfectly. It may be marked, have identifying markings on it, or show other signs of previous use.">G</th>
+                        <th scope="col" class="has-tip tip-top"
+                            title="<span class='orange'>From Amazon - Acceptable:</span> Use only if noted in the Category-Specific Condition Guidelines. The item is fairly worn but continues to work perfectly. Signs of wear can include aesthetic issues such as scratches, dents, and worn corners. The item may have identifying markings on it or show other signs of previous use." alt="From Amazon - Acceptable: Use only if noted in the Category-Specific Condition Guidelines. The item is fairly worn but continues to work perfectly. Signs of wear can include aesthetic issues such as scratches, dents, and worn corners. The item may have identifying markings on it or show other signs of previous use.">A</th>
+                        <th scope="col"  class="has-tip tip-top" title="Lowest price across all of the columns"
+                            alt="Lowest price across all of the columns">LOW</th>
+                    </tr>
+                    <tr class="fba">
+                        <td>FBA</td>
+                        <td>-</td>
+                        <td>$17.99</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>$17.99</td>
+                    </tr>
+                    <tr class="add">
+                        <td>Other Merchants</td>
+                        <td>-</td>
+                        <td>$17.99</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>$17.99</td>
+                    </tr>
+                    <tr class="addPrice">
+                        <td> Your Price</td>
+                        <td>-</td>
+                        <td>$17.99</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>$17.99</td>
+                    </tr>
+                    <tr class="sub">
+                        <td>- Fees</td>
+                        <td>3.48</td>
+                        <td>$6.18</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>$6.18</td>
+                    </tr>
+                    <tr class="total">
+                        <td>= Net</td>
+                        <td>-</td>
+                        <td>$11.81</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>$11.81</td>
+                    </tr>
+                </table>
+                          <table class="responsive" border="1" cellspacing="0" cellpadding="4" style="width:45% !important; float:left;border:1px solid white;">
+                                    <tbody>
+                                        <tr>
+                                            <th class="has-tip tip-top" title="SKU #">SKU #</th>
+                                            <th class="has-tip tip-top" title="Item's Merchant SKU">Merchant SKU</th>
+                                            <th class="has-tip tip-top" title="Item's Quantity">Quantity</th>
+                                            <th class="has-tip tip-top" title="Item's Current Price">Current Price</th>
+                                            <th class="has-tip tip-top" title="Cost">Cost</th>
+                                        </tr>
+                                        <apex:variable var="c" value="{!1}" />
+                                        <apex:repeat value="{!ProductsDetail}" var="pd">
+                                            <tr>
+                                                <td style="text-align: center;"><apex:outputText value="{!c}" ></apex:outputText> <apex:variable var="c" value="{!c+1}"/></td>
+                                                <td style="text-align: center;"><apex:outputLink value="/{!pd.id}" target="_blank" ><apex:outputField value="{!pd.Name}"/></apex:outputLink></td>
+                                                <td style="text-align: center;"><apex:outputText value="{!pd.ECS__Quantity__c}" ></apex:outputText></td>
+                                                <td style="text-align: center;"><apex:outputText value="${!pd.eCommazon__FBA_Current_Price__c}" ></apex:outputText></td>
+                                                <td style="text-align: center;"><apex:outputText value="${!pd.ECS__Cost__c}" ></apex:outputText></td>
+                                           </tr>
+                                        </apex:repeat>
+                                       
+                                    </tbody>
+                              </table>
+                       <br/><br/>
+                               <table class="responsive" border="1" cellspacing="0" cellpadding="4" style="width:45% !important;float:left;border:1px solid white;">
+                                    <tbody>
+                                        <tr>
+                                            <th class="has-tip tip-top" title="SKU #">SKU #</th>
+                                            <th class="has-tip tip-top" title="Number of<br/>product onhand">On Hand</th>
+                                            <th class="has-tip tip-top" title="Inbound Receiving">Inbound Receiving</th>
+                                            <th class="has-tip tip-top" title="Inbound Shipped">Inbound Shipped</th>
+                                            <th class="has-tip tip-top" title="Inbound Working">Inbound Working</th>
+                                            <th class="has-tip tip-top"  title="Items damaged in some<br/>way that cannot be sold">Unsellable</th>
+                                            <th class="has-tip tip-top" title="Items sold, but not yet paid,<br/>or items being moved">Reserved</th>
+                                            <th class="has-tip tip-top" title="Number sold">Total Sold</th>
+                                        </tr>
+                                        <apex:variable var="i" value="{!1}" />
+                                        <apex:repeat value="{!ProductsDetail}" var="pd">
+                                            <tr>
+                                                <td style="text-align: center;"><apex:outputText value="{!i}" ></apex:outputText> <apex:variable var="i" value="{!i+1}"/></td>
+                                                <td style="text-align: center;"><apex:outputField value="{!pd.eCommazon__FBA_Have__c}" rendered="{!ProductsDetail.size>0}"/></td>
+                                                <td style="text-align: center;"><apex:outputText value="{!pd.eCommazon__FBA_Inbound_Receiving__c}" rendered="{!ProductsDetail.size>0}"></apex:outputText></td>
+                                                <td style="text-align: center;"><apex:outputText value="{!pd.eCommazon__FBA_Inbound_Shipped__c}" rendered="{!ProductsDetail.size>0}"></apex:outputText></td>
+                                                <td style="text-align: center;"><apex:outputText value="{!pd.eCommazon__FBA_Inbound_Working__c}" rendered="{!ProductsDetail.size>0}"></apex:outputText></td>
+                                                <td style="text-align: center;"><apex:outputText value="{!pd.eCommazon__FBA_Unfulfillable__c}" rendered="{!ProductsDetail.size>0}"></apex:outputText></td>
+                                                <td style="text-align: center;"><apex:outputText value="{!pd.eCommazon__FBA_Reserved__c}" rendered="{!ProductsDetail.size>0}"></apex:outputText></td>
+                                                <td style="text-align: center;"><apex:outputText value="{!pd.ECS__Total_Sold__c}" rendered="{!ProductsDetail.size>0}"></apex:outputText></td>
+                                           </tr>
+                                        </apex:repeat>
+                                    </tbody>
+                              </table>
+                              
+                             <table class="responsive" border="1" cellspacing="0" cellpadding="4" style="width:45% !important;border:1px solid white;">
+                                    <tbody>
+                                        <tr>
+                                            <th class="header has-tip tip-left"  title="Date of last sale" style="width:20%">Last Sale</th>
+                                                <td  style="text-align: center;width:30%"><apex:outputField value="{!ProductsDetail[0].ECS__Order_Lines__r[0].ECS__Order_Time__c}" rendered="{!AND(ProductsDetail.size>0,ProductsDetail[0].ECS__Order_Lines__r.size>0)}"/></td>
+                                            
+                                            <th class="header has-tip tip-left"  title="Price of last sale" style="width:20%">Last Price</th>
+                                                <td style="text-align: center;"><apex:outputText value="${!ProductsDetail[0].ECS__Price__c}" rendered="{!ProductsDetail.size>0}"></apex:outputText></td>
+                                            
+                                        </tr>
+                                
+                                       
+                                    </tbody>
+                              </table>
+                              
+           <br/><br/>
+                    
+                        <table class="responsive" border="1" cellspacing="0" cellpadding="4" style="width:45% !important;float:left;border:1px solid white;">
+                          
+                           
+                            <tr>
+                                <th class="header has-tip tip-left" Style="width:50%">Units Sold Past 1 Week </th>
+                                <td Style="width:50%;text-align: center;" >
+                                     <apex:outputField value="{!ProductsDetail[0].ECS__Units_Sold_Past_1_Week__c}" rendered="{!ProductsDetail.size>0}"/>
+                               </td>
+                            </tr>
+                            <tr>
+                                <th class="header has-tip tip-left" Style="width:50%">Units Sold Past 2 Weeks</th>
+                                <td Style="width:50%;text-align: center;">
+                                     <apex:outputField value="{!ProductsDetail[0].ECS__Units_Sold_Past_2_Weeks__c}" rendered="{!ProductsDetail.size>0}"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th class="header has-tip tip-left" Style="width:50%">Units Sold Past 4 Weeks</th>
+                                <td Style="width:50%;text-align: center;">
+                                     <apex:outputField value="{!ProductsDetail[0].ECS__Units_Sold_Past_4_Weeks__c}" rendered="{!ProductsDetail.size>0}"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th class="header has-tip tip-left" Style="width:50%">Units Sold Past 12 Weeks</th>
+                                <td Style="width:50%;text-align: center;">
+                                     <apex:outputField value="{!ProductsDetail[0].ECS__Units_Sold_Past_12_Weeks__c}" rendered="{!ProductsDetail.size>0}"/>
+                                </td>
+                            </tr>
+                        </table>
+                        <table class="info orange-table" border="1" cellspacing="0" cellpadding="4" style="width:50% !important;float:right;border:1px solid white;">
+                        <tr class="header">
+                            <th scope="col" class="has-tip tip-top" title="Condition">Cond</th>
+                            <th scope="col" class="has-tip tip-top" title="Lowest price at this condition">Price</th>
+                            <th scope="col" class="has-tip tip-top" title="Lowest seller at this condition">Seller Name</th>
+                            <th scope="col" class="has-tip tip-top" title="Feedback amount">FB</th>
+                            <th scope="col" class="has-tip tip-top" title="Feedback rating">%</th>
+                        </tr>
+                        <apex:repeat value="{!llol}" var="lol">
+                            <tr>
+                                <td style="text-align: center;"><apex:outputText value="{!lol.ItemSubcondition}"></apex:outputText> </td>
+                                <td style="text-align: center;"><apex:outputText value="${!lol.LandedPrice}"></apex:outputText> </td>
+                                <td style="text-align: center;"><apex:outputText value="{!lol.FulfillmentChannel}"></apex:outputText></td>
+                                <td style="text-align: center;"><apex:outputText value="{!lol.SellerFeedbackCount}"></apex:outputText></td>
+                                <td style="text-align: center;"><apex:outputText value="{!lol.SellerPositiveFeedbackRating}"></apex:outputText></td>
+                            </tr>
+                       </apex:repeat>
+                    </table>
+                <!---  </apex:outputPanel>  ---->
+
+                    <br/> <br/>
+                    
+               
+
+        </apex:outputPanel>
+       </apex:outputPanel>
+    </apex:outputPanel>
+        </apex:pageBlock>
+      </apex:outputPanel>
+    </apex:form>
+    
+</apex:page>

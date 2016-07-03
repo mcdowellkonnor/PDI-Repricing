@@ -1,0 +1,47 @@
+<apex:page standardController="ECS__Product__c"  extensions="ECS.ProductImagesController" sidebar="false"> 
+    <!-- Google API inclusion -->
+    <apex:includeScript id="a" value="https://www.google.com/jsapi" />
+     <Style>
+        .effectfront {
+          border: none;
+          margin: 0 auto;
+        }
+        .effectfront:hover {
+          -webkit-transform: scale(2);
+          -moz-transform: scale(2);
+          -o-transform: scale(2);
+          transform: scale(2);
+          transition: all 0.3s;
+          -webkit-transition: all 0.3s;
+        }
+
+    </Style>    
+   
+    <!-- Google Charts will be drawn in this DIV -->
+    <div id="chartBlock" />
+     
+    <script type="text/javascript">
+        initCharts();   
+   
+        function initCharts() {         
+          // Following the usual Remoting syntax
+          // [<namespace>.]<controller>.<method>([params...,] <callbackFunction>(result, event) {...}
+          // controller : GoogleChartsController
+          // method : loadRanks
+         var productId = '{!ECS__Product__c.Id}';
+
+         ECS.ProductImagesController.getImages( productId.substring(0,15),
+                 function(result, event){  
+
+                      var resultText = "";
+
+                      for(var i =0; i<result.length;i++) {
+                          resultText = resultText + "<a href='" + result[i].ECS__Image_URL__c +"' target='_blank'><img class = 'effectfront' src='" +  result[i].ECS__Image_URL__c + "' height='120' width='120'/></a>";
+                      }
+                         
+                      document.getElementById("chartBlock").innerHTML = resultText;
+                                             
+        }, {escape:true});
+          } 
+    </script>
+</apex:page>

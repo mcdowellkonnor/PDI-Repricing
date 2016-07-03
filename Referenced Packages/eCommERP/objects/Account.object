@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <webLinks>
+        <fullName>Manage_Forecasts</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <height>600</height>
+        <linkType>page</linkType>
+        <masterLabel>Manage Forecasts</masterLabel>
+        <openType>sidebar</openType>
+        <page>AnalyzeForecastFromAccount</page>
+        <protected>false</protected>
+    </webLinks>
+    <webLinks>
+        <fullName>Manage_Forecasts_List</fullName>
+        <availability>online</availability>
+        <displayType>massActionButton</displayType>
+        <linkType>javascript</linkType>
+        <masterLabel>Manage Forecasts</masterLabel>
+        <openType>onClickJavaScript</openType>
+        <protected>false</protected>
+        <requireRowSelection>true</requireRowSelection>
+        <url>var ids= {!GETRECORDIDS($ObjectType.Account)}; if(ids.length &lt; 1 ) alert(&apos;Please select at least one account.&apos;); else var mywin = window.open(&apos;/apex/serp__Analyze_Forecast?ids=&apos;+ids.join(&apos;,&apos;));</url>
+    </webLinks>
+</CustomObject>

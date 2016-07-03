@@ -1,0 +1,12 @@
+<apex:page showHeader="false" renderAs="pdf" controller="CloudConversion.InvoiceController" action="{!updateOrders}">
+	<head>
+  		<style>
+    		@page {
+      			size:landscape;
+    		}
+  		</style> 
+	</head> 
+
+  <c:AdvInvoiceComponent /> 
+  
+</apex:page>

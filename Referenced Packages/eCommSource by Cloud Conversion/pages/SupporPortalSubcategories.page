@@ -1,0 +1,85 @@
+<apex:page docType="html-5.0" sidebar="false" showHeader="false" standardStylesheets="false" applyHtmlTag="false" applyBodyTag="false" cache="false">
+	<html lang="en">
+		<head>
+	
+			<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+			
+		     	<apex:includeScript value="{!URLFOR($Resource.CloudConversion__supportportalresources, 'js/jquery.min.js')}"/>
+		     	<apex:includeScript value="{!URLFOR($Resource.CloudConversion__supportportalresources, 'js/jquery-ui.js')}"/>
+		        <apex:includeScript value="{!URLFOR($Resource.CloudConversion__supportportalresources, 'js/skel.min.js')}"/>
+		        <apex:includeScript value="{!URLFOR($Resource.CloudConversion__supportportalresources, 'js/skel-layers.min.js')}"/>
+		        <apex:includeScript value="{!URLFOR($Resource.CloudConversion__supportportalresources, 'js/init.js')}"/>
+
+		        <apex:stylesheet value="{!URLFOR($Resource.CloudConversion__supportportalresources, 'css/skel.css')}"/>
+		        <apex:stylesheet value="{!URLFOR($Resource.CloudConversion__supportportalresources, 'css/style.css')}"/>
+		        <apex:stylesheet value="{!URLFOR($Resource.CloudConversion__supportportalresources, 'css/style-xsmall.css')}"/>
+		        <apex:stylesheet value="{!URLFOR($Resource.CloudConversion__supportportalresources, 'css/style-small.css')}"/>
+		        <apex:stylesheet value="{!URLFOR($Resource.CloudConversion__supportportalresources, 'css/style-medium.css')}"/>
+		        <apex:stylesheet value="{!URLFOR($Resource.CloudConversion__supportportalresources, 'css/style-large.css')}"/>
+		        <apex:stylesheet value="{!URLFOR($Resource.CloudConversion__supportportalresources, 'css/style-xlarge.css')}"/>
+		        <apex:stylesheet value="{!URLFOR($Resource.CloudConversion__supportportalresources, 'css/jquery-ui.min.css')}"/>
+		        
+		</head>
+		<body class="landing">
+		    <c:SupportPortalHeader />
+		    <c:SupportPortalSubCategories />
+		    <c:SupportPortalFooter />
+		    <script type="text/javascript">
+			   var PLACEHOLDER = 'Enter a term to start looking'; 
+			   var seachObjects;
+			   var queryTerm;
+			   
+			   $('[id$=searchTextBoxId]').autocomplete({
+			       minLength: 2,
+			       source: function(request, response) {
+			                   queryTerm = request.term;
+			                   faqs.searchArticle(request.term, function(result, event){
+			                       if(event.type == 'exception') {
+			                             alert(event.message);
+			                       } else {
+			                            seachObjects = result;
+			                            response(seachObjects);
+			                       }
+			                   });
+			              },
+			       focus: function( event, ui ) {
+			               $('[id$=searchTextBoxId]').val( ui.item.Name );
+			               return false;
+			               },
+			       select: function( event, ui ) {
+			                   $('[id$=searchTextBoxId]').val( ui.item.Name );
+			                   $('[id$=searchContentId]').val( ui.item.Id );
+			                   return false;
+			               },
+			    })
+			    .data( "ui-autocomplete" )._renderItem = function( ul, item ) {
+			       var entry = "<a>" + item.Name;
+			      
+			       entry = entry + "</a>";
+			       entry = entry.replace(queryTerm, "<b>" + queryTerm + "</b>");
+			       return $( "<li></li>" )
+			           .data( "ui-autocomplete-item", item )
+			           .append( entry )
+			           .appendTo( ul );
+			   };
+			       
+			   // Add or remove placeholder values
+			   $('[id$=searchTextBoxId]').val(PLACEHOLDER);
+			   $('[id$=searchTextBoxId]').on("focus",  function(event){
+			       $tgt = $(event.target);
+			       if($tgt.val() === PLACEHOLDER ){
+			           $tgt.val('');
+			           $tgt.removeClass('placeHolder');
+			       }
+			   });
+			   $('[id$=searchTextBoxId]').on( "blur",  function(event){
+			       $tgt = $(event.target);
+			       if($tgt.val() === '' ){
+			           $tgt.val(PLACEHOLDER);
+			           $tgt.addClass('placeHolder');
+			       }
+			   });
+			</script>
+		</body>
+	</html>
+</apex:page>

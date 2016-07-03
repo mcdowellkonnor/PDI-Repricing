@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomLabels xmlns="http://soap.sforce.com/2006/04/metadata">
+    <labels>
+        <fullName>Support_Company_Copyright</fullName>
+        <categories>Support</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Support Company Copyright</shortDescription>
+        <value>2015 Cloud Conversion.</value>
+    </labels>
+    <labels>
+        <fullName>Support_Company_Name</fullName>
+        <categories>Support</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Support Company Name</shortDescription>
+        <value>Cloud Conversion</value>
+    </labels>
+    <labels>
+        <fullName>Support_Portal_Title</fullName>
+        <categories>Support</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Support Portal Title</shortDescription>
+        <value>Cloud Conversion&apos;s Support Portal</value>
+    </labels>
+    <labels>
+        <fullName>Support_Search_Form_Instructions</fullName>
+        <categories>Support</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Support Search Form Instructions</shortDescription>
+        <value>Enter a term to start looking...</value>
+    </labels>
+    <labels>
+        <fullName>Support_Welcome_Message</fullName>
+        <categories>Support</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Support Welcome Message</shortDescription>
+        <value>We&apos;re here for you. Find articles, help, and advice for getting the most out of</value>
+    </labels>
+</CustomLabels>

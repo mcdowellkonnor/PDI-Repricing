@@ -1,0 +1,6 @@
+<apex:page controller="ECS.ScheduleJobsController">
+	<apex:form >
+		<apex:inputText value="{!minute}"/>
+		<apex:commandButton action="{!save}" value="Schedule"/>
+	</apex:form>
+</apex:page>

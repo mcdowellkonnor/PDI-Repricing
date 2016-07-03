@@ -1,0 +1,117 @@
+<apex:page controller="serp.InventoryMovementController">
+    
+    <ECS:Analytics event="INFO" app="ERP" />
+   
+	<div class="cc">
+	<apex:stylesheet value="{!URLFOR($Resource.ECS__bootstrap_cc)}" />
+	
+	<link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.9.0/themes/base/jquery-ui.css"></link> 
+		
+	<apex:pageMessages id="pageMessages" />
+	<apex:form >
+	<apex:outputPanel id="warehouse-panel">
+		<apex:outputPanel >
+			<div>
+				<table>
+					<tr>
+						<td>
+							<apex:outputLabel style="width: 165px; float: left; margin-left: 35px;">From Warehouse</apex:outputLabel>
+						</td>
+						<td>
+							<apex:selectList value="{!fromWarehouse}" size="1">
+								<apex:selectOptions value="{!Warehouses}"/>
+							</apex:selectList>
+						</td>
+					</tr>
+
+					<tr>
+						<td>
+							<apex:outputLabel style="width: 165px; float: left; margin-left: 35px;">To Warehouse</apex:outputLabel>
+						</td>
+						<td>
+							<apex:selectList value="{!toWarehouse}" size="1">
+								<apex:selectOptions value="{!Warehouses}"/>
+							</apex:selectList>
+						</td>
+					</tr>
+					
+          			<!-- <apex:repeat value="{!$ObjectType.Inventory_Adjustment_Group__c.FieldSets.Create_Adjustment_Group}" var="fs">
+					  	<tr><td><apex:outputLabel style="float: left; margin-left: 35px; width: 165px;" value="{!fs.Label}" /></td><td><apex:inputField value="{!iag[fs]}" required="{!OR(fs.required, fs.dbrequired)}" /></td></tr>
+          			</apex:repeat> -->
+          			
+				</table>
+			</div>
+			<div style="border: 1px solid #DDD; margin-top: 15px; margin-bottom: 15px;"></div>
+		</apex:outputPanel>
+	</apex:outputPanel>
+	
+	<apex:outputPanel id="products-panel2">
+		<table id="products-container" style="width: 60%; margin-left: 12px;">
+			<thead>
+				<tr>
+					<!-- <th style="width: 20px;"></th> -->
+					<th style="width: 240px;">
+						<apex:outputLabel value="SKU" />
+					</th>
+					<th style="width: 70px;">
+						<apex:outputLabel value="Quantity" />
+					</th>
+					<!-- <apex:repeat value="{!$ObjectType.Inventory_Adjustment__c.FieldSets.Manage_Adjustments}" var="fs">
+						<th style="text-wrap: unrestricted;"><apex:outputLabel style="text-wrap: unrestricted; float: left;" value="{!fs.Label}" /></th>
+					</apex:repeat> -->
+				</tr>
+			</thead>
+			<tbody>
+				<apex:repeat id="lines" value="{!miList}" var="mi">
+					<tr>
+						<!-- <td>
+							<apex:actionRegion >
+								<apex:commandLink rendered="{!adjustments.size > 1}" action="{!removeLine}" status="formActionStatus">
+									<apex:param name="lineToRemove" value="{!mi.Product__c}" />
+									<span style="font-size: 30px;">&#xd7;</span>
+								</apex:commandLink>
+							</apex:actionRegion>
+						</td> -->
+						<td>
+							<div class="sku-container">
+								<apex:outputPanel >
+									<apex:outputText value="{!mi.prod.ECS__External_Product_ID__c}" id="productname" style="width: 100;" />
+								</apex:outputPanel>
+							</div>
+						</td>
+						<td>
+							<div class="qty-container">
+								<apex:outputPanel >
+									<apex:inputText value="{!mi.qty}" id="qty" style="width: 30;" />
+								</apex:outputPanel>
+							</div>
+						</td>
+						<!-- <apex:repeat value="{!$ObjectType.Inventory_Adjustment__c.FieldSets.Manage_Adjustments}" var="fs">
+							<td><apex:inputField value="{!a[fs]}" /></td>
+					    </apex:repeat> -->
+					</tr>
+				</apex:repeat>
+			</tbody>
+		</table>
+		<!-- <apex:outputPanel >
+			<apex:actionRegion >
+				<div id="add-line-link" style="padding-left: 12px;">
+					<apex:commandLink action="{!addLine}" status="formActionStatus">
+						<span style="font-size: 30px; display:block; float: left;">&#x2b;</span>
+						<span style="display:block; margin-left: 30px; padding-top: 10px;">Add Line</span>
+					</apex:commandLink>
+				</div>
+			</apex:actionRegion>
+		</apex:outputPanel> -->
+	</apex:outputPanel>
+	
+	<div style="clear: both; text-align: center; margin-top: 15px;">
+		<apex:commandButton style="text-align: center; clear: both;" styleClass="btn-primary" action="{!save}" value="Save" status="formActionStatus" rerender="pageMessages" />
+		<!-- <apex:commandButton action="{!cancel}" value="Cancel" status="formActionStatus" rerender="pageMessages" /> -->
+		<p>&nbsp;</p>
+	</div>
+						
+	</apex:form>
+	</div>
+
+</apex:page>

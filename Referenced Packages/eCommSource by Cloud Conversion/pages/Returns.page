@@ -1,0 +1,9 @@
+<apex:page showHeader="false" cache="false">
+
+	<apex:composition template="{!$Site.Template}">
+	  <apex:define name="body">
+	   <c:Returns />
+	  </apex:define>
+	</apex:composition>
+
+</apex:page>

@@ -1,0 +1,6 @@
+<apex:page standardController="ECS__Payment_Detail__c" extensions="ECS.ManagePaymentsController" action="{!getPaymentDetails}">
+
+	<c:Analytics event="INFO" app="ECS" />
+	
+	<apex:pageMessages />
+</apex:page>

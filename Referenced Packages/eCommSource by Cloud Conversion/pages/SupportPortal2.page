@@ -1,0 +1,10 @@
+<apex:page docType="html-5.0" sidebar="false" showHeader="false" standardStylesheets="false" applyHtmlTag="false" applyBodyTag="false" cache="false">
+    <html lang="en">
+        <head>
+        	<c:SupportPortalHead /> 
+        </head>
+        <body class="landing">
+            <c:SupportPortalCategories />
+        </body>
+    </html>
+</apex:page>

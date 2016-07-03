@@ -1,0 +1,248 @@
+<apex:page standardController="ECS__Product__c" extensions="ECS.ManageVariationsController" id="myPage">
+
+
+	<c:Analytics event="INFO" app="ECS" />
+	
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<apex:stylesheet value="{!$Resource.ECS__Generate}"/>
+<script type="text/javascript">
+    
+        function selectAllCheckboxes(obj,receivedInputID){
+            var rowCount = receivedInputID.rows.length;
+            //alert(rowCount);
+            for(var i=0; i<rowCount; i++) {
+                var row = receivedInputID.rows[i];
+                var chkbox = row.cells[0].childNodes[0];
+                chkbox.checked=obj.checked;
+            }
+        }
+        
+       function validateForm(){
+            for(var i=0; i<$(".mainTable").length; i++) {
+                var myclass = $(".mainTable")[i];
+                 if($(myclass).find("input[type='checkbox']:checked").length == 0)
+                  {
+                        alert('Please select atleast one checkbox for '+$(myclass).attr('id')+' block');
+                        return false;
+                        
+                  }
+            }
+              generate();
+              return true;
+              
+        }
+    </script>
+    
+    
+    
+    <div class="cc">
+        <apex:stylesheet value="{!URLFOR($Resource.ECS__bootstrap_cc)}" />
+        <link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.9.0/themes/base/jquery-ui.css"></link> 
+            
+        <apex:pageMessages id="pageMessages" />
+        <apex:form id="frm">
+        <apex:actionFunction name="generate" action="{!generate}" status="loadStatus"/>
+            <!-- <apex:pageblock id="pblock1" > -->
+            <apex:outputPanel id="table" rendered="{!isSelectProd}">
+                <center>
+                <table border="1">
+                    
+                        <!--  <apex:outputPanel rendered="{!variationOptions.size>0}">
+                        <tr>
+                            <td style="vertical-align:middle; width: 265px;"></td>
+                             <td style="vertical-align:middle; width: 265px;"> 
+                              <table border="5">
+                                <tr>
+                                <td style="width: 265px; horizontal-align:center;">&nbsp;</td>
+                                <apex:repeat value="{!variationOptions}" var="vo">
+                                    <td style="vertical-align:middle; width: 65px;">Qty<br/>
+                                    <apex:inputField style="width: 20px;" value="{!vo.prod.ECS__Quantity__c}" /></td>
+                                </apex:repeat>
+                                </tr>
+                              </table>
+                            </td>
+                        </tr>
+                        </apex:outputPanel>-->
+                        <apex:repeat value="{!wrapMap}" var="key">
+                        <tr  class="attribute-row-0">
+                          <td class="attribute-name" style="vertical-align:middle;white-space: nowrap;background: #f5f5f5;"><apex:inputCheckbox onclick="selectAllCheckboxes(this,{!key})"/>&nbsp;&nbsp;<b>{!key}</b>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                          <td>
+                               <table border="1" id="{!key}" class="mainTable" style="cellpadding:5;">
+                                <apex:repeat value="{!wrapMap[key]}" var="w"> 
+                                    <tr class="attribute-row-1">
+                                        <td style="vertical-align:middle; width: 265px;"  >
+                                          <apex:inputCheckbox value="{!w.selected}" id="inputid"  />&nbsp;&nbsp;<apex:outputText value="{!w.option} - {!w.id}"/>
+                                        </td>
+                                        <!-- Show Previous Variations to Edit! -->
+                                        <apex:outputPanel rendered="{!variationOptions.size>0}">
+                                           <apex:variable var="uniqueNum" value="{!0}"/>
+                                           <apex:variable var="uniqueNum1" value="{!1000}"/>
+                                           <apex:variable var="uniqueNum2" value="{!10000}" />
+                                           <apex:variable var="uniqueNum3" value="{!1000000}" />
+                                            <apex:repeat value="{!variationOptions}" var="vo">
+                                              <apex:variable var="voIdUnique" value="{!vo.myProid}{!uniqueNum}"/>
+                                               <apex:variable var="voIdUnique1" value="{!vo.myProid}{!uniqueNum1}"/>
+                                               <apex:variable var="voIdUnique2" value="{!vo.myProid}{!uniqueNum2}" rendered="{!if(w.option=vo.option3 && vo.option3!=null,true,false)}"/>
+                                               <apex:variable var="voIdUnique3" value="{!vo.myProid}{!uniqueNum3}" rendered="{!if(w.option=vo.option4 && vo.option4!=null,true,false)}"/>
+                                                <!-- TODO: mark as checked, then change to an Image with JS Remoting -->
+                                                <td style="vertical-align:middle; width: 65px;">
+                                                    <center>
+                                                       <!-- {!vo.Id}-<apex:inputCheckbox id="inputId2"/>  -->
+                                                       
+                                                       <apex:outputpanel rendered="{!if(w.option=vo.option1 && vo.option1!=null,true,false)}">
+                                                           <a href="/{!vo.myProid}" id="{!voIdUnique}" 
+                                                               onblur="LookupHoverDetail.getHover('{!voIdUnique}').hide();" 
+                                                               onfocus="LookupHoverDetail.getHover('{!voIdUnique}', '/{!vo.myProid}/m?retURL=%2F{!vo.myProid}&isAjaxRequest=1').show();"
+                                                                target="_blank"  
+                                                               onmouseout="LookupHoverDetail.getHover('{!voIdUnique}').hide();" 
+                                                               onmouseover="LookupHoverDetail.getHover('{!voIdUnique}', '/{!vo.myProid}/m?retURL=%2F{!vo.myProid}&isAjaxRequest=1').show();">
+                                                               <!--<b><apex:outputField styleClass="header" value="{!loc.name}" /></b>-->
+                                                               <apex:image value="{!URLFOR($Resource.ECS__checkmark)}"  alt="{!vo.option1} - {!vo.option2}"/>
+                                                           </a>
+                                                           </apex:outputpanel>
+                                                           
+                                                        <apex:outputpanel rendered="{!if(w.option=vo.option2  && vo.option2!=null,true,false)}">
+                                                          <a href="/{!vo.myProid}" id="{!voIdUnique1}" 
+                                                           onblur="LookupHoverDetail.getHover('{!voIdUnique1}').hide();" 
+                                                           onfocus="LookupHoverDetail.getHover('{!voIdUnique1}', '/{!vo.myProid}/m?retURL=%2F{!vo.myProid}&isAjaxRequest=1').show();"
+                                                            target="_blank" 
+                                                           onmouseout="LookupHoverDetail.getHover('{!voIdUnique1}').hide();" 
+                                                           onmouseover="LookupHoverDetail.getHover('{!voIdUnique1}', '/{!vo.myProid}/m?retURL=%2F{!vo.myProid}&isAjaxRequest=1').show();">
+                                                           <!--<b><apex:outputField styleClass="header" value="{!loc.name}" /></b>-->
+                                                           <apex:image value="{!URLFOR($Resource.ECS__checkmark)}" alt="{!vo.option1} - {!vo.option2}"/>
+                                                           </a>
+                                                       </apex:outputpanel>
+                                                       
+                                                       <apex:outputpanel rendered="{!if(w.option=vo.option3 && vo.option3!=null,true,false)}">
+                                                          <a href="/{!vo.myProid}" id="{!voIdUnique2}" 
+                                                           onblur="LookupHoverDetail.getHover('{!voIdUnique2}').hide();" 
+                                                           onfocus="LookupHoverDetail.getHover('{!voIdUnique2}', '/{!vo.myProid}/m?retURL=%2F{!vo.myProid}&isAjaxRequest=1').show();"
+                                                            target="_blank" 
+                                                           onmouseout="LookupHoverDetail.getHover('{!voIdUnique2}').hide();" 
+                                                           onmouseover="LookupHoverDetail.getHover('{!voIdUnique2}', '/{!vo.myProid}/m?retURL=%2F{!vo.myProid}&isAjaxRequest=1').show();">
+                                                           <!--<b><apex:outputField styleClass="header" value="{!loc.name}" /></b>-->
+                                                           <apex:image value="{!URLFOR($Resource.ECS__checkmark)}" alt="{!vo.option1} - {!vo.option2}"/>
+                                                           </a>
+                                                       </apex:outputpanel>
+                                                       
+                                                       <apex:outputpanel rendered="{!if(w.option=vo.option4 && vo.option4!=null,true,false)}">
+                                                          <a href="/{!vo.myProid}" id="{!voIdUnique3}" 
+                                                           onblur="LookupHoverDetail.getHover('{!voIdUnique3}').hide();" 
+                                                           onfocus="LookupHoverDetail.getHover('{!voIdUnique3}', '/{!vo.myProid}/m?retURL=%2F{!vo.myProid}&isAjaxRequest=1').show();"
+                                                            target="_blank" 
+                                                           onmouseout="LookupHoverDetail.getHover('{!voIdUnique3}').hide();" 
+                                                           onmouseover="LookupHoverDetail.getHover('{!voIdUnique3}', '/{!vo.myProid}/m?retURL=%2F{!vo.myProid}&isAjaxRequest=1').show();">
+                                                           <!--<b><apex:outputField styleClass="header" value="{!loc.name}" /></b>-->
+                                                           <apex:image value="{!URLFOR($Resource.ECS__checkmark)}" alt="{!vo.option1} - {!vo.option2}"/>
+                                                           </a>
+                                                       </apex:outputpanel>
+                                                   </center>
+                                                </td>
+                                                <apex:variable var="uniqueNum" value="{!uniqueNum + 1}"/>
+                                                <apex:variable var="uniqueNum1" value="{!uniqueNum1 + 1}" />
+                                                <apex:variable var="uniqueNum2" value="{!uniqueNum2 + 1}" rendered="{!if(w.option=vo.option3 && vo.option3!=null,true,false)}"/>
+                                                <apex:variable var="uniqueNum3" value="{!uniqueNum3 + 1}" rendered="{!if(w.option=vo.option4 && vo.option4!=null,true,false)}"/>
+                                            </apex:repeat>
+                                        </apex:outputPanel>
+                                    </tr>
+                                </apex:repeat>
+                               </table>
+                          </td>
+                        </tr>
+                        </apex:repeat>
+                    
+                </table>
+                </center>
+                <div style="clear: both; text-align: center; margin-top: 15px;">
+                    <apex:commandButton value="Generate" id="generate" onclick="return validateForm();" rerender="pageMessages,frm,script" /><!-- onclick="CheckForAllOptionSelect()" -->
+                    <apex:commandButton action="{!cancel}" value="Cancel" status="loadstatus" rerender="pageMessages" /> 
+                        <p>&nbsp;</p>
+                </div>
+            </apex:outputPanel>
+            
+            <apex:outputpanel id="table1" rendered="{!isSelectedProd}">
+                <table border="1" class="table-bordered">
+                <thead>
+                    <tr>
+                    <td  style="font-weight: bold;
+                            font-size: medium;
+                            font-family: inherit;
+                            font-style: oblique;
+                            flood-color: initial;
+                            background-color: beige;
+                            color: blueviolet;
+                            position: relative;
+                            flex-wrap: wrap;">SKU</td>
+                    <apex:repeat value="{!schemaLst}" var="label">
+                        <td style="font-weight: bold;
+                                font-size: medium;
+                                font-family: inherit;
+                                font-style: oblique;
+                                flood-color: initial;
+                                background-color: beige;
+                                color: blueviolet;
+                                position: relative;
+                                flex-wrap: wrap;">{!label.Label}</td>
+                        </apex:repeat>
+                    </tr>
+                    <tr>
+                            <td><apex:Outputlabel /></td>
+                            <apex:repeat value="{!schemaLst}" var="label">
+                                 <td style="vertical-align:middle;white-space: nowrap;background: #f5f5f5;" id="{!label.fieldpath}" class="topInput"><apex:inputtext /></td>
+                            </apex:repeat>
+                    </tr>
+                </thead>
+                <tbody>
+                
+                    <apex:repeat value="{!lstProd}" var="prod">
+                   
+                        <tr  class="alt">
+                            <td><apex:Outputtext value="{!prod.Name}" /></td>
+                            <apex:repeat value="{!schemaLst}" var="field">
+                            <td class="{!field.fieldpath}"><apex:inputfield value="{!prod[field.fieldpath]}" /></td>
+                             </apex:repeat>
+                        </tr>
+                    </apex:repeat>
+                    </tbody>
+                </table>
+                        
+                <div style="clear: both; text-align: center; margin-top: 15px;">
+                    <apex:commandButton style="text-align: center; clear: both;" styleClass="btn-primary" action="{!save}" value="Save" status="loadstatus" rerender="pageMessages,frm,script" />
+                    <apex:commandButton onClick="document.location.reload(true);" value="Cancel" status="loadstatus" rerender="pageMessages,frm" />
+                    <p>&nbsp;</p>
+                </div>          
+            </apex:outputpanel>                 
+        </apex:form>
+    </div>
+    <apex:outputPanel id="script"> 
+    <script type="text/javascript">
+        $(document).ready(function() {
+            //var weight = document.getElementById('myPage:frm:weight');
+            
+            $(".topInput input").keyup(function() {
+               var idd = $(this).parent().attr("id");
+               var classString = "."+idd+" input";
+               //alert('classString '+classString);
+               $(classString).val(this.value);  
+                
+               // console.log('Class string '+classString);
+                
+            });
+           
+            //var weight = document.getElementById('myPage:frm:weight');
+            $(".topInput input").on('keyup', function() {
+                
+               var idd = $(this).parent().attr("id");
+               
+               var classString = "."+idd+" select";
+               
+               $(classString).val(this.value);  
+                
+                //console.log('Class string '+classString);
+                
+            });
+        });
+        
+    </script>
+    </apex:outputPanel>
+</apex:page>

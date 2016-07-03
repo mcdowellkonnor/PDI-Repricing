@@ -1,0 +1,30 @@
+<apex:page controller="ECS.AddToOrderController" docType="HTML-5.0">
+
+	<c:Analytics event="INFO" app="ECS" />
+	
+	<apex:stylesheet value="{!URLFOR($Resource.ECS__sf1css, 'sf1css.css')}" />
+
+	<apex:form id="frm">
+
+		<div class="container">
+		
+			<apex:pageMessages id="pageMessages"/>
+			
+			<div class="form-panel">
+
+				<apex:outputPanel id="vals">
+				<div class="row">
+					<p>Order Number</p>
+					<apex:inputText value="{!orderNumber}" required="true" id="search" label="Search Order & Add Products" />
+				</div>
+
+				<div class="new-task">
+					<apex:commandButton action="{!searchOrders}" value="Find Order" rerender="pageMessages"
+						style="background:#137fc0; height:30px;  padding:0 15px 0 15px; border:none; cursor:pointer; margin:4px 0 0 6px;font-weight:regular;color:White;font-size: 13px;color:white" />
+				</div>
+				</apex:outputPanel>
+			</div>
+		</div>
+	</apex:form>
+
+</apex:page>

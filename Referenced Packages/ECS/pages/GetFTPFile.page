@@ -1,0 +1,20 @@
+<apex:page standardController="ECS__FTP_File__c" extensions="ECS.GetFTPFileController" action="{!getFile}">
+
+	<c:Analytics event="INFO" app="ECS" />
+	
+	<apex:pageMessages /> 
+	
+	<apex:form >
+      <apex:pageBlock id="pageBlock">
+		<apex:pageBlockButtons location="bottom">
+		    <apex:commandButton action="{!processFile}" value="Process" />
+		</apex:pageBlockButtons>
+        <apex:pageBlockSection id="pgsAttachments" columns="1">
+        	<apex:pageBlockSectionItem id="serialNumberAttachments">
+		        <apex:outputLabel value="File" for="file"/>	
+				<apex:inputTextarea value="{!fileStr}" cols="60" rows="10"/>
+			</apex:pageBlockSectionItem>
+		</apex:pageBlockSection>
+	  </apex:pageBlock>
+	</apex:form>
+</apex:page>

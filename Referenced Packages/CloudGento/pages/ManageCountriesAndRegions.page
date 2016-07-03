@@ -1,0 +1,16 @@
+<apex:page controller="CloudGento.ManageCountryRegionController">
+
+   <apex:sectionHeader title="Get Countries & Regions from Magento"/>
+	
+   <apex:pagemessages />
+   
+   <apex:form id="theForm">
+     <apex:pageBlock id="pageBlock">
+      <apex:pageBlockButtons location="bottom">
+        <apex:commandButton action="{!getCountries}" value="Get Countries"/> 
+        <apex:commandButton action="{!getRegions}" value="Get Regions"/> 
+        <!-- <apex:commandButton action="{!cancel}" value="Cancel"/>  -->
+      </apex:pageBlockButtons>
+     </apex:pageBlock>
+    </apex:form>
+</apex:page>

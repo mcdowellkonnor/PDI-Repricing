@@ -1,0 +1,100 @@
+<apex:page standardController="serp__Purchase_Order__c" extensions="serp.ManageCreditsController">
+
+    <ECS:Analytics event="INFO" app="ERP" />
+   
+	<apex:pageMessages id="pageMessages" />
+
+	<apex:form >
+		<apex:pageBlock id="pageBlock">
+			<apex:pageBlockButtons location="top">
+				<apex:commandButton action="{!credit}" value="Credit" />
+				<apex:commandButton action="{!cancel}" value="Cancel" />
+			</apex:pageBlockButtons>
+
+			<apex:outputPanel id="table">
+				<apex:outputPanel id="table2">
+
+					<apex:repeat value="{!invoiceDetails}" var="inv">
+						<center>
+
+							<table cellspacing="3" cellpadding="3" border="0" width="90%">
+								<tr>
+									<td nowrap="true"><div>
+											<b>PO:</b> {!inv.po.Name}
+										</div></td>
+									<td><div>
+											<b>Payment Type:</b>
+											<apex:selectList size="1" value="{!inv.po.serp__Payment_Type__c}">
+												<apex:selectOptions value="{!paymentTypes}" />
+											</apex:selectList>
+										</div></td>
+									<td><div>
+											<b>Restocking Fee:</b>
+											<apex:inputText size="7" value="{!inv.po.serp__Restocking_Fee__c}" />
+										</div></td>
+									<td><div>
+											<b>Freight Charges:</b>
+											<apex:inputText size="7" value="{!inv.po.serp__Freight_Charges__c}" />
+										</div></td>
+								</tr>
+							</table>
+
+							<table cellspacing="3" cellpadding="3" border="0" width="80%">
+								<thead>
+									<tr>
+										<td></td>
+										<td><span><b>SKU</b></span></td>
+										<td><span><b>Manufacturer</b></span></td>
+										<td><span><b>MPN</b></span></td>
+										<td><span><b>Quantity</b></span></td>
+										<td><span><b>Price</b></span></td>
+										<td><span><b>Credit Reason</b></span></td>
+									</tr>
+								</thead>
+								<tbody>
+									<apex:actionRegion >
+										<apex:repeat value="{!inv.poLines}" var="pol">
+											<tr id="{!pol.Id}">
+												<td align="center"><apex:commandLink rendered="{!inv.poLines.size > 1}" action="{!removeLine}"
+														status="formActionStatus"
+														rerender="pageMessages, table, table2">
+														<apex:param name="lineToRemove" value="{!pol.Id}" />
+														<span style="font-size: 30px;">&#xd7;</span>
+													</apex:commandLink></td>
+												<td><div>{!pol.serp__B2C_Product__r.Name}</div></td>
+												<td><div>{!pol.serp__B2C_Product__r.ECS__Manufacturer__c}</div></td>
+												<td><div>{!pol.serp__B2C_Product__r.ECS__MPN__c}</div></td>
+												<td title="{!pol.serp__Quantity_Received__c}"><div>
+														<apex:inputField value="{!pol.serp__Quantity_Returned__c}" />
+													</div></td>
+												<td title="{!pol.serp__Purchase_Price__c}"><div>
+														<apex:inputField value="{!pol.serp__Purchase_Price__c}" />
+													</div></td>
+												<td title="{!pol.serp__Credit_Reason__c}"><div>
+														<apex:inputField value="{!pol.serp__Credit_Reason__c}" />
+													</div></td>
+											</tr>
+										</apex:repeat>
+									</apex:actionRegion>
+								</tbody>
+							</table>
+
+							<table cellspacing="3" cellpadding="3" border="0" width="50%">
+								<tr>
+									<td><div>
+											<b>Memo:</b>
+										</div></td>
+									<td><div>
+											<apex:inputTextArea rows="10" cols="100"
+												value="{!inv.po.serp__Memo__c}" />
+										</div></td>
+								</tr>
+							</table>
+
+						</center>
+					</apex:repeat>
+				</apex:outputPanel>
+			</apex:outputPanel>
+		</apex:pageBlock>
+	</apex:form>
+</apex:page>

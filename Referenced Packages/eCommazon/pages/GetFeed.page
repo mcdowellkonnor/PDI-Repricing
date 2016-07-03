@@ -1,0 +1,21 @@
+<apex:page controller="eCommazon.GetFeedController">
+
+	<apex:pageMessages />
+	
+	<apex:form id="details">
+	
+     <apex:pageBlock id="pageBlock">
+     
+		<apex:pageBlockButtons location="top"> 
+		    <apex:commandButton action="{!getFeedInfo}" value="Get Feed Info"/>
+		</apex:pageBlockButtons>
+
+		<apex:outputPanel id="searchPanel">
+	        Feed Id: <apex:inputText id="feedId" value="{!feedId}"/> 
+		</apex:outputPanel>
+		
+	 </apex:pageBlock>
+	
+	</apex:form>
+	
+</apex:page>

@@ -1,0 +1,79 @@
+<apex:page standardController="serp__Warehouse__c" extensions="serp.SetupWarehouseController">
+
+	<div class="cc">
+	<apex:stylesheet value="{!URLFOR($Resource.ECS__bootstrap_cc)}" />
+	<link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.9.0/themes/base/jquery-ui.css"></link> 
+		
+	<apex:pageMessages id="pageMessages" />
+	<apex:form >
+	<apex:outputPanel id="products-panel2">
+		<table id="products-container" style="width: 60%; margin-left: 12px;">
+			<thead>
+				<tr>
+					<th style="width: 240px;">
+						<apex:outputLabel value="Aisle Identifier" />
+					</th>
+					<th style="width: 70px;">
+						<apex:outputLabel value="Number of Shelves" />
+					</th>
+					<th style="width: 70px;">
+						<apex:outputLabel value="Create Single BIN Locations" />
+					</th>
+				</tr>
+			</thead>
+			<tbody>
+				<apex:repeat id="warehouse-info" value="{!wiList}" var="wi">
+					<tr>
+						<td>
+							<div class="aisle-identifier">
+								<apex:outputPanel >
+									<apex:inputText value="{!wi.aisleName}" id="identifier" style="width: 100;" />
+								</apex:outputPanel>
+							</div>
+						</td>
+						<td>
+							<div class="num-shelves">
+								<apex:outputPanel >
+									<apex:inputText value="{!wi.numOfShelves}" id="qty" style="width: 30;" />
+								</apex:outputPanel>
+							</div>
+						</td>
+						<td>
+							<div class="num-shelves" style="clear: both; text-align: center; margin-top: 15px;">
+								<apex:outputPanel >
+									<apex:inputCheckbox value="{!wi.createSingleLocations}"/>
+								</apex:outputPanel>
+							</div>
+						</td>
+							
+					</tr>
+				</apex:repeat>
+			</tbody>
+		</table>
+		<apex:outputPanel >
+			<apex:actionRegion >
+				<div id="add-line-link" style="padding-left: 12px;">
+					<apex:commandLink action="{!addLine}" status="formActionStatus">
+						<span style="font-size: 30px; display:block; float: left;">&#x2b;</span>
+						<span style="display:block; margin-left: 30px; padding-top: 10px;">Add Line</span>
+					</apex:commandLink>
+				</div>
+			</apex:actionRegion>
+		</apex:outputPanel>
+	</apex:outputPanel>
+
+	<div style="clear: both; text-align: center; margin-top: 15px;">
+		<apex:commandButton style="text-align: center; clear: both;" styleClass="btn-primary" action="{!save}" value="Save" status="formActionStatus" rerender="pageMessages" />
+		<!-- <apex:commandButton action="{!cancel}" value="Cancel" status="formActionStatus" rerender="pageMessages" /> -->
+		<apex:actionStatus id="formActionStatus">
+			<apex:facet name="start">
+			<p><br/>Processing, please wait!</p>
+			</apex:facet>
+		</apex:actionStatus>
+		
+	</div>
+						
+	</apex:form>
+	</div>
+
+</apex:page>

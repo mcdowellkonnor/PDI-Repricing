@@ -1,0 +1,37 @@
+<apex:page controller="CloudConversion.MergeCustomersController" >
+
+   <ECS:twitterBootstrap /> 
+   
+    <apex:sectionHeader title="Select Master Customer to Merge"/>
+    <apex:form >
+    
+    <center>
+    <table class="table table-hover" cellspacing="3" cellpadding="3" border="0" width="80%">
+        <thead>
+           <tr>
+             <td><span>Customer Name</span></td>
+             <td><span>Email Address</span></td>
+             <td><span>Phone</span></td>         
+             <td><span>eBay User Id</span></td>
+           </tr>
+        </thead>
+        <tbody>
+            <apex:repeat value="{!customerList}" var="c">
+                 <tr id="{!c.Id}">
+                     <td title="{!c.FirstName} {!c.LastName} ">
+                           <div><apex:commandLink action="{!mergeCustomers}">{!c.FirstName} {!c.LastName} 
+                                   <apex:param name="masterCustomerId" value="{!c.Id}"/>
+                                </apex:commandLink></div>
+                     </td>
+                     <td title="{!c.Email}"><div>{!c.Email}</div></td> 
+                     <td title="{!c.Phone}"><div>{!c.Phone}</div></td> 
+                     <td title="{!c.ECS__eBay_User_Id__c}"><div>{!c.ECS__eBay_User_Id__c}</div></td>            
+                     <!--<td title="{!c.ECS__Status__c}"><div>{!c.ECS__Status__c}</div></td>-->
+                  </tr> 
+            </apex:repeat>
+        </tbody>
+    </table>
+    </center>
+    </apex:form>
+
+</apex:page>

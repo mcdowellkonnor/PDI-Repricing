@@ -1,0 +1,116 @@
+<apex:page controller="ECS.ProductSearchController" showHeader="false">
+	<apex:pageMessages id="pagemessages"></apex:pageMessages>
+	
+	<script type="text/javascript">
+		//$j = jQuery.noConflict();
+
+		function preSearch(searchString) {
+			if(searchString != null) {
+				var inputs = document.getElementById('query-holder').getElementsByTagName('input');
+				inputs[0].value = searchString;
+				alert(searchString);
+			} else {
+				alert('is null');
+			}
+		}
+
+		function fillIn(name, id) {
+      		var winMain = window.opener;
+      		if (null == winMain) {
+         		winMain = window.parent.opener;
+      		}
+      		var nameEl = winMain.document.getElementById('{!$CurrentPage.parameters.namefield}');
+      		nameEl.value = name;
+      		var idEl = winMain.document.getElementById('{!$CurrentPage.parameters.idfield}');
+      		idEl.value = id;
+      		nameEl.onchange();
+      		closeWindow();
+   		}
+ 
+   		function closeWindow() {
+      		var winMain = window.opener;
+      		if (null == winMain) {
+         		winMain = window.parent.opener;
+      		}
+      		winMain.closeLookupPopup();
+   		}
+
+   	preSearch('{!$CurrentPage.parameters.searchfield}');
+	</script>
+
+	<apex:form >
+		<apex:pageBlock title="Product Search">
+			<apex:pageBlockSection columns="1">
+				<apex:pageBlockSectionitem >
+					<apex:outputPanel >
+						<div id="query-holder">
+							<apex:inputText value="{!searchQuery}"/>
+							<apex:commandButton value="Search" action="{!Beginning}" rerender="searchresults, pagemessages"></apex:commandButton>
+						</div>
+					</apex:outputPanel>
+				</apex:pageBlockSectionitem>
+			</apex:pageBlockSection>
+		</apex:pageBlock>
+		<apex:pageBlock id="searchresults">
+			<apex:outputPanel id="navButtons">
+				<center>
+					<apex:commandButton action="{!Beginning}" title="Beginning" value="<<" disabled="{!disablePrevious}" reRender="resultPanel, navButtons"/>
+					<apex:commandButton action="{!Previous}" title="Previous" value="<" disabled="{!disablePrevious}" reRender="resultPanel, navButtons"/>
+					<apex:commandButton action="{!Next}" title="Next" value=">" disabled="{!disableNext}" reRender="resultPanel, navButtons"/>
+					<apex:commandButton action="{!End}" title="End" value=">>" disabled="{!disableNext}" reRender="resultPanel, navButtons"/>
+				</center>
+			</apex:outputPanel>
+			<apex:outputPanel id="resultPanel">
+				<apex:pageBlockSection columns="1">
+					<apex:pageBlockTable value="{!results}" var="p">
+						<apex:column >
+							<apex:facet name="header">
+								<apex:commandLink value="SKU{!IF(sortField=='Name',IF(sortDirection='ASC','▲','▼'),'')}" id="nameSort">
+          				<apex:param value="Name" name="nameField" assignTo="{!sortField}" ></apex:param>
+          				<apex:param value="{!IF(sortDirection='ASC','DESC','ASC')}" name="nameDirection" assignTo="{!sortDirection}" ></apex:param>
+       					</apex:commandLink>
+							</apex:facet>
+							<apex:outputLink value="#" onclick="fillIn('{!p.Name}', '{!p.id}')">{!p.Name}</apex:outputLink>
+						</apex:column>
+						<apex:column >
+							<apex:facet name="header">
+								<apex:commandLink value="Title{!IF(sortField=='Title__c',IF(sortDirection='ASC','▲','▼'),'')}" id="titleSort">
+          				<apex:param value="Title__c" name="titleField" assignTo="{!sortField}" ></apex:param>
+          				<apex:param value="{!IF(sortDirection='ASC','DESC','ASC')}" name="titleDirection" assignTo="{!sortDirection}" ></apex:param>
+       					</apex:commandLink>
+							</apex:facet>
+							<apex:outputText value="{!p.ECS__Title__c}"/>
+						</apex:column>
+						<apex:column >
+							<apex:facet name="header">
+								<apex:commandLink value="Price{!IF(sortField=='Price__c',IF(sortDirection='ASC','▲','▼'),'')}" id="priceSort">
+          				<apex:param value="Price__c" name="priceField" assignTo="{!sortField}" ></apex:param>
+          				<apex:param value="{!IF(sortDirection='ASC','DESC','ASC')}" name="priceDirection" assignTo="{!sortDirection}" ></apex:param>
+       					</apex:commandLink>
+							</apex:facet>
+							<apex:outputText value="{!p.ECS__Price__c}"/>
+						</apex:column>
+						<apex:column >
+							<apex:facet name="header">
+								<apex:commandLink value="Quantity{!IF(sortField=='Quantity__c',IF(sortDirection='ASC','▲','▼'),'')}" id="quantitySort">
+          				<apex:param value="Quantity__c" name="quantityField" assignTo="{!sortField}" ></apex:param>
+          				<apex:param value="{!IF(sortDirection='ASC','DESC','ASC')}" name="quantityDirection" assignTo="{!sortDirection}" ></apex:param>
+       					</apex:commandLink>
+							</apex:facet>
+							<apex:outputText value="{!p.ECS__Quantity__c}"/>
+						</apex:column>
+						<apex:column >
+							<apex:facet name="header">
+								<apex:commandLink value="Image{!IF(sortField=='Image_1_URL__c',IF(sortDirection='ASC','▲','▼'),'')}" id="imageSort">
+          				<apex:param value="Image_1_URL__c" name="imageField" assignTo="{!sortField}" ></apex:param>
+          				<apex:param value="{!IF(sortDirection='ASC','DESC','ASC')}" name="imageDirection" assignTo="{!sortDirection}" ></apex:param>
+       					</apex:commandLink>
+							</apex:facet>
+							<apex:image style="width: 150px;" url="{!p.ECS__Image_1_URL__c}"></apex:image>
+						</apex:column>
+					</apex:pageBlockTable>
+				</apex:pageBlockSection>
+			</apex:outputPanel>
+		</apex:pageBlock>
+	</apex:form>
+</apex:page>

@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Follow</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <deprecated>false</deprecated>
+    <enableActivities>true</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>true</enableHistory>
+    <enableReports>true</enableReports>
+    <enableSearch>true</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <fields>
+        <fullName>Shipping_Carrier__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <formula>TEXT(Shipping_Detail__r.Shipping_Carrier__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Shipping Carrier</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Shipping_Detail__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Shipping Detail</label>
+        <referenceTo>Shipping_Detail__c</referenceTo>
+        <relationshipLabel>Tracking Numbers</relationshipLabel>
+        <relationshipName>Tracking_Numbers</relationshipName>
+        <relationshipOrder>0</relationshipOrder>
+        <reparentableMasterDetail>false</reparentableMasterDetail>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>MasterDetail</type>
+        <writeRequiresMasterRead>false</writeRequiresMasterRead>
+    </fields>
+    <fields>
+        <fullName>Tracking_URL__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <formula>HYPERLINK(
+IF(Shipping_Carrier__c=&quot;USPS&quot;,&quot;https://tools.usps.com/go/TrackConfirmAction?qtc_tLabels1=&quot;,
+IF(Shipping_Carrier__c=&quot;UPSMailInnovations&quot;,&quot;http://www.ups-mi.net/packageID/default.aspx#&quot;,
+IF(Shipping_Carrier__c=&quot;DHL&quot;,&quot;http://webtrack.dhlglobalmail.com/?trackingnumber=&quot;,
+IF(Shipping_Carrier__c=&quot;RoyalMail&quot;,&quot;http://www.royalmail.com/portal/rm/track?trackNumber=&quot;,
+IF(Shipping_Carrier__c=&quot;Parcelforce&quot;,&quot;http://www.parcelforce.com/portal/pw/track?trackNumber=&quot;,
+IF(Shipping_Carrier__c=&quot;AustraliaPost&quot;,&quot;http://auspost.com.au/track&quot;,
+IF(CONTAINS(LOWER(Shipping_Carrier__c),&quot;fedex&quot;),&quot;http://www.fedex.com/Tracking?action=track&amp;tracknumbers=&quot;,
+IF(CONTAINS(LOWER(Shipping_Carrier__c),&quot;ups&quot;),&quot;http://wwwapps.ups.com/WebTracking/processRequest?tracknum=&quot;,
+IF(CONTAINS(LOWER(Shipping_Carrier__c),&quot;usps&quot;),&quot;https://tools.usps.com/go/TrackConfirmAction?qtc_tLabels1=&quot;,
+IF(BEGINS(Name,&quot;1Z&quot;),&quot;http://wwwapps.ups.com/WebTracking/processRequest?tracknum=&quot;,
+IF(BEGINS(Name,&quot;LN&quot;),&quot;https://tools.usps.com/go/TrackConfirmAction?qtc_tLabels1=&quot;,
+IF(BEGINS(Name,&quot;E&quot;),&quot;https://tools.usps.com/go/TrackConfirmAction?qtc_tLabels1=&quot;,
+IF(BEGINS(Name,&quot;CJ&quot;),&quot;https://tools.usps.com/go/TrackConfirmAction?qtc_tLabels1=&quot;,
+IF(BEGINS(Name,&quot;CQ&quot;),&quot;https://tools.usps.com/go/TrackConfirmAction?qtc_tLabels1=&quot;,
+IF(LEN(Name)==22,&quot;https://tools.usps.com/go/TrackConfirmAction?qtc_tLabels1=&quot;,
+IF(BEGINS(Name,&quot;84BF&quot;),&quot;http://hdnl.co.uk/UPI-Tracking-Details/?upi=&quot;,
+IF(BEGINS(Name,&quot;RJ&quot;),&quot;http://www.royalmail.com/portal/rm/track?trackNumber=&quot;,
+IF(LEN(Name)==12,&quot;http://www.fedex.com/Tracking?action=track&amp;tracknumbers=&quot;,
+IF(LEN(Name)==10,&quot;http://www.dhl.com/publish/g0/en/eshipping/track.high.html%3FpageToInclude%3DRESULTS%26type%3Dtrackindex%26brand%3DDHL%26AWB%3D&quot;,
+IF(LEN(Name)==15,&quot;http://www.fedex.com/Tracking?action=track&amp;tracknumbers=&quot;,&quot;http://wwwapps.ups.com/WebTracking/processRequest?tracknum=&quot;)
+)))))))))))))))))))
++Name,Name)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Tracking URL</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <label>Tracking Number</label>
+    <listViews>
+        <fullName>All</fullName>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+    </listViews>
+    <nameField>
+        <label>Tracking Number</label>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+    </nameField>
+    <pluralLabel>Tracking Numbers</pluralLabel>
+    <searchLayouts>
+        <customTabListAdditionalFields>Shipping_Carrier__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Shipping_Detail__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Tracking_URL__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>CREATEDBY_USER</customTabListAdditionalFields>
+        <customTabListAdditionalFields>CREATED_DATE</customTabListAdditionalFields>
+        <lookupDialogsAdditionalFields>Shipping_Carrier__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Shipping_Detail__c</lookupDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>Shipping_Carrier__c</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>Shipping_Detail__c</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>Tracking_URL__c</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>CREATEDBY_USER</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>CREATED_DATE</lookupPhoneDialogsAdditionalFields>
+        <searchFilterFields>NAME</searchFilterFields>
+        <searchFilterFields>Shipping_Carrier__c</searchFilterFields>
+        <searchFilterFields>Shipping_Detail__c</searchFilterFields>
+        <searchResultsAdditionalFields>Shipping_Carrier__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Shipping_Detail__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Tracking_URL__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>CREATED_DATE</searchResultsAdditionalFields>
+    </searchLayouts>
+    <sharingModel>ControlledByParent</sharingModel>
+</CustomObject>

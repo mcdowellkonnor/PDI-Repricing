@@ -1,0 +1,5 @@
+<apex:page standardController="ECS__Product__c" sidebar="false" showHeader="true" >
+
+	<c:AnalyzeForecast />
+	
+</apex:page>

@@ -1,0 +1,2 @@
+<apex:page action="{!getShippingDetailsOnOrder}" standardController="ECS__eCommSource_Order__c" extensions="CloudGento.GetMagentoShippingController">
+</apex:page>

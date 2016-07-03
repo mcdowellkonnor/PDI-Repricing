@@ -1,0 +1,7 @@
+<apex:page showHeader="false" renderAs="pdf" standardController="ECS__Quote__c">
+
+	<apex:stylesheet value="{!URLFOR($Resource.ECS__invoicestyle, 'invoicestyle.css')}" />
+	
+	<c:ViewQuote2 quoteId="{!ECS__Quote__c.Id}"/>   
+
+</apex:page>

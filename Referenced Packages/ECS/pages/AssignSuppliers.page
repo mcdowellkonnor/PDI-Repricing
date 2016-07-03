@@ -1,0 +1,62 @@
+<apex:page controller="ECS.AssignSupplierController">
+
+	<c:Analytics event="INFO" app="ECS" />
+	
+   <apex:sectionHeader title="Assign Suppliers"/>  
+
+   <apex:pagemessages />
+   
+   <apex:form id="theForm">
+     <apex:pageBlock id="pageBlock">
+		 <apex:pageBlockButtons >
+		    <apex:commandButton action="{!assignSuppliers}" value="Assign Suppliers"/>
+		    <apex:commandButton action="{!cancel}" value="Cancel"/>
+		 </apex:pageBlockButtons>
+		 <center>
+		 <apex:outputPanel id="table">
+		 <apex:actionRegion >
+	     <table cellspacing="3" cellpadding="3" border="0" width="90%">
+	        <thead>
+	           <tr>
+	             <td><span><b>Customer</b></span></td>  
+	             <apex:repeat value="{!$ObjectType.ECS__eCommSource_Order_Line__c.FieldSets.ECS__Assign_Supplier}" var="fs">
+					<td><span><b>{!fs.Label}</b></span></td>
+				 </apex:repeat>
+	             <td><span><b>Supplier</b></span></td>
+	           </tr>
+	        </thead>
+	           <tr>
+	             <td></td>
+	             <apex:repeat value="{!$ObjectType.ECS__eCommSource_Order_Line__c.FieldSets.ECS__Assign_Supplier}" var="fs">
+					<td></td>
+				 </apex:repeat>
+	             <td><apex:selectList size="1" id="supplier" value="{!bulkSupplierId}">
+				        <apex:actionSupport event="onchange"  action="{!changeSuppliers}" rerender="table" /> <!-- status="status"/>     -->
+				        <apex:selectOptions value="{!suppliers}"/> 
+				      </apex:selectList>
+				      <!-- <apex:actionStatus startText="applying value..." id="status"/> -->
+				 </td>
+	           </tr>
+	        <tbody>
+	            <apex:repeat value="{!orderLineList}" var="ol">
+	                 <tr id="{!ol.Id}">
+	                     <td title="{!ol.ECS__Order__r.ECS__Customer__r.Name}"><div>{!ol.ECS__Order__r.ECS__Customer__r.Name}</div></td>
+	                     <apex:repeat value="{!$ObjectType.ECS__eCommSource_Order_Line__c.FieldSets.ECS__Assign_Supplier}" var="fs">
+							 <td><span><apex:outputField value="{!ol[fs]}" /></span></td>
+						 </apex:repeat>            	
+	                     <td title="Supplier"><div><apex:selectList size="1" id="supplier" value="{!ol.ECS__Supplier__c}">                  
+				                   <apex:selectOptions value="{!suppliers}"/>
+				                </apex:selectList></div></td>
+	                  </tr> 
+	            </apex:repeat>
+	            
+	        </tbody>
+	    </table>
+	    </apex:actionRegion>
+	    Update Supplier on Products: <apex:inputCheckbox value="{!updateProductSuppliers}" />
+	    </apex:outputPanel>
+	    </center>
+        </apex:pageBlock>
+   </apex:form>
+	
+</apex:page>

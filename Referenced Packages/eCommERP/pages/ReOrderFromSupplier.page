@@ -1,0 +1,4 @@
+<apex:page standardController="ECS__Supplier__c"
+	extensions="serp.ReOrderController" action="{!reorder}">
+	<apex:pageMessages />
+</apex:page>

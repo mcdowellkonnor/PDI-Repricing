@@ -1,0 +1,80 @@
+<apex:page cache="true" expires="600">
+
+	<c:Analytics event="INFO" app="ECS" />
+	
+    <apex:stylesheet value="{!URLFOR($Resource.ECS__sf1css, 'sf1css.css')}" />
+
+    <style>
+body {
+    /*to retain view port proportions*/
+    
+}
+
+.icon-container {
+    text-align: center;
+    width: 100%;
+    padding-top: 115px;
+    background: url(/resource/1391149694000/eCommERP_100px) top no-repeat
+        !important;
+    background-color: #fff !important;
+    min-width: 320px;
+    /*to retain view port proportions*/
+}
+
+.icon-container ul {
+    list-style: none;
+    padding: 0;
+}
+
+.icon-container li {
+    display: inline-block;
+    width: 33%;
+    margin-left: 0;
+    font-size: 120%;
+    margin-bottom: 15px;
+}
+
+.icon-container li * {
+    border: none;
+    display: block;
+    text-decoration: none;
+    margin: 0 auto 10px;
+}
+</style>
+    <Center><div style="background-color:#fff;"> <!-- <apex:image id="logo" value="{!$Resource.eCommERP_Logo50px}" width="180" height="60"/> -->  </div></Center>
+    <apex:form >
+        <div class="icon-container">
+            <ul>
+                <li><apex:outputLink value="/apex/ECS__BIN_Count" target="_blank">
+                        <apex:image id="theImage2" value="{!$Resource.ECS__BINCountIcon}"
+                            width="60" height="60" />
+                        <p>Bin Count</p>
+                    </apex:outputLink></li>
+                
+                <!-- TODO: Manage with Custom Setting! -->  
+                    
+                <!-- <li><apex:outputLink value="/apex/serp__VF_BIN_Move"
+                        target="_blank">
+                        <apex:image id="theImage3" value="{!$Resource.BINMoveIcon}"
+                            width="60" height="60" />
+                        <p>Bin Move</p>
+                    </apex:outputLink></li>
+                <li><apex:outputLink value="/apex/serp__Vf_PO_Detail_Page">
+                        <apex:image id="theImage" value="{!$Resource.ReceivePOIcon}"
+                            width="60" height="60" />
+                        <p>Receive PO</p>
+                    </apex:outputLink></li>
+                <li><apex:outputLink value="/apex/serp__VF_POLSearch"
+                        target="_blank">
+                        <apex:image id="theImage4" value="{!$Resource.ReceivePOLIcon}"
+                            width="60" height="60" />
+                        <p>Receive POL</p>
+                    </apex:outputLink></li> -->
+                <!-- 
+            Find products by SKU, ASIN, FNSKU, etc
+         -->
+            </ul>
+        </div>
+    </apex:form>
+
+</apex:page>

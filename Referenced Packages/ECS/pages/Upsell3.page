@@ -1,0 +1,3 @@
+<apex:page showHeader="false" standardStylesheets="false" cache="true" expires="900">
+	<c:Upsell3 />
+</apex:page>

@@ -1,0 +1,30 @@
+<apex:page controller="serp.SplitPOController">
+
+	<apex:pageMessages />
+
+	<apex:form id="details">
+
+		<apex:outputPanel id="all" rendered="{!display}">
+			<apex:pageBlock id="pageBlock">
+				<apex:pageBlockButtons location="bottom">
+					<apex:commandButton action="{!split}" value="Split" />
+					<apex:commandButton action="{!cancel}" value="Cancel" />
+				</apex:pageBlockButtons>
+
+				<apex:pageBlockSection id="details" columns="1">
+					<apex:pageBlockSectionItem id="mp">
+						<apex:outputLabel value="Master Plan" for="masterPlan" />
+						<apex:inputField id="masterPlan" value="{!po.serp__Master_Plan__c}" />
+					</apex:pageBlockSectionItem>
+					<apex:pageBlockSectionItem id="supp">
+						<apex:outputLabel value="Supplier" for="supplier" />
+						<apex:inputField id="supplier" value="{!po.serp__Supplier__c}"
+							required="true" />
+					</apex:pageBlockSectionItem>
+				</apex:pageBlockSection>
+
+			</apex:pageBlock>
+		</apex:outputPanel>
+	</apex:form>
+
+</apex:page>

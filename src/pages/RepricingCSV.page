@@ -1,0 +1,5 @@
+<apex:page controller="RepricingController" action="{!do_export}" readOnly="true" contentType="application/vnd.ms-excel#PriceSheet.csv">{!header}
+    <apex:repeat value="{!wrapr}" var="x">
+    	{!x.ProductID}, {!x.DirectCost}, {!x.PCost}, {!x.IFreight}, {!x.OShip}, {!x.FFee}, {!x.MinSalePrice}, {!x.AmazonPrice}, {!x.AZPriceChange}, {!x.UzookaPrice}, {!x.UzookaPriceChange}, {!x.DepotPrice}, {!x.DepotPriceChange}, {!x.WebsitePrice}, {!x.WebsitePriceChange}, {!x.CompAeBayPrice}, {!x.CompBeBayPrice}, {!x.CompCeBayPrice}, {!x.CompAAZPrice}, {!x.CompBAZPrice}, {!x.CompCAZPrice}
+    </apex:repeat>
+</apex:page>

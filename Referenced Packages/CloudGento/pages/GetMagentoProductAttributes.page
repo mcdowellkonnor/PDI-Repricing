@@ -1,0 +1,2 @@
+<apex:page showHeader="false" standardController="ECS__Attribute_Set__c" extensions="CloudGento.GetMagentoProductAttributesController" action="{!getProductAttributes}"> 
+</apex:page>

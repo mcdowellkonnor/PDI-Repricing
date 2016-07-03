@@ -1,0 +1,2 @@
+<apex:page showHeader="false" standardController="CloudGento__Magento_Setting__c" extensions="CloudGento.GetMagentoStoreInfoController" action="{!getStoreInfo}">
+</apex:page>

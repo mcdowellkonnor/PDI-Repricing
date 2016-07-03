@@ -1,0 +1,38 @@
+<apex:page standardController="CloudGento__Magento_Setting__c" extensions="CloudGento.GetMagentoInventoryController">
+
+  <apex:sectionHeader title="Get Inventory for {!settingName}"/>  
+      
+   <apex:pagemessages />
+   
+   <apex:form id="theForm">
+     <center>
+     <apex:pageBlock id="pageBlock">
+      <apex:pageBlockButtons >
+        <apex:commandButton action="{!getInventory}" value="Get Inventory"/> 
+        <apex:commandButton action="{!getInventoryDetails}" value="Get Inventory Details"/>
+        <apex:commandButton action="{!getImages}" value="Get Images"/> 
+        <apex:commandButton action="{!cancel}" value="Cancel"/> 
+      </apex:pageBlockButtons>
+      <apex:outputPanel id="outputPanelSelectBoxes">
+      <table border="0" cellpadding="0" cellspacing="0" width="90%">
+          <tr>
+	         <td nowrap="true"> 
+			        <apex:pageBlockSection id="pgsRow1" columns="1"> 
+			            <apex:pageBlockSectionItem id="pgsiSKU">
+			                <apex:outputLabel value="SKU" for="skus"/>
+					        <apex:inputTextarea id="skus" value="{!skus}"/>
+			            </apex:pageBlockSectionItem>
+			            <apex:pageBlockSectionItem >
+			              <apex:outputLabel value="Last Updated" for="lastUpdated"/> 
+			              <apex:inputText id="lastUpdated" value="{!lastUpdated}"/>
+			            </apex:pageBlockSectionItem> 
+			        </apex:pageBlockSection>
+	         </td>
+	        </tr>
+	        </table>
+	      </apex:outputPanel>
+    </apex:pageBlock>
+    </center>
+   </apex:form>
+
+</apex:page>

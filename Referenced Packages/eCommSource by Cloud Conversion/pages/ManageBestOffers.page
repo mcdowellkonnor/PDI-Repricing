@@ -1,0 +1,49 @@
+<apex:page controller="CloudConversion.ManageBestOffersController">
+
+	<ECS:Analytics event="INFO" app="eCommSource" />
+	
+   <apex:pagemessages />
+   
+   <apex:form id="theForm">
+   <apex:pageBlock id="pageBlock" >
+      <apex:pageBlockButtons location="bottom">
+        <apex:commandButton action="{!counter}" value="Counter"/>
+      </apex:pageBlockButtons>
+      
+	  <apex:outputPanel id="outputPanelSelectBoxes">
+      <table border="0" cellpadding="0" cellspacing="0" width="100%">
+        <tr>
+         <td nowrap="true"> 
+	           <apex:outputPanel id="outputPanelResponse">
+	            
+	               <!-- <apex:pageBlockSection id="pgsResponse" columns="1">
+			           <apex:pageBlockSectionItem id="pgsiResponse">
+			             <apex:outputLabel value="Message" for="response"/>
+			             <apex:inputTextarea id="response" value="{!response}" cols="100" rows="3" />  <!-- onchange="sz(this);" onclick="sz(this);" onkeydown="sz(this);" onkeyup="sz(this);" onmousedown="sz(this);" -->
+			             <!-- <apex:inputTextarea id="response" value="{!response}" cols="100" rows="5" onchange="handleTextAreaElementChange('response', 1000, 'remaining', 'over limit');" onclick="handleTextAreaElementChange('response', 1000, 'remaining', 'over limit');" onkeydown="handleTextAreaElementChange('response', 1000, 'remaining', 'over limit');" onkeyup="handleTextAreaElementChange('response', 1000, 'remaining', 'over limit');" onmousedown="handleTextAreaElementChange('response', 1000, 'remaining', 'over limit');" />  
+			           </apex:pageBlockSectionItem>
+	        	   </apex:pageBlockSection>-->
+	        	   
+	               <apex:pageBlockSection id="counterInfo" columns="1">
+			           <apex:pageBlockSectionItem id="counterResponsePrice">
+			             <apex:outputLabel value="Counteroffer Price" for="counterPrice"/>
+			             <apex:inputText id="counterPrice" value="{!counterOfferPrice}" />
+			           </apex:pageBlockSectionItem>
+			       
+			           <!-- <apex:pageBlockSectionItem id="counterResponseQty">
+			             <apex:outputLabel value="Counteroffer Quantity" for="counterQty"/>
+			             <apex:inputText id="counterQty" value="{!counterQuantity}" />
+			           </apex:pageBlockSectionItem>-->
+			           
+	        	   </apex:pageBlockSection>
+	        	   
+	           </apex:outputPanel>
+	         </td>
+	        </tr>
+	        
+	        </table>
+	      </apex:outputPanel>
+    </apex:pageBlock>
+   </apex:form>
+
+</apex:page>

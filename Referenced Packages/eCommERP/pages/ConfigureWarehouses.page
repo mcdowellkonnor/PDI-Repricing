@@ -1,0 +1,91 @@
+<apex:page standardController="serp__Warehouse__c" extensions="serp.ConfigureWarehousesController" sidebar="false" showHeader="true">
+<apex:stylesheet value="{!URLFOR($Resource.serp__sf1css, 'sf1css.css')}"/>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>
+        <apex:form id="frmid" onkeyup="Myfunction1();">
+
+		<apex:pageBlock id="blckId">
+
+			<table
+				Style="height: 80px; border-collapse: collapse; border-spacing: 0px; border-color: #000; text-align: center;"
+				border="3px" bordercolor="#000000" width="1300px" class="list big">
+				<thead>
+					<tr>
+						<th><div align="center">
+								<b>Warehouse Name</b>
+							</div></th>
+						
+					</tr>
+				</thead>
+				<tr>
+				<td class="dataCell" style="text-align: center;"><b><font size="3"><apex:outputLink value="/{!warehouse.Id}"
+									target="_blank">{!warehouse.Name}</apex:outputLink></font></b></td>
+				
+				</tr>
+			</table>
+		</apex:pageBlock>
+        <!--<div class="col-2 row">
+        	<div><apex:selectList value="{!warehouseID}" size="1">
+            	<apex:actionSupport event="onchange" action="{!changePick}"/>
+                <apex:selectOptions value="{!WarehouseList}"></apex:selectOptions>
+            </apex:selectList></div>
+            <div><apex:commandButton value="New Warehouse" action="{!CreateNewWarehouse}" styleClass="createNewAmazonRemoval" style="text-allign:center;"/></div>
+        </div> -->
+        
+        <Center>
+        	<div>
+        	<table cellspacing="0" cellpadding="5px" width="80%" style="text-allign:center; padding:2px;"> 
+					<thead class="rich-table-thead">
+						<tr class="headerRow "> 
+							<th class="headerRow  " scope="col" colspan="1">Shelves</th>
+							<th class="headerRow  " scope="col" colspan="5">Aisles</th>
+						</tr>
+					</thead>
+					<apex:repeat value="{!aisles}" var="aisleList">
+						<tr>
+							<td>
+								<apex:outputText >b</apex:outputText>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<apex:outputText value="{!aisleList.Name}"></apex:outputText>
+							</td>
+						</tr>
+					</apex:repeat>
+        	</table>
+        	</div>
+        </Center>
+
+
+	<!-- <table border="1">
+		<apex:repeat value="{!matrix}" var="r"> 
+			<tr> 
+			   <apex:repeat value="{!r}" var="c"> 
+			     <td>{!c}</td> 
+			   </apex:repeat>
+			</tr>
+		</apex:repeat>
+	</table> -->
+	
+   <apex:repeat value="{!lstAcc}" var="acc">
+      <table border="1">
+          <tr>
+              <td>Aisle: {!acc.name}</td> 
+              <td>
+                  <table border="1">
+                      <tr>
+                         <apex:repeat value="{!acc.Shelf__r}" var="con">
+                             <td>Shelf: {!con.name}</td>
+                         </apex:repeat>
+                      </tr>
+                  </table>
+              </td>
+          </tr>
+      </table>
+    </apex:repeat>	
+
+
+</apex:form>
+ 
+	
+</apex:page>

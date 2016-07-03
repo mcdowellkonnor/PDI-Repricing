@@ -1,0 +1,104 @@
+<apex:page standardController="CloudConversion__Inquiry_Setting__c" extensions="CloudConversion.MakeEBayCallsController">
+	
+   <ECS:Analytics event="INFO" app="eCommSource" />
+	
+   <apex:pageMessages id="pageMessages"/>
+   
+   <apex:sectionHeader title="Get eBay Messages for {!inquirySetting.CloudConversion__eBay_User_Id__c}"/>
+   <apex:form id="theForm">
+     <apex:pageBlock >
+	 <apex:actionRegion >
+        <apex:pageBlockSection columns="1">
+           <apex:pageBlockSectionItem >
+             <apex:outputLabel value="Call Type" for="callType"/>   
+             <apex:selectList size="1" id="callType" value="{!callType}">
+               <apex:actionSupport event="onchange" action="{!handleCallOptions}" rerender="options, pageMessages" />
+               <apex:selectOptions value="{!ebaycalloptions}"/>
+             </apex:selectList>
+           </apex:pageBlockSectionItem>
+           <apex:outputPanel id="options"> 
+             <apex:pageBlockSection columns="1">
+	           <apex:pageBlockSectionItem rendered="{!renderMessageId}"> 
+	             <apex:outputLabel value="Message Id" for="MessageId"/> 
+	             <apex:inputText id="MessageId" value="{!MessageId}"/>
+	           </apex:pageBlockSectionItem> 
+	           <apex:pageBlockSectionItem rendered="{!renderStartHour}"> 
+	             <apex:outputLabel value="Start Hour" for="startHour"/> 
+	             <apex:inputText id="startHour" value="{!startHour}"/>
+	           </apex:pageBlockSectionItem> 
+	           <!--<apex:pageBlockSectionItem >
+	             <apex:outputLabel value="Days to Go Back" for="daysToGoBack"/>      
+	             <apex:inputText id="daysToGoBack" value="{!daysToGoBack}"/>
+	           </apex:pageBlockSectionItem> -->
+	           <apex:pageBlockSectionItem rendered="{!renderHoursToGoBack}">
+	             <apex:outputLabel value="Hours to Go Back" for="hoursToGoBack"/>            
+	             <apex:inputText id="hoursToGoBack" value="{!hoursToGoBack}"/>
+	           </apex:pageBlockSectionItem>
+	           <apex:pageBlockSectionItem rendered="{!renderEndHour}">
+	             <apex:outputLabel value="End Hour" for="endHour"/> 
+	             <apex:inputText id="endHour" value="{!endHour}"/>
+	           </apex:pageBlockSectionItem> 
+	           <apex:pageBlockSectionItem rendered="{!renderEBayUserId}">
+	             <apex:outputLabel value="eBay User Id" for="eBayUserId"/>            
+	             <apex:inputText id="eBayUserId" value="{!eBayUserId}"/>
+	           </apex:pageBlockSectionItem>
+	           <apex:pageBlockSectionItem rendered="{!renderEBayItemId}">
+	             <apex:outputLabel value="eBay Item Id" for="eBayItemId"/>            
+	             <apex:inputText id="eBayItemId" value="{!eBayItemId}"/>
+	           </apex:pageBlockSectionItem>
+	           <apex:pageBlockSectionItem rendered="{!renderEBayTxnId}">
+	             <apex:outputLabel value="eBay Transaction Id" for="eBayTxnId"/>            
+	             <apex:inputText id="eBayTxnId" value="{!eBayTxnId}"/>
+	           </apex:pageBlockSectionItem>
+	        </apex:pageBlockSection>
+	        <apex:pageBlockSection columns="2" rendered="{!renderEBayOrderIds}">
+	           <apex:pageBlockSectionItem rendered="{!renderEBayOrderIds}">
+	             <apex:outputLabel value="eBay Order Ids" for="eBayOrderIds"/>            
+	             <apex:inputTextarea id="eBayOrderIds" value="{!eBayOrderIds}" rows="20" cols="50"/>
+	           </apex:pageBlockSectionItem>
+	           <apex:pageBlockSectionItem rendered="{!renderSalesRecordId}">
+	             <apex:outputLabel value="eBay Sales Record Ids" for="SalesRecordId"/>            
+	             <apex:inputTextarea id="SalesRecordId" value="{!SalesRecordId}" rows="20" cols="50"/>
+	           </apex:pageBlockSectionItem>
+	        </apex:pageBlockSection>
+	       	<apex:pageBlockSection columns="1" rendered="{!renderMessageStatus}">
+	           <apex:pageBlockSectionItem rendered="{!renderMessageStatus}">
+	             <apex:outputLabel value="Message Status" for="messageStatus"/>   
+	             <apex:selectList size="1" id="messageStatus" value="{!messageStatus}">
+	               <apex:selectOptions value="{!messagestatusoptions}"/>
+	             </apex:selectList>
+	           </apex:pageBlockSectionItem>
+	        </apex:pageBlockSection>
+	       	<apex:pageBlockSection columns="1" rendered="{!renderEbayCaseId}">
+	           <apex:pageBlockSectionItem rendered="{!renderEbayCaseId}">
+	             <apex:outputLabel value="eBay Case Id" for="EbayCaseId"/>
+	             <apex:inputText id="EBayCaseId" value="{!eBayCaseId}"/>
+	           </apex:pageBlockSectionItem>
+	           <apex:pageBlockSectionItem rendered="{!renderEbayCaseId}">
+	             <apex:outputLabel value="eBay Case Type" for="EbayCaseType"/>
+	             <apex:inputText id="EBayCaseType" value="{!eBayCaseType}"/> 
+	           </apex:pageBlockSectionItem>
+	        </apex:pageBlockSection>
+
+	       	<apex:pageBlockSection columns="1" rendered="{!renderEbayReturnId}">
+	           <apex:pageBlockSectionItem >
+	             <apex:outputLabel value="eBay Return Ids" for="EbayReturnId"/>
+	             <apex:inputTextarea id="EBayReturnId" value="{!eBayReturnId}"/>
+	           </apex:pageBlockSectionItem>
+	        </apex:pageBlockSection>
+	        
+
+	           <!--<apex:pageBlockSectionItem rendered="{!renderJobId}">
+	             <apex:outputLabel value="jobId" for="jobId"/>      
+	             <apex:inputText id="jobId" value="{!jobId}"/>
+	           </apex:pageBlockSectionItem> -->
+	       </apex:outputPanel>
+           <apex:pageBlockSectionItem >
+             <apex:outputLabel value=""/>
+             <apex:commandButton action="{!submit}" styleClass="btn btn-success" value="Submit" rerender="pageMessages"/>
+           </apex:pageBlockSectionItem> 
+        </apex:pageBlockSection>
+        </apex:actionRegion>
+    </apex:pageBlock>
+   </apex:form>
+</apex:page>

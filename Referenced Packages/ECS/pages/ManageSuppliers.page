@@ -1,0 +1,5 @@
+<apex:page standardController="ECS__Supplier__c">
+		
+	<c:ManageSuppliers />
+
+</apex:page>

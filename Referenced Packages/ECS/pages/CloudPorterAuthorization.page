@@ -1,0 +1,10 @@
+<apex:page controller="ECS.CloudPorterAuthorizationController" >
+	<apex:pageMessages id="pageMessages"/>
+	<apex:form >
+		<apex:outputPanel id="all">
+			<apex:pageBlock id="pageBlock">
+				<apex:outputLink value="{!authorizationUrl}">Authorize CloudPorter</apex:outputLink>
+			</apex:pageBlock>
+		</apex:outputPanel>
+	</apex:form>
+</apex:page>

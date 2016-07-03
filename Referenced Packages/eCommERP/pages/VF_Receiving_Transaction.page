@@ -1,0 +1,234 @@
+<apex:page standardController="serp__Purchase_Order__c"
+	extensions="serp.ReceivePurchaseOrderController" sidebar="True"
+	showHeader="True" id="pge" docType="HTML-5.0" cache="true"
+	expires="600">
+
+	<apex:stylesheet value="{!URLFOR($Resource.serp__sf1css, 'sf1css.css')}" />
+
+	<script
+		src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+	<style>
+select {
+	padding: 6px 0;
+}
+
+.text-bg a {
+	z-index: 2;
+	color: #606060;
+}
+
+.col-1 div {
+	width: 100%;
+}
+
+.col-1,.col-2 {
+	text-align: left;
+	margin-bottom: 8px;
+}
+
+.full-width {
+	display: block !important;
+	width: 100% !important;
+	position: relative !important;
+	margin: 0 !important;
+}
+
+.col-2 div {
+	display: inline-block;
+	width: 47%;
+}
+
+.col-2 input {
+	display: inline-block;
+	width: 98%;
+}
+
+.col-1 span,.col-2 span,.col-3 span,.info,.label {
+	line-height: 30px;
+	font-family: Arial, Helvetica, sans-serif;
+	color: #606060;
+	text-align: left;
+	position: relative;
+}
+
+.label {
+	font-size: 14px;
+}
+
+.col-2 span {
+	width: inherit !important;
+	padding: 7px 0;
+}
+
+.col-2.row input,.col-3.row input {
+	padding: 7px 0;
+	text-indent: 5px;
+}
+
+.info a {
+	margin: 0;
+	left: 1%;
+}
+
+.col-2 div:nth-of-type(2) {
+	vertical-align: top;
+	margin-left: 4%
+}
+
+.col-3 {
+	text-align: left;
+	position: relative;
+}
+
+.col-3 div {
+	display: inline-block;
+	width: 31%;
+	text-align: left;
+	position: relative;
+	vertical-align: middle;
+}
+
+.col-3 div:nth-of-type(2) {
+	margin: 0 2.1%
+}
+
+.col-3 div:nth-of-type(3) {
+	
+}
+
+.col-3 .text-bg span {
+	padding: 7px 0;
+	text-indent: 5px;
+}
+
+.info-image {
+	width: 30% !important;
+}
+
+.info-image img {
+	border: 2px solid #CCC;
+	border-radius: 5px;
+	width: 100%
+}
+
+.info-text {
+	width: 64% !important;
+	position: relative;
+	margin-left: 2%
+}
+
+.info-text div {
+	margin-bottom: 5%;
+}
+</style>
+	<script type="text/javascript">
+$(document).ready(function () {
+  $("[data-sort=\"1\"]").first().focus();
+  $('.serialNumberInput').click(function (event) { $(this).select(); });
+  $('.serialNumberInput').keydown(function(event) { 
+    if (event.keyCode == 13) {
+        var currentField = $(this).data('sort');
+        $("[data-sort=\"" + (parseInt(currentField) + 1)+"\"]").first().focus();
+        return false;
+    }
+  });
+});
+
+function copySerialNumbers() {
+    $('.serialNumberInput').each(function() {
+        var inputNum = $(this).data('sort');
+        $(this).parent().find('[type=hidden]').val($(this).val());
+    });
+}
+
+</script>
+
+	<apex:form >
+		<div class="container">
+			<div class="form-panel">
+
+				<apex:messages />
+				<apex:outputPanel rendered="{!poLineDetails.Size>0}">
+					<div class="col-2 row">
+						<div class="info-image">
+							<p>B2C Image:</p>
+							<!-- <apex:outputLink value="{!polst.serp__B2C_Product__r.image_url_x__c}" target="_blank"> -->
+							<img
+								src="{!poLineDetails[0].pol.serp__B2C_Product__r.ECS__Image_1_URL__c}"
+								width="125" />
+							<!-- </apex:outputLink> -->
+						</div>
+						<div class="info-text">
+							<div class="info text-bg full-width">
+								<p>B2C SKU:</p>
+								<span><apex:outputLink value="/{!poLineDetails[0].pol.serp__B2C_Product__c}"
+										target="_blank">{!poLineDetails[0].pol.serp__B2C_Product__r.Name}</apex:outputLink></span>
+							</div>
+							<div class="full-width">
+								<!-- <span class="label"> Amazon Prep:</span>
+             <apex:Inputfield value="{!polst.serp__B2C_Product__r.Amazon_Prep__c}" />-->
+							</div>
+						</div>
+					</div>
+					<div class="col-2 row">
+						<div>
+							<span class="label"> Supplier Case Qty:</span>
+							<apex:Inputfield value="{!polst.serp__B2C_Product__r.ECS__Supplier_Case_Quantity__c}" />
+						</div>
+						<div>
+							<span class="label"> # of Cases:</span>
+							<apex:input id="actulqnty" value="{!OfCases}" type="number" />
+						</div>
+					</div>
+					<div class="col-2 row">
+						<div>
+							<span class="label">Print Labels:</span>
+							<apex:selectList id="ChoosePrint" size="1" value="{!PrintLbl}">
+								<apex:selectOption itemValue="No" itemLabel="No" />
+								<apex:selectOption itemValue="Yes" itemLabel="Yes" />
+							</apex:selectList>
+						</div>
+						<div>
+							<span class="label">Take Pictures:</span>
+							<apex:selectList id="TakePicture" size="1" value="{!TakePicture}">
+								<apex:selectOption itemValue="No" itemLabel="No" />
+								<apex:selectOption itemValue="Yes" itemLabel="Yes" />
+							</apex:selectList>
+						</div>
+					</div>
+					<div class="col-3 row">
+						<div>
+							<span class="label">Location:</span>
+							<apex:Inputfield value="{!polst.serp__B2C_Product__r.serp__Warehouse_Location_Lookup__c}" />
+							<apex:outputLink value="/apex/serp__VF_BIN_Search_Records?WareLtn=WareLtn&poLineIds={!polst.Id}">
+								<img alt="Location Out Lookup (New Window)" class="lookupIconOn"
+									onblur="this.className = 'lookupIcon';"
+									onfocus="this.className = 'lookupIconOn';"
+									onmouseout="this.className = 'lookupIcon';this.className = 'lookupIcon';"
+									onmouseover="this.className = 'lookupIconOn';this.className = 'lookupIconOn';"
+									src="https://c.na7.content.force.com/servlet/servlet.FileDownload?file=015A0000003HaQt"
+									title="Location Out Lookup (New Window)"></img>
+							</apex:outputLink>
+						</div>
+
+						<div class="text-bg">
+							<p>Qty on Order:</p>
+							<apex:Outputtext id="QtyOrder" value="{!SumOfQty}" />
+						</div>
+						<div>
+							<span class="label">Qty Received:</span>
+							<apex:input id="recievqnty" value="{!recivedqty}" type="number" />
+						</div>
+					</div>
+					<br />
+					<div>
+						<apex:commandButton value="Receive" action="{!receive}"
+							onClick="copySerialNumbers();" />
+						<apex:commandButton value="Cancel" action="{!CancelRecieve}" />
+					</div>
+				</apex:outputPanel>
+				<apex:outputPanel rendered="{!poLineDetails.Size=0}">Already Received.</apex:outputPanel>
+			</div>
+		</div>
+	</apex:form>
+</apex:page>

@@ -1,0 +1,5 @@
+<apex:page showHeader="false" standardController="serp__Purchase_Order__c"
+	extensions="serp.InvoiceController">
+	<!-- renderAs="{!renderMode}"> -->
+	<c:Invoice orderId="{!serp__Purchase_Order__c.Id}" />
+</apex:page>

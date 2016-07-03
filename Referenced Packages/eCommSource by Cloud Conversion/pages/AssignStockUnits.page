@@ -1,0 +1,44 @@
+<apex:page standardController="ECS__eCommSource_Order_Line__c" extensions="CloudConversion.AssignStockUnitsController">
+
+	<div class="cc">
+	<apex:stylesheet value="{!URLFOR($Resource.ECS__bootstrap_cc)}" />
+	<link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.9.0/themes/base/jquery-ui.css"></link> 
+		
+	<apex:pageMessages id="pageMessages" />
+
+	<apex:form >
+	<apex:outputPanel id="no-units-panel" rendered="{!!displayUnitOptions}">
+		Sorry, there are no available units to assign.&nbsp;&nbsp;&nbsp;<apex:commandButton action="{!cancel}" value="Cancel" status="formActionStatus" rerender="pageMessages" />
+	</apex:outputPanel>
+	<apex:outputPanel id="assign-panel" rendered="{!displayUnitOptions}">
+		<apex:outputPanel >
+			<div>
+				<H3>Assign Stock for {!orderLine.ECS__Product__r.Name} - {!orderLine.ECS__Product__r.ECS__Title__c}</H3><br/><br/><br/>
+				<table width="95%">
+					<tr>
+						<td>
+							<apex:outputLabel style="width: 165px; float: left; margin-left: 35px;">Available Units</apex:outputLabel>
+						</td>
+						<td>
+							<apex:selectList style="width: 565px;" value="{!selectedUnit}" size="1">
+								<apex:selectOptions value="{!AvailableUnits}"/>
+							</apex:selectList>
+						</td>
+					</tr>
+				</table>
+			</div>
+			<div style="border: 1px solid #DDD; margin-top: 15px; margin-bottom: 15px;"></div>
+		</apex:outputPanel>
+	
+		<div style="clear: both; text-align: center; margin-top: 15px;">
+			<apex:commandButton style="text-align: center; clear: both;" styleClass="btn-primary" action="{!assign}" value="Save" status="formActionStatus" rerender="pageMessages" />
+			<apex:commandButton action="{!cancel}" value="Cancel" status="formActionStatus" rerender="pageMessages" />
+			<p>&nbsp;</p>
+		</div>
+	</apex:outputPanel>
+							
+	</apex:form>
+	</div>
+
+
+</apex:page>

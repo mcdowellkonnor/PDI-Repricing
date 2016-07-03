@@ -1,0 +1,5 @@
+<apex:page standardController="serp__Master_Plan__c"
+	extensions="serp.CreateOrderFromMasterPlanController"
+	action="{!createOrder}">
+	<apex:pageMessages id="pageMessages" />
+</apex:page>

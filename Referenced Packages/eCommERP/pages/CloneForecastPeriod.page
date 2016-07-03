@@ -1,0 +1,65 @@
+<apex:page standardController="serp__Forecast_Period__c" extensions="serp.CloneForecastPeriodController">
+	<apex:sectionHeader title="Clone Forecasts"/>
+	<apex:pageMessages />
+
+	<!-- Allow user to specify the new SKU and associated product info -->
+	<apex:form >
+		<apex:pageBlock >
+			<apex:pageBlockButtons >
+				<apex:commandButton action="{!cloneAll}" value="Clone"/>
+				<apex:commandButton action="{!cancel}" value="Cancel"/>
+			</apex:pageBlockButtons>
+			<center>
+				<table border="0" cellpadding="0" cellspacing="0" width="90%">
+					<tr>
+						<td nowrap="true" align="center">
+							<apex:pageBlockSection columns="2">
+								<apex:pageBlockSectionItem >
+									<apex:outputLabel value="New Forecast Period Name" for="fp"/>
+									<apex:inputText id="fp" value="{!newFP.Name}" />
+								</apex:pageBlockSectionItem>
+								<apex:pageBlockSectionItem >
+									<apex:outputLabel value="% Increase of Forecasted Units" for="percentIncrease"/>
+									<apex:inputText id="percentIncrease" value="{!percentIncrease}">
+										<apex:actionSupport event="onchange" action="{!init}" rerender="accounts" />
+									</apex:inputText>
+								</apex:pageBlockSectionItem>
+								<apex:pageBlockSectionItem >
+									<apex:outputLabel value="Use Actuals for new Forecasted Units" for="act"/>
+									<apex:inputCheckbox id="act" value="{!useActuals}"/>
+								</apex:pageBlockSectionItem>
+								<apex:pageBlockSectionItem >
+									<apex:outputLabel value="Show Only My Accounts"/>
+									<apex:inputCheckbox value="{!showOnlyMyAccounts}">
+										<apex:actionSupport event="onchange" action="{!init}" rerender="accounts" />
+									</apex:inputCheckbox>
+								</apex:pageBlockSectionItem>
+							</apex:pageBlockSection>
+						</td>
+					</tr>
+					<tr>
+						<td>
+						<center>
+						<apex:outputPanel id="accounts">
+						Number of Accounts: {!accounts.size}						
+					    <table border="0">
+						<tr>
+							<td nowrap="true"><apex:outputLabel value="Account"/></td>
+							<td nowrap="true"><apex:outputLabel value="% of Forecasted Units (+/-)"/></td>
+						</tr>
+						<apex:repeat var="ai" value="{!accounts}">
+							<tr>
+								<td nowrap="true"><apex:outputLabel value="{!ai.accountName}"/></td>
+								<td nowrap="true"><apex:inputText value="{!ai.percentIncrease}"/></td>
+							</tr>
+						</apex:repeat>
+						</table>
+						</apex:outputPanel>
+						</center>
+						</td>
+					</tr>
+				</table>
+			</center>
+		</apex:pageBlock>
+	</apex:form>
+</apex:page>

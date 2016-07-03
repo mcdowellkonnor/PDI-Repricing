@@ -1,0 +1,11 @@
+<apex:page showHeader="false" >
+
+    <link href="{!$Resource.SupportCSS}" rel="stylesheet" type="text/css" />
+
+	<div id="container">
+		<div class="kb-wrap">
+			<c:KB />
+		</div>
+	</div>
+
+</apex:page>

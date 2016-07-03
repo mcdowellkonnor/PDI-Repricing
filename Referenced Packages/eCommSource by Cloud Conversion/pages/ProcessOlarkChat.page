@@ -1,0 +1,2 @@
+<apex:page controller="CloudConversion.ProcessOlarkChatController" action="{!createCase}" showHeader="false">
+</apex:page>

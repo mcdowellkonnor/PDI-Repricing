@@ -1,0 +1,5 @@
+<apex:page standardController="CloudConversion__Listing__c" extensions="CloudConversion.ManageListingsController" action="{!getListing}">
+
+	<apex:pageMessages />
+
+</apex:page>

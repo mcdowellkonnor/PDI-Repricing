@@ -1,0 +1,334 @@
+<apex:page controller="serp.Cls_ShowPoInfo" sidebar="True" showHeader="True"
+	id="pge" cache="true" expires="600">
+	<apex:stylesheet value="{!URLFOR($Resource.serp__sf1css, 'sf1css.css')}" />
+	<style>
+.header1 {
+	border-top-width: medium;
+	border-top-style: solid;
+	border-top-color: #000;
+}
+
+.for-demo {
+	width: 50%;
+	background-color: #eee;
+}
+
+.for-table- {
+	width: 99%;
+	border-bottom-width: 3px;
+	border-bottom-style: solid;
+	border-bottom-color: #ccc;
+	border-right-width: 3px;
+	border-right-style: solid;
+	border-right-color: #ccc;
+	border-left-width: 3px;
+	border-left-style: solid;
+	border-left-color: #ccc;
+	overflow: hidden;
+	border-radius: 7px;
+	margin-bottom: 20px;
+}
+
+.for-row-1 {
+	float: left;
+	width: 24%;
+}
+
+.for-row-2 {
+	float: left;
+	width: 36%;
+}
+
+.for-row-3 {
+	float: left;
+	width: 20%;
+}
+
+.for-column {
+	width: 100%;
+	padding-top: 13px;
+	padding-bottom: 12px;
+	border-top-width: 3px;
+	border-top-style: solid;
+	border-top-color: #ccc;
+	border-right-width: 3px;
+	border-right-style: solid;
+	border-right-color: #ccc;
+}
+
+.for-column2 {
+	width: 100%;
+	border-top-width: 3px;
+	border-top-style: solid;
+	border-top-color: #ccc;
+	border-right-width: 3px;
+	border-right-style: solid;
+	border-right-color: #ccc;
+	padding-bottom: 1px;
+	width: 125px;
+	height: 125px;
+}
+
+.for-column3 {
+	width: 125px;
+	padding-top: 13px;
+	padding-bottom: 12px;
+	border-top-width: 3px;
+	border-top-style: solid;
+	border-top-color: #ccc;
+	border-right-width: 3px;
+	border-right-style: solid;
+	border-right-color: #ccc;
+}
+
+.for-column-1 {
+	vertical-align: middle;
+	border-top-width: 3px;
+	border-top-style: solid;
+	border-top-color: #ccc;
+	border-left-width: 3px;
+	border-left-style: solid;
+	border-left-color: #ccc;
+	text-align: center;
+	height: 40px
+}
+
+.for-column-1-1 {
+	vertical-align: middle;
+	border-left-width: 3px;
+	border-left-style: solid;
+	border-left-color: #ccc;
+	text-align: center;
+	height: 40px;
+}
+
+.for-column-2-1 {
+	vertical-align: middle;
+	text-align: center;
+}
+
+.for-column-2 {
+	border-top-width: 3px;
+	border-top-style: solid;
+	border-top-color: #ccc;
+	width: 125px;
+	height: 125px;
+	text-align: center;
+}
+
+.for-column-3 {
+	padding-top: 13px;
+	padding-bottom: 12px;
+	border-right-color: #ccc;
+	text-align: center;
+}
+
+.for-column1-1 {
+	border: 3px solid #ccc;
+	border-radius: 7px;
+	margin: 8px 0;
+	z-index: 5000;
+}
+
+.for-column1-1:hover {
+	background-color: rgba(174, 209, 243, 0.5) !important;
+	z-index: 5000;
+}
+
+.for-column-2 {
+	background-color: white;
+}
+
+.for-column1-1:hover img {
+	opacity: 0.7;
+}
+
+.for-column1-1:hover td {
+	opacity: 0.7;
+}
+
+.for-grey {
+	background-color: #D8D8D8 !important;
+}
+
+.for-grey:hover {
+	background-color: #aed1f3 !important;
+}
+
+/*Styles added to fix the various alignment issues */
+body,td {
+	vertical-align: top;
+}
+
+.row input {
+	padding: 7px 0px;
+	text-indent: 5px;
+	width: 99%;
+}
+
+.lookupIcon {
+	right: 1%;
+}
+
+.text-bg span {
+	width: 94%;
+}
+</style>
+
+	<Script>
+  function myfunction()
+  {
+   callfunction();
+  }
+  function myfunction2()
+  {
+   callfunction2();
+  }
+  
+  function clearThis(target){
+        target.value= "";
+    }
+  </Script>
+
+	<apex:form id="frm">
+		<apex:pageMessages />
+		<div class="container">
+			<div class="form-panel">
+				<apex:actionFunction name="callfunction" action="{!SearchPol}" />
+				<apex:actionFunction name="callfunction2" action="{!SearchPOInput}" />
+				<div class="row">
+					<table width="100%">
+						<tr>
+							<td width="32%">
+								<div class="row">
+									<p>PO # :</p>
+									<apex:InputField value="{!PO.Name}" onclick="clearThis(this)"
+										onkeydown="if(event.keyCode==13){myfunction2();this.blur();}" />
+									<apex:outputLink value="/apex/VF_PO_Search_Records?pid='poid'">
+										<img
+											src="https://dl.dropboxusercontent.com/u/20514651/SearchIcon.png"
+											alt="Location Out Lookup (New Window)" class="lookupIcon"
+											onblur="this.className = 'lookupIcon';"
+											onfocus="this.className = 'lookupIconOn';"
+											onmouseout="this.className = 'lookupIcon';this.className = 'lookupIcon';"
+											onmouseover="this.className = 'lookupIconOn';this.className = 'lookupIconOn';"
+											title="Location Out Lookup (New Window)" />
+									</apex:outputLink>
+								</div>
+							</td>
+							<td width="2%">&nbsp;</td>
+							<td width="32%"><div class="text-bg">
+									<p>Date :</p>
+									<span><apex:OutputText value="{0,date,dd/MM/yyyy}">
+											<apex:param value="{!PO.serp__Accepted_Date__c}" />
+										</apex:OutputText></span>
+								</div></td>
+							<td width="2%">&nbsp;</td>
+							<td width="32%"><div class="text-bg">
+									<p>Status :</p>
+									<apex:OutputField value="{!PO.serp__Status__c}" />
+								</div></td>
+						</tr>
+					</Table>
+				</div>
+				<div class="row">
+					<p>Supplier:</p>
+					<apex:InputField value="{!PO.serp__Supplier__c}" />
+					<apex:outputLink value="/apex/VF_PO_Search_Records?Supp='Supp'">
+						<img
+							src="https://dl.dropboxusercontent.com/u/20514651/SearchIcon.png"
+							alt="Location Out Lookup (New Window)" class="lookupIcon"
+							onblur="this.className = 'lookupIcon';"
+							onfocus="this.className = 'lookupIconOn';"
+							onmouseout="this.className = 'lookupIcon';this.className = 'lookupIcon';"
+							onmouseover="this.className = 'lookupIconOn';this.className = 'lookupIconOn';"
+							title="Location Out Lookup (New Window)" />
+					</apex:outputLink>
+				</div>
+				<div class="row">
+					<table width="100%">
+						<tr>
+							<td width="49%" align="left">
+								<p>POL Search:</p> <apex:inputText id="movieTextBox"
+									value="{!searchTerm}" styleClass="placeHolder"
+									onclick="clearThis(this)"
+									onkeydown="if(event.keyCode==13){myfunction();this.blur();}" />
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							</td>
+							<td width="3px">&nbsp;</td>
+							<td width="49%" align="right">
+								<p>POL Status:</p> <apex:selectlist value="{!s1}"
+									multiselect="false" size="1">
+									<apex:selectoptions value="{!options}"></apex:selectoptions>
+									<apex:actionsupport event="onchange"
+										action="{!SearchBasdFiltr}">
+									</apex:actionsupport>
+								</apex:selectlist>
+							</td>
+						</tr>
+					</table>
+
+
+
+					<apex:outputPanel rendered="{!Recvemsg}">
+						<Font size="4">All POLs Received.</Font>
+					</apex:outputPanel>
+					<apex:outputPanel rendered="{!polList.Size>0}">
+
+						<apex:repeat value="{!polList}" var="pol">
+							<apex:outputLink value="/apex/VF_Receiving_Transaction?poLineIds={!pol.Id}">
+								<table width="100%" border="0" cellpadding="0" cellspacing="0"
+									class="for-column1-1">
+
+									<tr>
+										<td width="125" bgcolor="#D8D8D8" class="for-column-2-1"><strong>Product
+												Image</strong></td>
+										<td width="36%" bgcolor="#D8D8D8" class="for-column-1-1"><strong>B2C
+												SKU</strong></td>
+										<td width="20%" bgcolor="#D8D8D8" class="for-column-1-1"><strong>Qty
+												on Order</strong></td>
+										<td width="20%" bgcolor="#D8D8D8" class="for-column-1-1"><strong>POL
+												Status</strong></td>
+									</tr>
+									<tr>
+										<td rowspan="3" class="for-column-2">
+											<!-- <apex:outputLink value="{!pol.serp__B2C_Product__r.image_url_x__c}" target="_blank"> -->
+											<apex:outputField value="{!pol.serp__Product_Image__c}" /> <!-- </apex:outputLink> -->
+										</td>
+										<td class="for-column-1"><apex:outputField value="{!pol.name}" /></td>
+										<td class="for-column-1"><apex:outputField value="{!pol.serp__Total_Qty_on_PO__c}" /></td>
+										<td class="for-column-1"><apex:outputField value="{!pol.serp__Status__c}" /></td>
+									</tr>
+									<tr>
+										<td bgcolor="#D8D8D8" class="for-column-1"><strong>Supplier
+												SKU</strong></td>
+										<td bgcolor="#D8D8D8" class="for-column-1"><strong>Qty
+												Received</strong></td>
+										<td bgcolor="#D8D8D8" class="for-column-1"><strong>Location</strong></td>
+
+									</tr>
+									<tr>
+										<td class="for-column-1">
+											<!-- <apex:outputField value="{!pol.serp__B2C_Product__r.supplier_sku__c}"/>-->
+										</td>
+										<td class="for-column-1"><apex:outputField value="{!pol.serp__Quantity_Received__c}" /></td>
+										<td class="for-column-1"><apex:outputField value="{!pol.serp__B2C_Product__r.ECS__Warehouse_Location__c}" /></td>
+									</tr>
+								</table>
+							</apex:outputLink>
+						</apex:repeat>
+
+					</apex:outputPanel>
+					<apex:outputPanel rendered="{!(polList.Size=0 &&  frmStrtng=True)}">
+						<Font size="4">No Results Found.</Font>
+					</apex:outputPanel>
+
+
+				</div>
+
+
+
+			</div>
+		</div>
+	</apex:form>
+</apex:page>

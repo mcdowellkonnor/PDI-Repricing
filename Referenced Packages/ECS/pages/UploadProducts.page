@@ -1,0 +1,25 @@
+<apex:page controller="ECS.UploadProductsController">
+
+	<c:Analytics event="INFO" app="ECS" />
+	
+	<apex:pageMessages /> 
+	
+	<apex:form id="uploadProducts">
+	     <apex:pageBlock id="pageBlock">
+			<apex:pageBlockButtons location="bottom">
+			    <apex:commandButton action="{!upload}" value="Upload" />
+			</apex:pageBlockButtons>
+	        <apex:pageBlockSection id="pgsAttachments" columns="1">
+			    <apex:pageBlockSectionItem id="rowsPerBatch">
+					<apex:outputLabel value="Rows Per Batch"/>
+					<apex:inputText value="{!rowsPerBatch}"/>
+				</apex:pageBlockSectionItem>
+	        	<apex:pageBlockSectionItem id="productAttachments">
+			         <apex:outputLabel value="Select Attachment:" for="attachment"/>
+			         <apex:inputFile id="attachment" value="{!attachmentBody}" filename="{!attachmentName}" contentType="{!mimeType}"/> 
+				</apex:pageBlockSectionItem>
+			 </apex:pageBlockSection>
+		</apex:pageBlock>
+	</apex:form>
+	
+</apex:page>

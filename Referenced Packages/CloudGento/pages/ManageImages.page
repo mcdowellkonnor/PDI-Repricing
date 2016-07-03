@@ -1,0 +1,7 @@
+<apex:page standardController="ECS__Product__c" extensions="CloudGento.ManageImagesController"> 
+	<apex:pageMessages />
+	<apex:form >
+		<apex:commandButton action="{!getImages}" value="Get Images"/>
+		<apex:commandButton action="{!uploadImages}" value="Upload"/> 
+	</apex:form>
+</apex:page>

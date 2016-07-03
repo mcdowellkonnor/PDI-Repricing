@@ -1,0 +1,18 @@
+<messaging:emailTemplate subject="Packing Slip for Order: {!relatedTo.Name}" recipientType="Contact" relatedToType="ECS__eCommSource_Order__c">
+    <messaging:plainTextEmailBody >
+        Dear  {!relatedTo.ECS__Customer__r.Name},                
+        
+        Attached is the packing slip for Order {!relatedTo.Name}.
+        
+        Feel free to contact me if you have any questions.
+        
+        Regards,
+        
+        {!$User.FirstName} {!$User.LastName} 
+    </messaging:plainTextEmailBody>
+    
+    <messaging:attachment renderAs="pdf" filename="{!relatedTo.Name}">    
+        <c:AdvInvoiceComponent orderId="{!relatedTo.Id}"/>                           
+    </messaging:attachment>
+    
+</messaging:emailTemplate>

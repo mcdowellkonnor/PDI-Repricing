@@ -1,0 +1,6 @@
+<apex:page standardController="ECS__Inventory_Adjustment_Group__c" extensions="ECS.ManageInventoryAdjustmentsController" action="{!activateGroup}">
+
+	<c:Analytics event="INFO" app="ECS" />
+	
+	<apex:pageMessages id="pageMessages" />
+</apex:page>

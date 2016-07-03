@@ -1,0 +1,163 @@
+<apex:page id="page" extensions="CloudConversion.RespondToInquiryController" standardController="Case" action="{!autoAssign}"> 
+	
+   <ECS:Analytics event="INFO" app="eCommSource" />
+	
+   <apex:pagemessages />
+   <apex:form id="theForm">
+     <apex:pageBlock id="pageBlock" rendered="{!render}">
+      <apex:pageBlockButtons >
+        <apex:commandButton action="{!save}" styleClass="btn btn-success" value="Send Response" rendered="{!!renderEBPOptions}"/> 
+		<apex:commandButton action="{!respondToEBayCase}" styleClass="btn btn-success" value="Respond to eBay Case" rendered="{!renderEBPOptions}"/>
+		<apex:commandButton value="Open Case in eBay" onclick="window.open('http://res.ebay.com/ws/eBayISAPI.dll?ResolveCPSCase&caseId={!myCase.CloudConversion__External_Id__c}');" rendered="{!myCase.Origin='eBay Resolution Center'}"/>
+        <apex:commandButton action="{!saveDraft}" styleClass="btn btn-warning"  value="Save Draft" rendered="{!!renderEBPOptions}"/> 
+      </apex:pageBlockButtons>
+      
+      <apex:outputPanel id="outputPanelSelectBoxes">
+      <table border="0" cellpadding="0" cellspacing="0" width="100%">
+ 
+         <apex:outputPanel rendered="{!responseHistory!=null}">
+	      <tr> 
+	        <td>
+		        <apex:pageBlockSection id="pgsbuyerExpectation" columns="1" >
+			        <apex:pageBlockSectionItem id="pgsibuyerExpectation">
+			           <apex:outputLabel value="Buyer Expectation" for="buyerExpectation"/>
+		         		 <apex:outputText value="{!buyerExpectation}" escape="false"/>
+		            </apex:pageBlockSectionItem>
+		        </apex:pageBlockSection>
+		        <apex:pageBlockSection id="pgsresponseHistory" columns="1" >
+			        <apex:pageBlockSectionItem id="pgsiresponseHistory">
+			           <apex:outputLabel value="Response History" for="respHist"/>
+		         		 <apex:outputText value="{!responseHistory}" escape="false"/>
+		            </apex:pageBlockSectionItem>
+		        </apex:pageBlockSection>
+	         </td>
+	      </tr>
+	    </apex:outputPanel>
+        <tr>
+	     <td nowrap="true">
+         <apex:actionRegion >
+	        <apex:pageBlockSection id="pgsEBPOptions" columns="1" rendered="{!renderEBPOptions}">
+	           <apex:pageBlockSectionItem id="pgsiEBPOptions">
+	                <apex:outputLabel value="Resolution Options" for="EBPOptionsList"/> 
+	                <apex:pageBlockSectionItem >
+	                  <apex:selectList size="1" id="EBPOptionsList" value="{!ebpOption}"> 
+	                     <apex:selectOptions value="{!EBPOptions}"/>
+	                     <apex:actionSupport event="onchange" rerender="ebpOptions"/> 
+	                  </apex:selectList>
+	                </apex:pageBlockSectionItem>
+	           	</apex:pageBlockSectionItem>
+	        </apex:pageBlockSection>
+	      </apex:actionRegion>
+	      <apex:outputPanel id="ebpOptions">
+		      <apex:pageBlockSection id="pgstrackingNumber" columns="1" rendered="{!ebpOption='Provide Tracking Info'}">
+		        <apex:pageBlockSectionItem id="pgsitrackingNumber">
+		           <apex:outputLabel value="Tracking Number" for="trackingNumber"/> 
+		           <apex:inputText id="trackingNumber" value="{!trackingNumber}"/>
+		        </apex:pageBlockSectionItem>
+		      </apex:pageBlockSection>
+		      <apex:pageBlockSection id="pgsCarrierUsed" columns="1" rendered="{!ebpOption='Provide Tracking Info'}">
+		        <apex:pageBlockSectionItem id="pgsiCarrierUsed">
+		           <apex:outputLabel value="Carrier Used" for="carrierUsed"/> 
+		           <apex:inputText id="carrierUsed" value="{!carrierUsed}"/>
+		        </apex:pageBlockSectionItem>
+		      </apex:pageBlockSection>
+		      <apex:pageBlockSection id="pgsAmount" columns="1" rendered="{!ebpOption='Issue Partial Refund'}">
+		        <apex:pageBlockSectionItem id="pgsiAmount">
+		           <apex:outputLabel value="Refund Amount" for="Amount"/> 
+		           <apex:inputText id="Amount" value="{!Amount}"/>
+		        </apex:pageBlockSectionItem>
+		      </apex:pageBlockSection>
+		      <apex:pageBlockSection id="pgsescalationReason" columns="1" rendered="{!ebpOption='Escalate To Customer Support'}">
+		        <apex:pageBlockSectionItem id="pgsiescalationReason">
+		           <apex:outputLabel value="Escalation Reason" for="escalationReason"/> 
+		           <apex:inputText id="escalationReason" value="{!escalationReason}"/>
+		        </apex:pageBlockSectionItem>
+		      </apex:pageBlockSection>
+		      <apex:pageBlockSection id="pgsappealReason" columns="1" rendered="{!ebpOption='Appeal To Customer Support'}">
+		        <apex:pageBlockSectionItem id="pgsiappealReason">
+		           <apex:outputLabel value="Appeal Reason" for="appealReason"/> 
+		           <apex:pageBlockSectionItem >
+		               <apex:selectList size="1" id="appealReason" value="{!appealReason}"> 
+		                 <apex:selectOptions value="{!appealReasons}"/>
+		               </apex:selectList>
+		            </apex:pageBlockSectionItem>
+		        </apex:pageBlockSectionItem>
+		      </apex:pageBlockSection>
+		      <apex:pageBlockSection id="pgsRma" columns="1" rendered="{!ebpOption=='Request Buyer to Return'}">
+		        <apex:pageBlockSectionItem id="pgsiRma">
+		           <apex:outputLabel value="RMA" for="rma"/> 
+		           <apex:inputText id="rma" value="{!rma}"/>
+		        </apex:pageBlockSectionItem>
+		      </apex:pageBlockSection>		
+		      <apex:pageBlockSection id="pgsadditionalReturnInstructions" columns="1" rendered="{!ebpOption=='Request Buyer to Return'}">
+		        <apex:pageBlockSectionItem id="pgsiadditionalReturnInstructions">
+		           <apex:outputLabel value="Additional Return Instructions" for="additionalReturnInstructions"/> 
+		           <apex:inputText id="additionalReturnInstructions" value="{!additionalReturnInstructions}"/>
+		        </apex:pageBlockSectionItem>
+		      </apex:pageBlockSection>
+		  </apex:outputPanel>
+		  
+	        <apex:pageBlockSection id="pgsReasons" columns="1" rendered="{!inquirySettings.CloudConversion__Display_Case_Reasons__c}">
+	           <apex:pageBlockSectionItem id="pgsiReasons">
+	                <apex:outputLabel value="Case Reason" for="caseReason"/>
+	                <apex:pageBlockSectionItem >
+	                  <apex:selectList size="1" id="caseReason" value="{!myCase.Reason}">
+	                     <apex:selectOptions value="{!casereasonoptions}"/>
+	                  </apex:selectList>
+	                </apex:pageBlockSectionItem>
+	           </apex:pageBlockSectionItem>
+	        </apex:pageBlockSection>
+	        <apex:actionRegion >
+		        <apex:pageBlockSection id="pgsSolutions" columns="1">
+		             <apex:pageBlockSectionItem id="pgsiSolutions">
+		                <apex:outputLabel value="Solutions" for="solution"/>
+		                <apex:pageBlockSectionItem id="pgsiSolution">
+		                  <apex:selectList size="1" id="solution" value="{!solution}" >  
+		                      <apex:actionSupport event="onchange" action="{!handleSelectSolution}" rerender="outputPanelResponse" />           
+		                      <apex:selectOptions value="{!solutionoptions}"/>
+		                  </apex:selectList>
+		                </apex:pageBlockSectionItem>
+		           </apex:pageBlockSectionItem>
+		         </apex:pageBlockSection>
+	             <apex:outputPanel id="outputPanelResponse">      
+	               <apex:pageBlockSection id="pgsResponse" columns="1">
+			           <apex:pageBlockSectionItem id="pgsiResponse">
+			             <apex:outputLabel value="Message" for="response"/>
+			             <apex:inputTextarea id="response" value="{!response}" cols="100" rows="10" />
+			           </apex:pageBlockSectionItem>
+	        	   </apex:pageBlockSection>
+	             </apex:outputPanel>
+	           </apex:actionRegion>
+	         </td>
+	         <td nowrap="true">
+		        <apex:pageBlockSection id="responseOptions" columns="1">      
+		           <apex:pageBlockSectionItem >
+		             <apex:inputCheckbox id="close" value="{!closeCase}" selected="{!closeCase}"/>
+		             <apex:outputLabel value="Close Case" for="close"/>
+		           </apex:pageBlockSectionItem>
+		           <apex:pageBlockSectionItem >
+		             <apex:inputCheckbox id="addToKnowledgeBase" value="{!addToKnowledgeBase}" selected="false"/>
+		             <apex:outputLabel value="Add to Knowledge Base" for="addToKnowledgeBase"/>
+		           </apex:pageBlockSectionItem>
+		           <!-- <apex:pageBlockSectionItem rendered="{!myCase.Message_Id__c!=''}" >
+		             <apex:inputCheckbox id="display" value="{!displayToPublic}" selected="{!displayToPublic}"/>
+		             <apex:outputLabel value="Display on eBay Listing" for="display"/> 
+		           </apex:pageBlockSectionItem>  -->
+		           <apex:pageBlockSectionItem rendered="{!CanBypassEBay}"> 
+		             <apex:inputCheckbox id="bypass" value="{!bypassEBay}" selected="false"/>
+		             <apex:outputLabel value="Bypass eBay Response" for="bypass"/>
+		           </apex:pageBlockSectionItem>
+		           <apex:outputPanel rendered="{!doesBuyerEmailExist}">
+		             <apex:outputLabel value="Select Attachments:" for="attachment"/><br/>
+		             <apex:inputFile id="attachment" value="{!attachmentBody}" filename="{!attachmentName}" /><br/>
+		             <apex:inputFile id="attachment2" value="{!attachmentBody2}" filename="{!attachmentName2}" /><br/>
+		             <apex:inputFile id="attachment3" value="{!attachmentBody3}" filename="{!attachmentName3}" />
+		           </apex:outputPanel>
+		        </apex:pageBlockSection>
+	        </td>
+	        </tr>
+	        </table>
+	      </apex:outputPanel>
+    </apex:pageBlock>
+   </apex:form>
+</apex:page>

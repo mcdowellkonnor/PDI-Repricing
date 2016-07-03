@@ -1,0 +1,5 @@
+<apex:page standardController="ECS__RMA__c" >
+   
+    <!-- <c:Refund rmaId="{!ECS__RMA__c.Id}"/> -->
+    
+</apex:page>

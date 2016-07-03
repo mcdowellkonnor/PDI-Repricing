@@ -1,0 +1,18 @@
+<apex:page standardController="ECS__eCommSource_Order__c" extensions="ECS.ProcessPaymentController" showHeader="false" >
+
+	<script type="text/javascript"> 
+		
+		$(document).ready(function() {
+			print_receipt_frame();
+		});
+		
+		function print_receipt_frame() {
+			window.frames["receiptFrame"].focus();
+			window.frames["receiptFrame"].print();
+			return false;
+		}
+	</script>
+	
+	<apex:iframe id="receiptFrame" src="GenerateReceipt?id={!curOrder.id}" />
+	
+</apex:page>

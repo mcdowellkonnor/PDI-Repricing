@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Package xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>CloudPorter_oauth</fullName>
+    <apiAccessLevel>Unrestricted</apiAccessLevel>
+    <modules>
+        <module>
+            <label>CloudPorter_oauth</label>
+            <moduleType>connected</moduleType>
+            <name>CloudPorter_oauth</name>
+            <types>
+                <members>CloudPorter_oauth_devConfig</members>
+                <name>ConnectivityDevConfigMetadata</name>
+            </types>
+            <types>
+                <members>ECS__CloudPorter_oauth</members>
+                <name>Module</name>
+            </types>
+            <version>741.0</version>
+        </module>
+    </modules>
+    <namespacePrefix>ECS</namespacePrefix>
+    <version>36.0</version>
+</Package>

@@ -1,0 +1,547 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Follow</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <content>InquirySettingsPG</content>
+        <skipRecordTypeSelect>false</skipRecordTypeSelect>
+        <type>Visualforce</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <deprecated>false</deprecated>
+    <description>Settings for the respond to inquiry application.</description>
+    <enableActivities>false</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>false</enableHistory>
+    <enableReports>true</enableReports>
+    <enableSearch>true</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <fields>
+        <fullName>Allow_Signature_Override__c</fullName>
+        <defaultValue>true</defaultValue>
+        <deprecated>false</deprecated>
+        <description>Determines if the Email Signature can be overridden in the inquiry response.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Determines if the Email Signature can be overridden in the inquiry response.</inlineHelpText>
+        <label>Allow Signature Override</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Auto_Assign_to_First_Viewer__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <description>Checking this box will automatically assign unread messages to the first rep who views the message.</description>
+        <externalId>false</externalId>
+        <label>Auto-Assign to First Viewer</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Case_Reason_Required__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Message Reason Required</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Close_Case_Default__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Close Message Default</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Default_Email_From_Address__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Default Email From Address</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Email</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Default_eBay_Bypass_Message__c</fullName>
+        <deprecated>false</deprecated>
+        <description>When bypassing eBay, the default message that is sent to the customer via eBay.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>When bypassing eBay, the default message that is sent to the customer via eBay.  Supported macros include {Buyer_Name}, {Buyer_Email}, {User_Name} and {User_First_Name}.  
+
+NOTE: the eBay introduction and eBay signature are not included in the response.</inlineHelpText>
+        <label>Default eBay Bypass Message</label>
+        <length>5000</length>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>5</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Display_Case_Reasons__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Display Message Reasons</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Display_to_Public_Default__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Display to Public Default</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Checked</fullName>
+                <default>true</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Not Checked</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Don&apos;t Display</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Email_From_Name__c</fullName>
+        <deprecated>false</deprecated>
+        <description>The name displayed in the email response.</description>
+        <externalId>false</externalId>
+        <label>Email From Name</label>
+        <length>100</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Email_Introduction__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>The introduction sent when responding to an email.  Currently supported macros include: {User_Name}, {User_First_Name} and {Buyer_Name}.</inlineHelpText>
+        <label>Email Introduction</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>Email_Signature__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>{Buyer_Name}, {Buyer_Email}, {User_Name}, {User_First_Name},{User_Title},{User_Email},{User_Company},{User_Phone},{User_Mobile},{User_Fax},{User_Extension},{User_Department},{User_Division},{User_Street},{User_City},{User_State},{User_Zip},{User_Country}</inlineHelpText>
+        <label>Email Signature</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>Email_and_eBay_Response_Setting__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Email and eBay Response Setting</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Both email and eBay response</fullName>
+                <default>true</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Just eBay response (no email)</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Email response and just eBay when necessary</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Enabled__c</fullName>
+        <defaultValue>true</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Enabled</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Get_Best_Offers__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Get Best Offers</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Get_Orders__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Get Orders</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Include_Original_Question_in_Response__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Include Original Question in Response</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Is_Default_Account__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Is Default Account</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Promo_Message__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Promo Message</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>Require_Additional_Context__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Require Additional Context</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Response_BCC_Address__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Message responses will be BCC&apos;d to this address.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Message responses will be BCC&apos;d to this address.</inlineHelpText>
+        <label>Response BCC Address</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Email</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Salesforce_Account__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Salesforce Account</label>
+        <referenceTo>Account</referenceTo>
+        <relationshipLabel>Inquiry Settings</relationshipLabel>
+        <relationshipName>Inquiry_Settings</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Use_eBay_Item_Id_as_SKU__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Use eBay Item Id as SKU</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>eBay_Introduction__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>The introduction sent when responding via eBay.  Currently supported macros include: {User_Name}, {User_First_Name} and {Buyer_Name}.</inlineHelpText>
+        <label>eBay Introduction</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>eBay_Signature__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>The default signature when responding to an eBay message.  Currently supported macros include: {User_Name}, {User_First_Name} and {Buyer_Name}.</inlineHelpText>
+        <label>eBay Signature</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>eBay_Site__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>eBay Site</label>
+        <picklist>
+            <picklistValues>
+                <fullName>ebay.com</fullName>
+                <default>true</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>ebay.co.uk</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>ebay.com.au</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>ebay.de</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>ebay.ca</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>ebay.fr</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>ebay.it</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>ebay.es</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>ebay.ie</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>ebay.at</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>ebay.be</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>ebay.ch</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>ebay.nl</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>ebay.com.sg</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>ebay.com.hk</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>ebay.in</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>ebay.ph</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>ebay.pl</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>ebay.com.my</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>eBay_Token__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>eBay Token</label>
+        <length>32000</length>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>2</visibleLines>
+    </fields>
+    <fields>
+        <fullName>eBay_User_Id__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Seller&apos;s eBay User Id</description>
+        <externalId>false</externalId>
+        <label>eBay User Id</label>
+        <length>200</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <label>Inquiry Setting</label>
+    <listViews>
+        <fullName>All</fullName>
+        <columns>NAME</columns>
+        <columns>Salesforce_Account__c</columns>
+        <columns>Default_Email_From_Address__c</columns>
+        <columns>eBay_User_Id__c</columns>
+        <columns>Email_and_eBay_Response_Setting__c</columns>
+        <columns>Is_Default_Account__c</columns>
+        <columns>Enabled__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+    </listViews>
+    <listViews>
+        <fullName>eBay_Settings</fullName>
+        <columns>NAME</columns>
+        <columns>eBay_Introduction__c</columns>
+        <columns>eBay_Signature__c</columns>
+        <columns>eBay_Site__c</columns>
+        <columns>eBay_User_Id__c</columns>
+        <columns>eBay_Token__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>eBay_User_Id__c</field>
+            <operation>notEqual</operation>
+        </filters>
+        <label>eBay Settings</label>
+    </listViews>
+    <nameField>
+        <label>Inquiry Setting Name</label>
+        <type>Text</type>
+    </nameField>
+    <pluralLabel>Inquiry Settings</pluralLabel>
+    <searchLayouts/>
+    <sharingModel>ReadWrite</sharingModel>
+    <webLinks>
+        <fullName>Create_Email_Service</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <linkType>javascript</linkType>
+        <masterLabel>Create Email Service</masterLabel>
+        <openType>onClickJavaScript</openType>
+        <protected>false</protected>
+        <url>{!REQUIRESCRIPT(&quot;/soap/ajax/25.0/connection.js&quot;)}
+{!REQUIRESCRIPT(&quot;/soap/ajax/25.0/apex.js&quot;)}
+var apexResult = sforce.connection.query(&quot;Select Id From ApexClass Where Name=&apos;ProcessECommerceEmail&apos; &quot;);
+var records = apexResult.getArray(&quot;records&quot;);
+alert(records[0].Id);
+var e = new sforce.SObject(&apos;EmailServicesFunction&apos;); 
+        e.OverLimitAction = &apos;3&apos;;
+        e.IsTlsRequired = false;
+        e.IsTextAttachmentsAsBinary = false;
+        e.IsErrorRoutingEnabled = true;
+        e.IsAuthenticationRequired = false;
+        e.IsActive = true;
+        e.FunctionName = &apos;UPS&apos;;
+        e.FunctionInactiveAction = &apos;2&apos;;
+        e.ErrorRoutingAddress = &apos;jon@cloudconversion.com&apos;;
+        e.AuthorizationFailureAction = &apos;2&apos;;
+        e.AuthenticationFailureAction = &apos;2&apos;;
+        e.AttachmentOption = &apos;3&apos;;
+        e.ApexClassId = records[0].Id;
+        e.AddressInactiveAction = &apos;2&apos;;
+var result = sforce.connection.create([e]); 
+alert(result.length);
+for (var i=0; i&lt;result.length; i++) {
+    if(result[i].getBoolean(&quot;success&quot;)) {
+       alert(&quot;new email service function created with id &quot; + result[i].id);
+        var es = new sforce.SObject(&apos;EmailServicesAddress&apos;); 
+        es.RunAsUserId = &apos;{!User.Id}&apos;;
+        es.LocalPart = &apos;ups&apos;;
+        es.IsActive = true;
+        es.FunctionId = result[i].id;
+         var result2 = sforce.connection.create([es]); 
+         for(var j=0; j&lt;result2.length; j++) {
+               if(result2[j].getBoolean(&quot;success&quot;)) {
+                   alert(&quot;new email service address created with id &quot; + result2[j].id);
+               } else {
+                   alert(&quot;failed to create account &quot; + result2[j]);
+              }
+         }
+    } else {
+      alert(&quot;failed to create account &quot; + result[i]);
+    }
+}
+window.location.reload();</url>
+    </webLinks>
+    <webLinks>
+        <fullName>Make_eBay_Calls</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <height>600</height>
+        <linkType>page</linkType>
+        <masterLabel>Make eBay Calls</masterLabel>
+        <openType>sidebar</openType>
+        <page>MakeEBayCallsPG</page>
+        <protected>false</protected>
+    </webLinks>
+    <webLinks>
+        <fullName>New_eBay_Account</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <height>600</height>
+        <linkType>page</linkType>
+        <masterLabel>eBay Re-Auth</masterLabel>
+        <openType>sidebar</openType>
+        <page>InquirySettingsPG</page>
+        <protected>false</protected>
+    </webLinks>
+</CustomObject>

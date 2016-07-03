@@ -1,0 +1,158 @@
+<apex:page controller="ECS.BinCountController" sidebar="True" showHeader="True" id="pge" docType="HTML-5.0">
+
+	<c:Analytics event="INFO" app="ECS" />
+	
+	<apex:stylesheet value="{!URLFOR($Resource.ECS__sf1css, 'sf1css.css')}" />
+
+	<script>
+	
+      function javaScrpt(){
+         actionFunName(); 
+         document.getElementById('{!$Component.frm.actulqnty}').focus();
+      }
+
+      function javaScrpt2(){
+         actionFunName2(); 
+         document.getElementById('{!$Component.frm.search}').focus();
+      }
+         
+      function changebackcolorFocus(ctrl){
+            ctrl.classList.remove('textBackColorBlur');
+            ctrl.classList.add('textBackColorFocus');
+      }
+          
+      function changebackcolorBlur(ctrl){
+            ctrl.classList.remove('textBackColorFocus');
+            ctrl.classList.add('textBackColorBlur');
+      }
+          
+     window.onload = function() {
+
+            var product = document.getElementById('{!$Component.frm.search}').value;
+
+            if(product.length>0) {
+                document.getElementById('{!$Component.frm.actulqnty}').focus();
+            } else {
+                document.getElementById('{!$Component.frm.search}').focus();
+            }
+     }
+   
+    </script>
+
+	<apex:form id="frm">
+
+		<div class="container">
+			<apex:pageMessages id="pageMessages"/>
+			
+			<apex:actionFunction name="actionFunName" action="{!query}" />
+
+			<apex:actionFunction name="actionFunName2" action="{!save}" />
+			
+			<div class="form-panel">
+
+				<apex:outputPanel id="vals">
+				<div class="row">
+					<p>Search by SKU/UPC/Item Id</p>
+					<apex:inputText value="{!searchTerm}" required="false" id="search" onchange="javaScrpt()" label="Search Product" />
+				</div>
+				<!-- <div class="row">
+					<p>B2C Product</p>
+					<apex:inputField value="{!ia2.Product__c}" required="false" id="prdct" onchange="javaScrpt()" label="B2C Product" />
+				</div> -->
+				<div class="row">
+					<p>Location</p>
+					<apex:inputText value="{!location}" required="false" id="lctn" onchange="javaScrpt()" />
+				</div>
+				
+				<apex:repeat value="{!$ObjectType.ECS__Product__c.FieldSets.ECS__Cycle_Count}" var="ccf">
+					<div class="row">
+						<p>{!ccf.Label}</p>
+						<div class="text-bg">
+							<apex:outputField value="{!prod[ccf]}" />
+						</div>
+					</div>
+				</apex:repeat>
+				
+				<!-- <div class="row">
+					<p>Status</p>
+					<div class="text-bg">
+						<apex:outputField value="{!prod.Status__c}" />
+					</div>
+				</div>
+				<div class="row">
+					<p>Product Id</p>
+					<div class="text-bg">
+						<apex:outputField value="{!prod.Product_Id__c}" />
+					</div>
+				</div>
+				<div class="row">
+					<p>Quantity On Hand</p>
+					<div class="text-bg">
+						<apex:outputField value="{!prod.Quantity_On_Hand__c}" />
+					</div>
+				</div>
+				<div class="row">
+					<p>Quantity Pending To Ship </p>
+					<div class="text-bg">
+						<apex:outputField value="{!prod.Quantity_Pending_Ship__c}" />
+					</div>
+				</div>
+ 				<apex:outputPanel rendered="{!prod.Quantity_On_Order__c!=null}">
+					<div class="row">
+						<p>Quantity On Order</p>
+						<div class="text-bg">
+							<apex:outputField value="{!prod.Quantity_On_Order__c}" />
+						</div>
+					</div>
+				</apex:outputPanel>-->
+				<div class="row">
+					<p>Actual Quantity</p>
+					<div class="text-bg">
+						<apex:input id="actulqnty" value="{!actualQty}" onchange="javaScrpt2()" type="number" /> 
+
+						<!-- <apex:outputLink id="loutlink"
+							value="/apex/serp__VF_BIN_Search_Records?lout=lout1"></apex:outputLink>
+						<apex:outputLink id="b2clink"
+							value="/apex/serp__VF_BIN_Search_Records?b2c=b2c1"></apex:outputLink>-->
+					</div>
+				</div>
+
+				<div class="new-task">
+					<apex:commandButton action="{!query}" value="Search" rerender="pageMessages,vals"
+						style="background:#137fc0; height:30px;  padding:0 15px 0 15px; border:none; cursor:pointer; margin:4px 0 0 6px;font-weight:regular;color:White;font-size: 13px;color:white" />
+
+					<apex:commandButton action="{!save}" value="Save Count" rendered="{!b}" 
+						style="background:#137fc0;Color:white; height:30px; padding:0 15px 0 15px;  border:none; cursor:pointer; margin:4px 0 0 6px;font-weight:regular;font-size: 13px;" />
+					
+					<apex:commandButton action="{!Cancel}" value="Cancel"
+						immediate="true"
+						style="background:#137fc0;Color:white; height:30px; padding:0 15px 0 15px;  border:none; cursor:pointer; margin:4px 0 0 6px;font-weight:regular;font-size: 13px;" />
+				</div>
+				</apex:outputPanel>
+								
+				<apex:outputPanel id="adjustments" rendered="{!adjustments.size>0}">
+					<br/><br/><br/>
+					<center>
+					<table border="0" cellpadding="10" cellspacing="10">
+					<tr>
+						<th>SKU</th>
+						<th>Old QOH</th>
+						<th>New QOH</th>
+						<th>Adjustment</th>
+					</tr>
+					<apex:repeat var="ia" value="{!adjustments}">
+						<tr>
+							<td><A HREF="/{!ia.ECS__Product__c}">{!ia.ECS__Product__r.Name}</A></td>
+							<td valign="middle">{!ia.ECS__Previous_Quantity__c}</td>
+							<td valign="middle">{!ia.ECS__Previous_Quantity__c + ia.ECS__Adjustment_Quantity__c}</td>
+							<td valign="middle"><A HREF="/{!ia.Id}">{!ia.ECS__Adjustment_Quantity__c}</A></td>
+						</tr>
+					</apex:repeat>
+					</table>
+					</center>
+				</apex:outputPanel>
+	
+			</div>
+		</div>
+	</apex:form>
+</apex:page>

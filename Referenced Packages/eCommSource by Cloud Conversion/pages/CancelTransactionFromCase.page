@@ -1,0 +1,5 @@
+<apex:page standardController="Case">
+
+   <c:CancelTransaction />
+
+</apex:page>

@@ -1,0 +1,5 @@
+<apex:page standardController="eCommazon__Amazon_Report__c" extensions="eCommazon.GetReportController" action="{!getReport}">
+
+	<apex:pageMessages />
+
+</apex:page>

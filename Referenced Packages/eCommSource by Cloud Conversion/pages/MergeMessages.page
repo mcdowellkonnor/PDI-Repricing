@@ -1,0 +1,36 @@
+<apex:page controller="CloudConversion.MergeMessagesController" >
+
+    <apex:sectionHeader title="Select Master Message to Merge"/>
+    <apex:form >
+    
+    <center>
+    <table cellspacing="3" cellpadding="3" border="0" width="80%">
+        <thead>
+           <tr>
+             <td><span>Message Number</span></td>
+             <td><span>Customer Name</span></td>
+             <td><span>Subject</span></td>         
+             <td><span>Email</span></td>     
+             <td><span>Inquiry Time</span></td>
+           </tr>
+        </thead>
+        <tbody>
+            <apex:repeat value="{!messageList}" var="m">
+                 <tr id="{!m.Id}">
+                     <td title="{!m.Name} ">
+                           <div><apex:commandLink action="{!mergeMessages}">{!m.Name}
+                                   <apex:param name="masterMessageId" value="{!m.Id}"/>
+                                </apex:commandLink></div>
+                     </td>
+                     <td title="{!m.Customer__r.Name}"><div>{!m.Customer__r.Name}</div></td> 
+                     <td title="{!m.CloudConversion__Subject__c}"><div>{!m.CloudConversion__Subject__c}</div></td> 
+                     <td title="{!m.CloudConversion__Web_Email__c}"><div>{!m.CloudConversion__Web_Email__c}</div></td> 
+                     <td title="{!m.CloudConversion__Inquiry_Time__c}"><div>{!m.CloudConversion__Inquiry_Time__c}</div></td>
+                  </tr> 
+            </apex:repeat>
+        </tbody>
+    </table>
+    </center>
+    </apex:form>
+
+</apex:page>

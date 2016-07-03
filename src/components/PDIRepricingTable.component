@@ -1,0 +1,653 @@
+<apex:component controller="RepricingController" allowDML="true">
+
+	<script>
+		function checkForNAeBay(ebay_id, partslink, store) {
+			var a = "http://google.com";
+			
+			if (ebay_id === "NA" || ebay_id === null || ebay_id === "") {
+				a = "http://stores.ebay.com/" + store + "?_dmd=2&_nkw=" + partslink;
+			} else {
+				a = "http://www.ebay.com/itm/" + ebay_id;
+			}
+			
+			return a;
+		}
+		
+		function checkForNAeBayLowest(id, partslink) {
+			var a = "http://google.com";
+			
+			if (id === "NA" || id === null || id === ""){
+				a = "http://www.ebay.com/sch/i.html?_from=R40&_sacat=0&_nkw=" + partslink + "&_sop=15";
+			} else {
+				a = "http://www.ebay.com/itm/" + id;
+			}
+			
+			return a;
+		}
+	</script>
+
+	<apex:form id="table-form">
+		<apex:actionFunction name="updateAll" action="{!updateAll}" reRender="table-form"/>
+		<html>
+	   		<table border="1" align="">
+	   			<tr>
+	   				<th>SKU</th>
+	   				<th>Direct Cost</th>
+	   				<th>Min Sale Price</th>
+	   				<th>Amazon</th>
+	   				<th>AZ PC</th>
+	   				<th>Uzooka</th>
+	   				<th>Uzooka PC</th>
+	   				<th>Depot</th>
+	   				<th>Depot PC</th>
+	   				<th>Website</th>
+	   				<th>Website PC</th>
+	   				<th colspan="3">Comp eBay</th>
+	   				<th colspan="3">Comp Amazon</th>
+	   			</tr>
+	   			<apex:repeat value="{!repricing_objects}" var="repricing" id="main_repeat">
+	   				<tr>
+	   				<td>
+	   					<a href="/{!repricing.PDI_Repricing__Linked_Product__c}" 
+	   					id="{!repricing.PDI_Repricing__Linked_Product__c}"
+	 						onblur="LookupHoverDetail.getHover('{!repricing.PDI_Repricing__Linked_Product__c}').hide();"
+	 						onfocus="LookupHoverDetail.getHover('{!repricing.PDI_Repricing__Linked_Product__c}', '/{!repricing.PDI_Repricing__Linked_Product__c}/m?retURL=%2F{!repricing.PDI_Repricing__Linked_Product__c}&isAjaxRequest=1').show();"
+	 						onmouseout="LookupHoverDetail.getHover('{!repricing.PDI_Repricing__Linked_Product__c}').hide();"
+	 						onmouseover="LookupHoverDetail.getHover('{!repricing.PDI_Repricing__Linked_Product__c}', '/{!repricing.PDI_Repricing__Linked_Product__c}/m?retURL=%2F{!repricing.PDI_Repricing__Linked_Product__c}&isAjaxRequest=1').show();">
+							{!repricing.PDI_Repricing__Linked_Product__r.Name}
+						</a>
+	   				</td>
+	   				
+	   				<td>
+	   					<div class="dropdown">
+	  							<p class="clickablefont">{!repricing.PDI_Repricing__Linked_Product__r[$Setup.PDI_Repricing__Repricing_Settings__c.PDI_Repricing__Direct_Cost_Field__c]}</p>
+	    					<div class="dropdown-content">
+	    						<table border="0">
+	    							<tr>
+	    								<td>P Cost:</td>
+	    								<td>{!repricing.PDI_Repricing__Linked_Product__r[$Setup.PDI_Repricing__Repricing_Settings__c.PDI_Repricing__P_Cost_Field__c]}</td>
+	    							</tr>
+	    							<tr>
+	    								<td>I Freight:</td>
+	    								<td>{!repricing.PDI_Repricing__Linked_Product__r[$Setup.PDI_Repricing__Repricing_Settings__c.PDI_Repricing__I_Freight_Field__c]}</td>
+	    							</tr>
+	    							<tr>
+	    								<td>O Ship:</td>
+	    								<td>{!repricing.PDI_Repricing__Linked_Product__r[$Setup.PDI_Repricing__Repricing_Settings__c.PDI_Repricing__O_Ship_Field__c]}</td>
+	    							</tr>
+	    							<tr>
+	    								<td>F Fee:</td>
+	    								<td>{!repricing.PDI_Repricing__Linked_Product__r[$Setup.PDI_Repricing__Repricing_Settings__c.PDI_Repricing__F_Fee_Field__c]}</td>
+	    							</tr>
+	    						</table>
+	    					</div>
+						</div>
+	   				</td>
+	   				
+	   				<td>
+	   					<!-- MIN SALE PRICE -->
+	   				</td>
+	   				
+	   				<td>
+	   					<div class="dropdown" style="display:{!If(AND(repricing.Our_Amazon_ID__c != null,AND(repricing.Our_Amazon_Price__c != null, repricing.Our_Amazon_Price__c != 'NA')),'','none')}">
+							<p class="clickablefont">
+								${!repricing.Our_Amazon_Raw_Price__c}
+							</p>
+							<div class="dropdown-content">
+								<p>Price:  ${!repricing.Our_Amazon_Price__c}</p>
+								<p>Shipping: ${!repricing.Our_Amazon_Shipping__c}</p>
+								<a href="https://www.amazon.com/s/ref=nb_sb_noss?url=search-alias%3Daps&field-keywords={!repricing.PDI_Repricing__Linked_Product__r[$Setup.PDI_Repricing__Repricing_Settings__c.PDI_Repricing__Partslink_Field__c]}" target="_blank">
+									View Product
+								</a>
+							</div>
+						</div>
+						<div class="dropdown" style="display:{!If(AND(repricing.Our_Amazon_ID__c != null, repricing.Our_Amazon_Price__c == null),'','none')}">
+							<p class="clickablefont">
+								<img src="http://i.imgur.com/mkW4M8v.png" width="20" height="20" class="clickable"/>
+							</p>
+							<div class="dropdown-content">
+								<p>Missing Data! Rerun Batch!</p>
+							</div>
+						</div>
+						<div class="dropdown" style="display:{!If(AND(repricing.Our_Amazon_ID__c != null, repricing.Our_Amazon_Price__c == 'NA'),'','none')}">
+							<p class="clickablefont">
+								<img src="http://www.iconarchive.com/download/i90882/icons8/windows-8/Healthcare-Skull.ico" width="20" height="20" class="clickable"/>
+							</p>
+							<div class="dropdown-content">
+								<p>Could not get data. Check to see if the id is legitimate, then update.</p>
+							</div>
+						</div>
+						<div class="dropdown" style="display:{!If(repricing.Our_Amazon_ID__c == null,'','none')}">
+							<img src="http://icons.iconarchive.com/icons/custom-icon-design/mono-general-1/512/alert-icon.png" width="20" height="20" class="clickable"/>
+							<div class="dropdown-content">
+								<p>No Item ID found!</p>
+								
+								<apex:inputField value="{!repricing.Our_Amazon_ID__c}" html-placeholder="Our Amazon ID"/>
+						
+								<button type="button" onclick="updateAll()">
+								Update
+								</button>
+								
+								<div style="display:{!If(repricing.PDI_Repricing__Linked_Product__r[$Setup.PDI_Repricing__Repricing_Settings__c.PDI_Repricing__Partslink_Field__c] == null, '', 'none')}">
+									<a href="https://www.amazon.com/s/ref=nb_sb_noss?url=search-alias%3Daps&field-keywords={!repricing.PDI_Repricing__Linked_Product__r[$Setup.PDI_Repricing__Repricing_Settings__c.PDI_Repricing__Partslink_Field__c]}" target="_blank">
+										Find ID
+										<img src="http://icons.iconarchive.com/icons/paomedia/small-n-flat/1024/sign-warning-icon.png" width="12" height="12" class="clickable"/>
+									</a>
+								</div>
+								
+								<div style="display:{!If(repricing.PDI_Repricing__Linked_Product__r[$Setup.PDI_Repricing__Repricing_Settings__c.PDI_Repricing__Partslink_Field__c] != null, '', 'none')}">
+									<a href="https://www.amazon.com/s/ref=nb_sb_noss?url=search-alias%3Daps&field-keywords={!repricing.PDI_Repricing__Linked_Product__r[$Setup.PDI_Repricing__Repricing_Settings__c.PDI_Repricing__Partslink_Field__c]}" target="_blank">
+										Find ID
+										<img src="http://icons.iconarchive.com/icons/paomedia/small-n-flat/1024/sign-warning-icon.png" width="12" height="12" class="clickable"/>
+									</a>
+								</div>
+							</div>
+						</div>
+	   				</td>
+	   				
+	   				<td><!-- AZ Price Change --></td>
+	   				
+	   				<td>
+	   					<div class="dropdown" style="display:{!If(AND(repricing.Our_eBay_ID_Uzooka__c != null,AND(repricing.Our_eBay_Price_Uzooka__c != null, repricing.Our_eBay_Shipping_Uzooka__c != null, repricing.Our_eBay_Raw_Price_Uzooka__c != '')),'','none')}">
+							<p class="clickablefont">
+								${!repricing.Our_eBay_Raw_Price_Uzooka__c}
+							</p>
+							<div class="dropdown-content">
+								<p>Uzooka</p>
+								<p>Price: ${!repricing.Our_eBay_Price_Uzooka__c}</p>	
+								<p>Shipping: ${!repricing.Our_eBay_Shipping_Uzooka__c}</p>
+								<a href="javascript:window.open(checkForNAeBay('{!repricing.Our_eBay_ID_Uzooka__c}', '{!repricing.PDI_Repricing__Linked_Product__r[$Setup.PDI_Repricing__Repricing_Settings__c.PDI_Repricing__Partslink_Field__c]}', '{!$Setup.PDI_Repricing__Repricing_Settings__c.PDI_Repricing__Uzooka_Store_Label__c}'));">
+									View Product
+								</a>
+							</div>
+						</div>
+						<div class="dropdown" style="display:{!If(AND(repricing.Our_eBay_ID_Uzooka__c != null, repricing.Our_eBay_Price_Uzooka__c == null),'','none')}">
+							<p class="clickablefont">
+								<img src="http://i.imgur.com/mkW4M8v.png" width="20" height="20" class="clickable"/>
+							</p>
+							<div class="dropdown-content">
+								<p>Missing Data! Rerun Batch!</p>
+							</div>
+						</div>
+						<div class="dropdown" style="display:{!If(AND(repricing.Our_eBay_ID_Uzooka__c != null, repricing.Our_eBay_Price_Uzooka__c == 'NA'),'','none')}">
+							<p class="clickablefont">
+								<img src="http://www.iconarchive.com/download/i90882/icons8/windows-8/Healthcare-Skull.ico" width="20" height="20" class="clickable"/>
+							</p>
+							<div class="dropdown-content">
+								<p>Could not get data. Check to see if the id is legitimate, then update.</p>
+							</div>
+						</div>
+						<div class="dropdown" style="display:{!If(repricing.Our_eBay_ID_Uzooka__c == null,'','none')}">
+							<img src="http://icons.iconarchive.com/icons/custom-icon-design/mono-general-1/512/alert-icon.png" width="20" height="20" class="clickable"/>
+							<div class="dropdown-content">
+								<p>No Item ID found!</p>
+								
+								<apex:inputField value="{!repricing.Our_eBay_ID_Uzooka__c}" html-placeholder="Uzooka eBay ID"/>
+								
+								<button type="button" onclick="updateAll()">
+								Update
+								</button>
+								
+								<div style="display:{!If(repricing.PDI_Repricing__Linked_Product__r[$Setup.PDI_Repricing__Repricing_Settings__c.PDI_Repricing__Partslink_Field__c] == null, '', 'none')}">
+									<a href="javascript:window.open(checkForNAeBay('{!repricing.Our_eBay_ID_Uzooka__c}', '{!repricing.PDI_Repricing__Linked_Product__r[$Setup.PDI_Repricing__Repricing_Settings__c.PDI_Repricing__Partslink_Field__c]}', '{!$Setup.PDI_Repricing__Repricing_Settings__c.PDI_Repricing__Uzooka_Store_Label__c}'));">
+										Find ID
+										<img src="http://icons.iconarchive.com/icons/paomedia/small-n-flat/1024/sign-warning-icon.png" width="12" height="12" class="clickable"/>
+									</a>
+								</div>
+								
+								<div style="display:{!If(repricing.PDI_Repricing__Linked_Product__r[$Setup.PDI_Repricing__Repricing_Settings__c.PDI_Repricing__Partslink_Field__c] != null, '', 'none')}">
+									<a href="javascript:window.open(checkForNAeBay('{!repricing.Our_eBay_ID_Uzooka__c}', '{!repricing.PDI_Repricing__Linked_Product__r[$Setup.PDI_Repricing__Repricing_Settings__c.PDI_Repricing__Partslink_Field__c]}', '{!$Setup.PDI_Repricing__Repricing_Settings__c.PDI_Repricing__Uzooka_Store_Label__c}'));">
+										Find ID
+										<img src="http://icons.iconarchive.com/icons/paomedia/small-n-flat/1024/sign-warning-icon.png" width="12" height="12" class="clickable"/>
+									</a>
+								</div>
+							</div>
+						</div>	
+	   				</td>
+	   				
+	   				<td><!-- Uzooka Price Change --></td>
+	   				
+	   				<td>
+	   					<div class="dropdown" style="display:{!If(AND(repricing.Our_eBay_ID_Depot__c != null,AND(repricing.Our_eBay_Price_Depot__c != null, repricing.Our_eBay_Shipping_Depot__c != null, repricing.Our_eBay_Raw_Price_Depot__c != '')),'','none')}">
+							<p class="clickablefont">
+								${!repricing.Our_eBay_Raw_Price_Depot__c}
+							</p>
+							<div class="dropdown-content">
+								<p>Depot</p>
+								<p>Price: ${!repricing.Our_eBay_Price_Depot__c}</p>	
+								<p>Shipping: ${!repricing.Our_eBay_Shipping_Depot__c}</p>
+								<a href="javascript:window.open(checkForNAeBay('{!repricing.PDI_Repricing__Our_eBay_ID_Depot__c}', '{!repricing.PDI_Repricing__Linked_Product__r[$Setup.PDI_Repricing__Repricing_Settings__c.PDI_Repricing__Partslink_Field__c]}' ,'{!$Setup.PDI_Repricing__Repricing_Settings__c.PDI_Repricing__HeadlightsDepot_Store_Label__c}'));">
+									View Product
+								</a>
+							</div>
+						</div>
+						<div class="dropdown" style="display:{!If(AND(repricing.Our_eBay_ID_Depot__c != null, repricing.Our_eBay_Price_Depot__c == null),'','none')}">
+							<p class="clickablefont">
+								<img src="http://i.imgur.com/mkW4M8v.png" width="20" height="20" class="clickable"/>
+							</p>
+							<div class="dropdown-content">
+								<p>Missing Data! Rerun Batch!</p>
+							</div>
+						</div>
+						<div class="dropdown" style="display:{!If(AND(repricing.Our_eBay_ID_Depot__c != null, repricing.Our_eBay_Price_Depot__c == 'NA'),'','none')}">
+							<p class="clickablefont">
+								<img src="http://www.iconarchive.com/download/i90882/icons8/windows-8/Healthcare-Skull.ico" width="20" height="20" class="clickable"/>
+							</p>
+							<div class="dropdown-content">
+								<p>Could not get data. Check to see if the id is legitimate, then update.</p>
+							</div>
+						</div>
+						<div class="dropdown" style="display:{!If(repricing.Our_eBay_ID_Depot__c == null,'','none')}">
+							<img src="http://icons.iconarchive.com/icons/custom-icon-design/mono-general-1/512/alert-icon.png" width="20" height="20" class="clickable"/>
+							<div class="dropdown-content">
+								<p>No Item ID found!</p>
+								
+								<apex:inputField value="{!repricing.PDI_Repricing__Our_eBay_ID_Depot__c}" html-placeholder="Depot eBay ID"/>
+								
+								<button type="button" onclick="updateAll()">
+								Update
+								</button>
+								
+								<div style="display:{!If(repricing.PDI_Repricing__Linked_Product__r[$Setup.PDI_Repricing__Repricing_Settings__c.PDI_Repricing__Partslink_Field__c] == null, '', 'none')}">
+									<a href="javascript:window.open(checkForNAeBay('{!repricing.PDI_Repricing__Our_eBay_ID_Depot__c}', '{!repricing.PDI_Repricing__Linked_Product__r[$Setup.PDI_Repricing__Repricing_Settings__c.PDI_Repricing__Partslink_Field__c]}', '{!$Setup.PDI_Repricing__Repricing_Settings__c.PDI_Repricing__HeadlightsDepot_Store_Label__c}'));">
+										Find ID
+										<img src="http://icons.iconarchive.com/icons/paomedia/small-n-flat/1024/sign-warning-icon.png" width="12" height="12" class="clickable"/>
+									</a>
+								</div>
+								
+								<div style="display:{!If(repricing.PDI_Repricing__Linked_Product__r[$Setup.PDI_Repricing__Repricing_Settings__c.PDI_Repricing__Partslink_Field__c] != null, '', 'none')}">
+									<a href="javascript:window.open(checkForNAeBay('{!repricing.PDI_Repricing__Our_eBay_ID_Depot__c}', '{!repricing.PDI_Repricing__Linked_Product__r[$Setup.PDI_Repricing__Repricing_Settings__c.PDI_Repricing__Partslink_Field__c]}', '{!$Setup.PDI_Repricing__Repricing_Settings__c.PDI_Repricing__HeadlightsDepot_Store_Label__c}'));">
+										Find ID
+										<img src="http://icons.iconarchive.com/icons/paomedia/small-n-flat/1024/sign-warning-icon.png" width="12" height="12" class="clickable"/>
+									</a>
+								</div>
+							</div>
+						</div>	
+	   				</td>
+	   				
+	   				<td><!-- Depot Price Change --></td>
+	   				
+	   				<td>{!repricing.PDI_Repricing__Linked_Product__r[$Setup.PDI_Repricing__Repricing_Settings__c.PDI_Repricing__Website_Price_Field__c]}</td>
+	   				
+	   				<td><!-- Website Price Change --></td>
+	   				
+	   				<td>
+	   					<div class="dropdown" style="display:{!If(AND(repricing.PDI_Repricing__Competitor_A_eBay_ID__c != null,AND(repricing.PDI_Repricing__Competitor_A_eBay_Price__c != null, repricing.PDI_Repricing__Competitor_A_eBay_Shipping__c != null, repricing.PDI_Repricing__Competitor_A_eBay_Raw_Price__c != '')),'','none')}">
+							<p class="clickablefont">
+								${!repricing.PDI_Repricing__Competitor_A_eBay_Raw_Price__c}
+							</p>
+							<div class="dropdown-content">
+								<p>{!$Setup.PDI_Repricing__Repricing_Settings__c.PDI_Repricing__Competitor_A_Label__c}</p>
+								<p>Price: ${!repricing.PDI_Repricing__Competitor_A_eBay_Price__c}</p>	
+								<p>Shipping: ${!repricing.PDI_Repricing__Competitor_A_eBay_Shipping__c}</p>
+								<a href="javascript:window.open(checkForNAeBay('{!repricing.PDI_Repricing__Competitor_A_eBay_ID__c}', '{!repricing.PDI_Repricing__Linked_Product__r[$Setup.PDI_Repricing__Repricing_Settings__c.PDI_Repricing__Partslink_Field__c]}', '{!$Setup.PDI_Repricing__Repricing_Settings__c.PDI_Repricing__Competitor_A_eBay_Store__c}'));">
+									View Product
+								</a>
+							</div>
+						</div>
+						<div class="dropdown" style="display:{!If(AND(repricing.PDI_Repricing__Competitor_A_eBay_ID__c != null, repricing.PDI_Repricing__Competitor_A_eBay_Price__c == null),'','none')}">
+							<p class="clickablefont">
+								<img src="http://i.imgur.com/mkW4M8v.png" width="20" height="20" class="clickable"/>
+							</p>
+							<div class="dropdown-content">
+								<p>Missing Data! Rerun Batch!</p>
+							</div>
+						</div>
+						<div class="dropdown" style="display:{!If(AND(repricing.PDI_Repricing__Competitor_A_eBay_ID__c != null, repricing.PDI_Repricing__Competitor_A_eBay_Price__c == 'NA'),'','none')}">
+							<p class="clickablefont">
+								<img src="http://www.iconarchive.com/download/i90882/icons8/windows-8/Healthcare-Skull.ico" width="20" height="20" class="clickable"/>
+							</p>
+							<div class="dropdown-content">
+								<p>Could not get data. Check to see if the id is legitimate, then update.</p>
+							</div>
+						</div>
+						<div class="dropdown" style="display:{!If(repricing.PDI_Repricing__Competitor_A_eBay_ID__c == null,'','none')}">
+							<img src="http://icons.iconarchive.com/icons/custom-icon-design/mono-general-1/512/alert-icon.png" width="20" height="20" class="clickable"/>
+							<div class="dropdown-content">
+								<p>No Item ID found!</p>
+								
+								<apex:inputField value="{!repricing.PDI_Repricing__Competitor_A_eBay_ID__c}" html-placeholder="As eBay ID"/>
+								
+								<button type="button" onclick="updateAll()">
+								Update
+								</button>
+								
+								<div style="display:{!If(repricing.PDI_Repricing__Linked_Product__r[$Setup.PDI_Repricing__Repricing_Settings__c.PDI_Repricing__Partslink_Field__c] == null, '', 'none')}">
+									<a href="javascript:window.open(checkForNAeBay('{!repricing.PDI_Repricing__Competitor_A_eBay_ID__c}', '{!repricing.PDI_Repricing__Linked_Product__r[$Setup.PDI_Repricing__Repricing_Settings__c.PDI_Repricing__Partslink_Field__c]}', '{!$Setup.PDI_Repricing__Repricing_Settings__c.PDI_Repricing__Competitor_A_eBay_Store__c}'));">
+										Find ID
+										<img src="http://icons.iconarchive.com/icons/paomedia/small-n-flat/1024/sign-warning-icon.png" width="12" height="12" class="clickable"/>
+									</a>
+								</div>
+								
+								<div style="display:{!If(repricing.PDI_Repricing__Linked_Product__r[$Setup.PDI_Repricing__Repricing_Settings__c.PDI_Repricing__Partslink_Field__c] != null, '', 'none')}">
+									<a href="javascript:window.open(checkForNAeBay('{!repricing.PDI_Repricing__Competitor_A_eBay_ID__c}', '{!repricing.PDI_Repricing__Linked_Product__r[$Setup.PDI_Repricing__Repricing_Settings__c.PDI_Repricing__Partslink_Field__c]}', '{!$Setup.PDI_Repricing__Repricing_Settings__c.PDI_Repricing__Competitor_A_eBay_Store__c}'));">
+										Find ID
+										<img src="http://icons.iconarchive.com/icons/paomedia/small-n-flat/1024/sign-warning-icon.png" width="12" height="12" class="clickable"/>
+									</a>
+								</div>
+							</div>
+						</div>	
+	   				</td>
+	   				
+	   				<td>
+	   					<div class="dropdown" style="display:{!If(AND(repricing.PDI_Repricing__Competitor_B_eBay_ID__c != null,AND(repricing.PDI_Repricing__Competitor_B_eBay_Price__c != null, repricing.PDI_Repricing__Competitor_B_eBay_Shipping__c != null, repricing.PDI_Repricing__Competitor_B_eBay_Raw_Price__c != '')),'','none')}">
+							<p class="clickablefont">
+								${!repricing.PDI_Repricing__Competitor_B_eBay_Raw_Price__c}
+							</p>
+							<div class="dropdown-content">
+								<p>{!$Setup.PDI_Repricing__Repricing_Settings__c.PDI_Repricing__Competitor_B_Label__c}</p>
+								<p>Price: ${!repricing.PDI_Repricing__Competitor_B_eBay_Price__c}</p>	
+								<p>Shipping: ${!repricing.PDI_Repricing__Competitor_B_eBay_Shipping__c}</p>
+								<a href="javascript:window.open(checkForNAeBay('{!repricing.PDI_Repricing__Competitor_B_eBay_ID__c}', '{!repricing.PDI_Repricing__Linked_Product__r[$Setup.PDI_Repricing__Repricing_Settings__c.PDI_Repricing__Partslink_Field__c]}', '{!$Setup.PDI_Repricing__Repricing_Settings__c.PDI_Repricing__Competitor_B_eBay_Store__c}'));">
+									View Product
+								</a>
+							</div>
+						</div>
+						<div class="dropdown" style="display:{!If(AND(repricing.PDI_Repricing__Competitor_B_eBay_ID__c != null, repricing.PDI_Repricing__Competitor_B_eBay_Price__c == null),'','none')}">
+							<p class="clickablefont">
+								<img src="http://i.imgur.com/mkW4M8v.png" width="20" height="20" class="clickable"/>
+							</p>
+							<div class="dropdown-content">
+								<p>Missing Data! Rerun Batch!</p>
+							</div>
+						</div>
+						<div class="dropdown" style="display:{!If(AND(repricing.PDI_Repricing__Competitor_B_eBay_ID__c != null, repricing.PDI_Repricing__Competitor_B_eBay_Price__c == 'NA'),'','none')}">
+							<p class="clickablefont">
+								<img src="http://www.iconarchive.com/download/i90882/icons8/windows-8/Healthcare-Skull.ico" width="20" height="20" class="clickable"/>
+							</p>
+							<div class="dropdown-content">
+								<p>Could not get data. Check to see if the id is legitimate, then update.</p>
+							</div>
+						</div>
+						<div class="dropdown" style="display:{!If(repricing.PDI_Repricing__Competitor_B_eBay_ID__c == null,'','none')}">
+							<img src="http://icons.iconarchive.com/icons/custom-icon-design/mono-general-1/512/alert-icon.png" width="20" height="20" class="clickable"/>
+							<div class="dropdown-content">
+								<p>No Item ID found!</p>
+								
+								<apex:inputField value="{!repricing.PDI_Repricing__Competitor_B_eBay_ID__c}" html-placeholder="Bs eBay ID"/>
+								
+								<button type="button" onclick="updateAll()">
+								Update
+								</button>
+								
+								<div style="display:{!If(repricing.PDI_Repricing__Linked_Product__r[$Setup.PDI_Repricing__Repricing_Settings__c.PDI_Repricing__Partslink_Field__c] == null, '', 'none')}">
+									<a href="javascript:window.open(checkForNAeBay('{!repricing.PDI_Repricing__Competitor_B_eBay_ID__c}', '{!repricing.PDI_Repricing__Linked_Product__r[$Setup.PDI_Repricing__Repricing_Settings__c.PDI_Repricing__Partslink_Field__c]}', '{!$Setup.PDI_Repricing__Repricing_Settings__c.PDI_Repricing__Competitor_B_eBay_Store__c}'));">
+										Find ID
+										<img src="http://icons.iconarchive.com/icons/paomedia/small-n-flat/1024/sign-warning-icon.png" width="12" height="12" class="clickable"/>
+									</a>
+								</div>
+								
+								<div style="display:{!If(repricing.PDI_Repricing__Linked_Product__r[$Setup.PDI_Repricing__Repricing_Settings__c.PDI_Repricing__Partslink_Field__c] != null, '', 'none')}">
+									<a href="javascript:window.open(checkForNAeBay('{!repricing.PDI_Repricing__Competitor_B_eBay_ID__c}', '{!repricing.PDI_Repricing__Linked_Product__r[$Setup.PDI_Repricing__Repricing_Settings__c.PDI_Repricing__Partslink_Field__c]}', '{!$Setup.PDI_Repricing__Repricing_Settings__c.PDI_Repricing__Competitor_B_eBay_Store__c}'));">
+										Find ID
+										<img src="http://icons.iconarchive.com/icons/paomedia/small-n-flat/1024/sign-warning-icon.png" width="12" height="12" class="clickable"/>
+									</a>
+								</div>
+							</div>
+						</div>	
+	   				</td>
+	   				
+	   				<td>
+	   					<div class="dropdown" style="display:{!If(AND(repricing.PDI_Repricing__Competitor_C_eBay_ID__c != null,AND(repricing.PDI_Repricing__Competitor_C_eBay_Price__c != null, repricing.PDI_Repricing__Competitor_C_eBay_Shipping__c != null, repricing.PDI_Repricing__Competitor_C_eBay_Raw_Price__c != '')),'','none')}">
+							<p class="clickablefont">
+								${!repricing.PDI_Repricing__Competitor_C_eBay_Raw_Price__c}
+							</p>
+							<div class="dropdown-content">
+								<p>Lowest Price</p>
+								<p>Price: ${!repricing.PDI_Repricing__Competitor_C_eBay_Price__c}</p>	
+								<p>Shipping: ${!repricing.PDI_Repricing__Competitor_C_eBay_Shipping__c}</p>
+								<a href="javascript:window.open(checkForNAeBay('{!repricing.PDI_Repricing__Competitor_C_eBay_ID__c}', '{!repricing.PDI_Repricing__Linked_Product__r[$Setup.PDI_Repricing__Repricing_Settings__c.PDI_Repricing__Partslink_Field__c]}', ''));">
+									View Product
+								</a>
+							</div>
+						</div>
+						<div class="dropdown" style="display:{!If(AND(repricing.PDI_Repricing__Competitor_C_eBay_ID__c != null, repricing.PDI_Repricing__Competitor_C_eBay_Price__c == null),'','none')}">
+							<p class="clickablefont">
+								<img src="http://i.imgur.com/mkW4M8v.png" width="20" height="20" class="clickable"/>
+							</p>
+							<div class="dropdown-content">
+								<p>Missing Data! Rerun Batch!</p>
+							</div>
+						</div>
+						<div class="dropdown" style="display:{!If(AND(repricing.PDI_Repricing__Competitor_C_eBay_ID__c != null, repricing.PDI_Repricing__Competitor_C_eBay_Price__c == 'NA'),'','none')}">
+							<p class="clickablefont">
+								<img src="http://www.iconarchive.com/download/i90882/icons8/windows-8/Healthcare-Skull.ico" width="20" height="20" class="clickable"/>
+							</p>
+							<div class="dropdown-content">
+								<p>Could not get data. Check to see if the id is legitimate, then update.</p>
+							</div>
+						</div>
+						<div class="dropdown" style="display:{!If(repricing.PDI_Repricing__Competitor_C_eBay_ID__c == null,'','none')}">
+							<img src="http://icons.iconarchive.com/icons/custom-icon-design/mono-general-1/512/alert-icon.png" width="20" height="20" class="clickable"/>
+							<div class="dropdown-content">
+								<p>No Item ID found!</p>
+								
+								<apex:inputField value="{!repricing.PDI_Repricing__Competitor_C_eBay_ID__c}" html-placeholder="Cs eBay ID"/>
+								
+								<button type="button" onclick="updateAll()">
+								Update
+								</button>
+				    			
+				    			<div style="display:{!If(repricing.PDI_Repricing__Linked_Product__r[$Setup.PDI_Repricing__Repricing_Settings__c.PDI_Repricing__Partslink_Field__c] == null, '', 'none')}">
+									<a href="javascript:window.open(checkForNAeBayLowest('{!repricing.PDI_Repricing__Competitor_C_eBay_ID__c}', '{!repricing.PDI_Repricing__Linked_Product__r[$Setup.PDI_Repricing__Repricing_Settings__c.PDI_Repricing__Partslink_Field__c]}'));">
+										Find ID
+										<img src="http://icons.iconarchive.com/icons/paomedia/small-n-flat/1024/sign-warning-icon.png" width="12" height="12" class="clickable"/>
+									</a>
+								</div>
+								
+								<div style="display:{!If(repricing.PDI_Repricing__Linked_Product__r[$Setup.PDI_Repricing__Repricing_Settings__c.PDI_Repricing__Partslink_Field__c] != null, '', 'none')}">
+									<a href="javascript:window.open(checkForNAeBayLowest('{!repricing.PDI_Repricing__Competitor_C_eBay_ID__c}', '{!repricing.PDI_Repricing__Linked_Product__r[$Setup.PDI_Repricing__Repricing_Settings__c.PDI_Repricing__Partslink_Field__c]}'));">
+										Find ID
+										<img src="http://icons.iconarchive.com/icons/paomedia/small-n-flat/1024/sign-warning-icon.png" width="12" height="12" class="clickable"/>
+									</a>
+								</div>
+							</div>
+						</div>	
+	   				</td>
+	   				
+	   				<td>
+	   					<div class="dropdown" style="display:{!If(AND(repricing.PDI_Repricing__Competitor_A_Amazon_ID__c != null,AND(repricing.PDI_Repricing__Competitor_A_Amazon_Price__c != null, repricing.PDI_Repricing__Competitor_A_Amazon_Price__c != 'NA')),'','none')}">
+							<p class="clickablefont">
+								${!repricing.As_Amazon_Raw_Price__c}
+							</p>
+							<div class="dropdown-content">
+								<p>{!$Setup.PDI_Repricing__Repricing_Settings__c.PDI_Repricing__Competitor_A_Label__c}</p>
+								<p>Price:  ${!repricing.PDI_Repricing__Competitor_A_Amazon_Price__c}</p>
+								<p>Shipping: ${!repricing.PDI_Repricing__Competitor_A_Amazon_Shipping__c}</p>
+								<a href="https://www.amazon.com/s/ref=nb_sb_noss?url=search-alias%3Daps&field-keywords={!repricing.PDI_Repricing__Linked_Product__r[$Setup.PDI_Repricing__Repricing_Settings__c.PDI_Repricing__Partslink_Field__c]}" target="_blank">
+									View Product
+								</a>
+							</div>
+						</div>
+						<div class="dropdown" style="display:{!If(AND(repricing.PDI_Repricing__Competitor_A_Amazon_ID__c != null, repricing.PDI_Repricing__Competitor_A_Amazon_Price__c == null),'','none')}">
+							<p class="clickablefont">
+								<img src="http://i.imgur.com/mkW4M8v.png" width="20" height="20" class="clickable"/>
+							</p>
+							<div class="dropdown-content">
+								<p>Missing Data! Rerun Batch!</p>
+							</div>
+						</div>
+						<div class="dropdown" style="display:{!If(AND(repricing.PDI_Repricing__Competitor_A_Amazon_ID__c != null, repricing.PDI_Repricing__Competitor_A_Amazon_Price__c == 'NA'),'','none')}">
+							<p class="clickablefont">
+								<img src="http://www.iconarchive.com/download/i90882/icons8/windows-8/Healthcare-Skull.ico" width="20" height="20" class="clickable"/>
+							</p>
+							<div class="dropdown-content">
+								<p>Could not get data. Check to see if the id is legitimate, then update.</p>
+							</div>
+						</div>
+						<div class="dropdown" style="display:{!If(repricing.PDI_Repricing__Competitor_A_Amazon_ID__c == null,'','none')}">
+							<img src="http://icons.iconarchive.com/icons/custom-icon-design/mono-general-1/512/alert-icon.png" width="20" height="20" class="clickable"/>
+							<div class="dropdown-content">
+								<p>No Item ID found!</p>
+								
+								<apex:inputField value="{!repricing.PDI_Repricing__Competitor_A_Amazon_ID__c}" html-placeholder="As Amazon ID"/>
+						
+								<button type="button" onclick="updateAll()">
+								Update
+								</button>
+								
+								<div style="display:{!If(repricing.PDI_Repricing__Linked_Product__r[$Setup.PDI_Repricing__Repricing_Settings__c.PDI_Repricing__Partslink_Field__c] == null, '', 'none')}">
+									<a href="https://www.amazon.com/s/ref=nb_sb_noss?url=search-alias%3Daps&field-keywords={!repricing.PDI_Repricing__Linked_Product__r[$Setup.PDI_Repricing__Repricing_Settings__c.PDI_Repricing__Partslink_Field__c]}" target="_blank">
+										Find ID
+										<img src="http://icons.iconarchive.com/icons/paomedia/small-n-flat/1024/sign-warning-icon.png" width="12" height="12" class="clickable"/>
+									</a>
+								</div>
+								
+								<div style="display:{!If(repricing.PDI_Repricing__Linked_Product__r[$Setup.PDI_Repricing__Repricing_Settings__c.PDI_Repricing__Partslink_Field__c] != null, '', 'none')}">
+									<a href="https://www.amazon.com/s/ref=nb_sb_noss?url=search-alias%3Daps&field-keywords={!repricing.PDI_Repricing__Linked_Product__r[$Setup.PDI_Repricing__Repricing_Settings__c.PDI_Repricing__Partslink_Field__c]}" target="_blank">
+										Find ID
+										<img src="http://icons.iconarchive.com/icons/paomedia/small-n-flat/1024/sign-warning-icon.png" width="12" height="12" class="clickable"/>
+									</a>
+								</div>
+								
+							</div>
+						</div>
+	   				</td>
+	   				
+	   				<td>
+						<div class="dropdown" style="display:{!If(AND(repricing.PDI_Repricing__Competitor_B_Amazon_ID__c != null,AND(repricing.PDI_Repricing__Competitor_B_Amazon_Price__c != null, repricing.PDI_Repricing__Competitor_B_Amazon_Price__c != 'NA')),'','none')}">
+							<p class="clickablefont">
+								${!repricing.Bs_Amazon_Raw_Price__c}
+							</p>
+							<div class="dropdown-content">
+								<p>{!$Setup.PDI_Repricing__Repricing_Settings__c.PDI_Repricing__Competitor_B_Label__c}</p>
+								<p>Price:  ${!repricing.PDI_Repricing__Competitor_B_Amazon_Price__c}</p>
+								<p>Shipping: ${!repricing.PDI_Repricing__Competitor_B_Amazon_Shipping__c}</p>
+								<a href="https://www.amazon.com/s/ref=nb_sb_noss?url=search-alias%3Daps&field-keywords={!repricing.PDI_Repricing__Linked_Product__r[$Setup.PDI_Repricing__Repricing_Settings__c.PDI_Repricing__Partslink_Field__c]}" target="_blank">
+									View Product
+								</a>
+							</div>
+						</div>
+						<div class="dropdown" style="display:{!If(AND(repricing.PDI_Repricing__Competitor_B_Amazon_ID__c != null, repricing.PDI_Repricing__Competitor_B_Amazon_Price__c == null),'','none')}">
+							<p class="clickablefont">
+								<img src="http://i.imgur.com/mkW4M8v.png" width="20" height="20" class="clickable"/>
+							</p>
+							<div class="dropdown-content">
+								<p>Missing Data! Rerun Batch!</p>
+							</div>
+						</div>
+						<div class="dropdown" style="display:{!If(AND(repricing.PDI_Repricing__Competitor_B_Amazon_ID__c != null, repricing.PDI_Repricing__Competitor_B_Amazon_Price__c == 'NA'),'','none')}">
+							<p class="clickablefont">
+								<img src="http://www.iconarchive.com/download/i90882/icons8/windows-8/Healthcare-Skull.ico" width="20" height="20" class="clickable"/>
+							</p>
+							<div class="dropdown-content">
+								<p>Could not get data. Check to see if the id is legitimate, then update.</p>
+							</div>
+						</div>
+						<div class="dropdown" style="display:{!If(repricing.PDI_Repricing__Competitor_B_Amazon_ID__c == null,'','none')}">
+							<img src="http://icons.iconarchive.com/icons/custom-icon-design/mono-general-1/512/alert-icon.png" width="20" height="20" class="clickable"/>
+							<div class="dropdown-content">
+								<p>No Item ID found!</p>
+								
+								<apex:inputField value="{!repricing.PDI_Repricing__Competitor_B_Amazon_ID__c}" html-placeholder="Bs Amazon ID"/>
+						
+								<button type="button" onclick="updateAll()">
+								Update
+								</button>
+								
+								<div style="display:{!If(repricing.PDI_Repricing__Linked_Product__r[$Setup.PDI_Repricing__Repricing_Settings__c.PDI_Repricing__Partslink_Field__c] == null, '', 'none')}">
+									<a href="https://www.amazon.com/s/ref=nb_sb_noss?url=search-alias%3Daps&field-keywords={!repricing.PDI_Repricing__Linked_Product__r[$Setup.PDI_Repricing__Repricing_Settings__c.PDI_Repricing__Partslink_Field__c]}" target="_blank">
+										Find ID
+										<img src="http://icons.iconarchive.com/icons/paomedia/small-n-flat/1024/sign-warning-icon.png" width="12" height="12" class="clickable"/>
+									</a>
+								</div>
+								
+								
+								<div style="display:{!If(repricing.PDI_Repricing__Linked_Product__r[$Setup.PDI_Repricing__Repricing_Settings__c.PDI_Repricing__Partslink_Field__c] != null, '', 'none')}">
+									<a href="https://www.amazon.com/s/ref=nb_sb_noss?url=search-alias%3Daps&field-keywords={!repricing.PDI_Repricing__Linked_Product__r[$Setup.PDI_Repricing__Repricing_Settings__c.PDI_Repricing__Partslink_Field__c]}" target="_blank">
+										Find ID
+										<img src="http://icons.iconarchive.com/icons/paomedia/small-n-flat/1024/sign-warning-icon.png" width="12" height="12" class="clickable"/>
+									</a>
+								</div>
+								
+							</div>
+						</div>
+					</td>
+	   				
+	   				<td>
+	   					<div class="dropdown" style="display:{!If(AND(repricing.PDI_Repricing__Competitor_C_Amazon_ID__c != null,AND(repricing.PDI_Repricing__Competitor_C_Amazon_Price__c != null, repricing.PDI_Repricing__Competitor_C_Amazon_Price__c != 'NA')),'','none')}">
+							<p class="clickablefont">
+								${!repricing.Cs_Amazon_Raw_Price__c}
+							</p>
+							<div class="dropdown-content">
+								<p>Price:  ${!repricing.PDI_Repricing__Competitor_C_Amazon_Price__c}</p>
+								<p>Shipping: ${!repricing.PDI_Repricing__Competitor_C_Amazon_Shipping__c}</p>
+								<a href="https://www.amazon.com/s/ref=nb_sb_noss?url=search-alias%3Daps&field-keywords={!repricing.PDI_Repricing__Linked_Product__r[$Setup.PDI_Repricing__Repricing_Settings__c.PDI_Repricing__Partslink_Field__c]}" target="_blank">
+									View Product
+								</a>
+							</div>
+						</div>
+						<div class="dropdown" style="display:{!If(AND(repricing.PDI_Repricing__Competitor_C_Amazon_ID__c != null, repricing.PDI_Repricing__Competitor_C_Amazon_Price__c == null),'','none')}">
+							<p class="clickablefont">
+								<img src="http://i.imgur.com/mkW4M8v.png" width="20" height="20" class="clickable"/>
+							</p>
+							<div class="dropdown-content">
+								<p>Missing Data! Rerun Batch!</p>
+							</div>
+						</div>
+						<div class="dropdown" style="display:{!If(AND(repricing.PDI_Repricing__Competitor_C_Amazon_ID__c != null, repricing.PDI_Repricing__Competitor_C_Amazon_Price__c == 'NA'),'','none')}">
+							<p class="clickablefont">
+								<img src="http://www.iconarchive.com/download/i90882/icons8/windows-8/Healthcare-Skull.ico" width="20" height="20" class="clickable"/>
+							</p>
+							<div class="dropdown-content">
+								<p>Could not get data. Check to see if the id is legitimate, then update.</p>
+							</div>
+						</div>
+						<div class="dropdown" style="display:{!If(repricing.PDI_Repricing__Competitor_C_Amazon_ID__c == null,'','none')}">
+							<img src="http://icons.iconarchive.com/icons/custom-icon-design/mono-general-1/512/alert-icon.png" width="20" height="20" class="clickable"/>
+							<div class="dropdown-content">
+								<p>No Item ID found!</p>
+								
+								<apex:inputField value="{!repricing.PDI_Repricing__Competitor_C_Amazon_ID__c}" html-placeholder="Cs Amazon ID"/>
+						
+								<button type="button" onclick="updateAll()">
+								Update
+								</button>
+								
+								<div style="display:{!If(repricing.PDI_Repricing__Linked_Product__r[$Setup.PDI_Repricing__Repricing_Settings__c.PDI_Repricing__Partslink_Field__c] == null, '', 'none')}">
+									<a href="https://www.amazon.com/s/ref=nb_sb_noss?url=search-alias%3Daps&field-keywords={!repricing.PDI_Repricing__Linked_Product__r[$Setup.PDI_Repricing__Repricing_Settings__c.PDI_Repricing__Partslink_Field__c]}" target="_blank">
+										Find ID
+										<img src="http://icons.iconarchive.com/icons/paomedia/small-n-flat/1024/sign-warning-icon.png" width="12" height="12" class="clickable"/>
+									</a>
+								</div>
+								
+								<div style="display:{!If(repricing.PDI_Repricing__Linked_Product__r[$Setup.PDI_Repricing__Repricing_Settings__c.PDI_Repricing__Partslink_Field__c] != null, '', 'none')}">
+									<a href="https://www.amazon.com/s/ref=nb_sb_noss?url=search-alias%3Daps&field-keywords={!repricing.PDI_Repricing__Linked_Product__r[$Setup.PDI_Repricing__Repricing_Settings__c.PDI_Repricing__Partslink_Field__c]}" target="_blank">
+										Find ID
+									</a>
+								</div>
+							</div>
+						</div>
+	   				</td>
+	   				</tr>
+				</apex:repeat>
+	  		</table>
+		</html>
+	</apex:form>
+	
+	<style type="text/css">
+		table {
+			width: 100%;
+        	border-collapse: collapse;
+		}
+		
+		td {
+        	text-align: center;
+        	border-bottom: 1px solid #ddd;
+        	vertical-align: center;
+        	padding: 5px;
+        }
+        
+        th {
+        	text-align: center;
+        	background-color: #009DD5;
+        	color: white;
+        	border-bottom: 1px solid #ddd;
+        	vertical-align: center;
+        	padding: 5px;
+        }
+        
+        tr:nth-child(even){background-color: #f2f2f2}
+        
+	</style>
+</apex:component>

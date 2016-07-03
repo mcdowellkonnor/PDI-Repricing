@@ -1,0 +1,5 @@
+<apex:page standardController="ECS__eCommSource_Order__c" extensions="CloudConversion.RefundController"> 
+   
+    <c:Refund orderId="{!ECS__eCommSource_Order__c.Id}"/> 
+    
+</apex:page>

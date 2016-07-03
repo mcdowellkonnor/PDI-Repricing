@@ -1,0 +1,2 @@
+<apex:page action="{!updateProduct}" standardController="ECS__Product__c" extensions="CloudGento.UpdateMagentoProductController">
+</apex:page>

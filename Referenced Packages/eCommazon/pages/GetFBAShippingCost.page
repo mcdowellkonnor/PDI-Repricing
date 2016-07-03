@@ -1,0 +1,3 @@
+<apex:page standardController="eCommazon__Amazon_Setting__c" extensions="eCommazon.GetFBAShippingCostController" action="{!UpdateShipingCost}" sidebar="true">
+
+</apex:page>

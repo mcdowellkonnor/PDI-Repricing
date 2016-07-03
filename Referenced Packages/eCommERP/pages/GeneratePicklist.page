@@ -1,0 +1,125 @@
+<apex:page standardController="ECS__eCommSource_Order__c"
+	extensions="serp.GeneratePicklistController">
+
+	<apex:pageMessages id="pageMessages" />
+
+	<apex:form >
+		<apex:pageBlock id="pageBlock">
+			<apex:pageBlockButtons location="top">
+				<apex:commandButton action="{!save}" value="Pick"
+					rendered="{!hasProductsToPick}" />
+				<apex:commandButton action="{!cancel}" value="Cancel" />
+			</apex:pageBlockButtons>
+
+			<apex:outputPanel id="table" rendered="{!hasProductsToPick}">
+				<h2>Products to Pick</h2>
+				<table cellspacing="3" cellpadding="3" border="1" width="90%">
+					<thead>
+						<tr>
+							<td><span><b>SKU</b></span></td>
+							<td align="center"><span><b>Title</b></span></td>
+							<apex:outputPanel rendered="true">
+								<td><span><b>Quantity</b></span></td>
+							</apex:outputPanel>
+							<apex:outputPanel rendered="true">
+								<td><span><b>Location</b></span></td>
+							</apex:outputPanel>
+							<apex:outputPanel rendered="{!serializeInventory}">
+								<td><span><b>Serial Number</b></span></td>
+								<td></td>
+							</apex:outputPanel>
+							<apex:outputPanel rendered="{!!serializeInventory}">
+								<td><span><b>UPC</b></span></td>
+								<td></td>
+							</apex:outputPanel>
+						</tr>
+					</thead>
+					<tbody>
+						<apex:outputPanel id="detail">
+							<apex:repeat value="{!allocationDetails}" var="detail">
+								<tr>
+									<td title="{!detail.sku}" align="center" valign="middle"><div>
+											<a href="/{!detail.productId}" target="_blank">{!detail.sku}</a>
+										</div></td>
+									<td title="{!detail.title}" align="center" valign="middle"><div>{!detail.title}</div></td>
+									<td title="qty" align="center" valign="middle"><div>
+											<apex:outputText value="{!detail.quantity}" />
+										</div></td>
+									<td title="loc" align="center" valign="middle"><div>
+											<a href="/{!detail.locationId}" target="_blank"><apex:outputText value="{!detail.location}" /></a>
+										</div></td>
+									<apex:outputPanel rendered="{!serializeInventory && detail.serialNumber!=null}">
+										<td title="serialNumber" align="center" valign="middle"><div>
+												<a href="/{!detail.stockUnitId}" target="_blank"><apex:outputText value="{!detail.serialNumber}" /></a>
+											</div></td>
+										<td title="barcode" align="center" valign="middle"><div>
+												<ECS:BarcodeContainer barcodeType="code39"
+													barcodeText="{!detail.serialNumber}" width="10" height="30" />
+											</div></td>
+									</apex:outputPanel>
+									<apex:outputPanel rendered="{!!serializeInventory && detail.upc!=null}">
+										<td title="upc" align="center" valign="middle"><div>
+												<apex:outputText value="{!detail.upc}" />
+											</div></td>
+										<td title="barcode" align="center" valign="middle"><div>
+												<ECS:BarcodeContainer barcodeType="code39"
+													barcodeText="{!detail.upc}" width="10" height="30" />
+											</div></td>
+									</apex:outputPanel>
+								</tr>
+							</apex:repeat>
+						</apex:outputPanel>
+					</tbody>
+				</table>
+			</apex:outputPanel>
+
+			<apex:outputPanel id="table2" rendered="{!hasUnableToLocate}">
+				<br />
+				<br />
+				<h2>Unable to Locate Products</h2>
+				<table cellspacing="3" cellpadding="3" border="1" width="90%">
+					<thead>
+						<tr>
+							<td><span><b>SKU</b></span></td>
+							<td align="center"><span><b>Title</b></span></td>
+							<td><span><b>Quantity</b></span></td>
+							<td><span><b>UPC</b></span></td>
+							<td><span><b>Location</b></span></td>
+						</tr>
+					</thead>
+					<tbody>
+						<apex:outputPanel id="utl">
+							<apex:repeat value="{!unableToLocate}" var="detail">
+								<tr>
+									<td title="{!detail.sku}" align="center" valign="middle"><div>
+											<a href="/{!detail.productId}" target="_blank">{!detail.sku}</a>
+										</div></td>
+									<td title="{!detail.title}" align="center" valign="middle"><div>{!detail.title}</div></td>
+									<td title="qty" align="center" valign="middle"><div>
+											<apex:outputText value="{!detail.quantity}" />
+										</div></td>
+									<td title="upc-barcode" align="center" valign="middle">
+											<div>
+												<apex:outputPanel rendered="{!detail.upc!=null}">
+													<ECS:BarcodeContainer barcodeType="code39" barcodeText="{!detail.upc}" displayText="{!detail.upc}" width="10" height="30" />
+												</apex:outputPanel>
+											</div>
+									</td>
+									<td title="location-barcode" align="center" valign="middle">
+											<div>
+												<apex:outputPanel rendered="{!detail.location!=null}">
+													<ECS:BarcodeContainer barcodeType="code39" barcodeText="{!detail.location}" displayText="{!detail.location}" width="10" height="30" />
+												</apex:outputPanel>
+											</div>
+									</td>
+								</tr>
+							</apex:repeat>
+						</apex:outputPanel>
+					</tbody>
+				</table>
+			</apex:outputPanel>
+
+		</apex:pageBlock>
+	</apex:form>
+
+</apex:page>

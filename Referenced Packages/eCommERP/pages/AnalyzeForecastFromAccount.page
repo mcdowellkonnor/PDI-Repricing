@@ -1,0 +1,5 @@
+<apex:page standardController="Account" sidebar="false" showHeader="true">
+
+	<c:AnalyzeForecast />
+
+</apex:page>

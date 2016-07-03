@@ -1,0 +1,21 @@
+<messaging:emailTemplate subject="Your {!relatedTo.ECS__Order_Setting__r.Name} Quote" recipientType="Contact" relatedToType="ECS__eCommSource_Order__c">
+
+    <messaging:plainTextEmailBody >
+    
+        Dear  {!relatedTo.ECS__Customer__r.Name},                
+        
+        Thank you for your interest.  Please find your quote attached.
+        
+        Feel free to let me know if you have any questions.
+        
+        Regards,
+        
+        {!$User.FirstName} {!$User.LastName}
+        
+    </messaging:plainTextEmailBody>
+    
+    <messaging:attachment renderAs="pdf" filename="{!relatedTo.Name}">    
+        <c:Invoice type="Quote" orderId="{!relatedTo.Id}" />      
+    </messaging:attachment>
+
+</messaging:emailTemplate>

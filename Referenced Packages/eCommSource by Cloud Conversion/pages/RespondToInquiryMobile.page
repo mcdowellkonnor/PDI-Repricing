@@ -1,0 +1,7 @@
+<apex:page id="inquiry-iphone" standardController="Case">
+
+   <!-- <apex:composition template="iuivf2" >
+      <apex:define name="body-content" />
+   </apex:composition>
+ -->
+</apex:page>

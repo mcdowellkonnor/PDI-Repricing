@@ -1,0 +1,23 @@
+<apex:page showHeader="false" standardController="ECS__Template__c" extensions="ECS.TemplateController" applyhtmltag="false">
+
+	<apex:pageMessages />
+
+	<apex:form >
+		
+		<apex:outputPanel id="page">
+		
+			<apex:outputPanel rendered="{!order==null}">
+				Select Order: <apex:inputField value="{!orderLine.ECS__Order__c}">
+								  <apex:actionSupport event="onchange" rerender="page"/>
+							  </apex:inputField>
+			</apex:outputPanel>
+		
+			<apex:outputPanel rendered="{!order!=null}">
+				<c:ViewTemplate orderId="{!order.Id}" templateId="{!ECS__Template__c.Id}"/>
+			</apex:outputPanel>
+			
+		</apex:outputPanel>
+		
+	</apex:form>
+	
+</apex:page>

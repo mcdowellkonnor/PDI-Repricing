@@ -1,0 +1,3 @@
+<apex:page standardController="ECS__Recurring_Order__c" extensions="ECS.RecurringOrderUtils" action="{!fulfillCurrentRecurringOrder}">
+
+</apex:page>

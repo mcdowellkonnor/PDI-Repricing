@@ -1,0 +1,33 @@
+<apex:page controller="ECS.ManageScheduleDeleteController">
+
+	<div class="cc">
+		<apex:stylesheet value="{!URLFOR($Resource.ECS__bootstrap_cc)}" />
+		
+		<link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.9.0/themes/base/jquery-ui.css"></link> 
+			
+		<apex:pageMessages id="pageMessages" />
+		<apex:form >
+
+			<div>
+				<table>
+					<tr>
+						<td>
+							<apex:outputLabel style="width: 165px; float: left; margin-left: 35px;">Days in the Past to Delete</apex:outputLabel>
+						</td>
+						<td>
+							<apex:inputText value="{!days}" />
+						</td>
+					</tr>
+				</table>
+			</div>
+			<div style="border: 1px solid #DDD; margin-top: 15px; margin-bottom: 15px;"></div>
+	
+			<div style="clear: both; text-align: center; margin-top: 15px;">
+				<apex:commandButton style="text-align: center; clear: both;" styleClass="btn-primary" action="{!save}" value="Save" status="formActionStatus" rerender="pageMessages" />
+				<!-- <apex:commandButton action="{!cancel}" value="Cancel" status="formActionStatus" rerender="pageMessages" /> -->
+				<p>&nbsp;</p>
+			</div>
+						
+		</apex:form>
+	</div>
+</apex:page>

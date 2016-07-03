@@ -1,0 +1,5 @@
+<apex:page standardController="ECS__eCommSource_Order_Line__c" >
+   
+   <c:CreateCase orderLineId="{!ECS__eCommSource_Order_Line__c.Id}"/>
+    
+</apex:page>

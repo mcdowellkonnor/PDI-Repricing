@@ -1,0 +1,3 @@
+<apex:page standardController="ECS__Supplier__c" extensions="CloudConversion.SupplierListingsController" action="{!getListings}">
+	<apex:pageMessages />
+</apex:page>

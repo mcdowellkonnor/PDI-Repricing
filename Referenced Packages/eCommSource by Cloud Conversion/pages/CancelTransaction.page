@@ -1,0 +1,7 @@
+<apex:page standardController="ECS__eCommSource_Order__c">
+
+   <!-- <c:SendMessageCss />  -->
+
+   <c:CancelTransaction orderId="{!ECS__eCommSource_Order__c.Id}"/>
+
+</apex:page>

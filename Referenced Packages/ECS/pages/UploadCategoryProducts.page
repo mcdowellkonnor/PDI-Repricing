@@ -1,0 +1,26 @@
+<apex:page standardController="ECS__Category__c" extensions="ECS.UploadCategoryProductsController">
+
+	<c:Analytics event="INFO" app="ECS" />
+	
+	<apex:pageMessages /> 
+	
+	<apex:form id="uploadCategoryProducts">  
+	 
+    <apex:pageBlock id="pageBlock">
+    
+		<apex:pageBlockButtons location="bottom">
+		    <apex:commandButton action="{!upload}" value="Upload"/>
+		</apex:pageBlockButtons>
+		
+        <apex:pageBlockSection id="pgsAttachments" columns="1">
+        	<apex:pageBlockSectionItem id="categoryProductAttachments">
+		             <apex:outputLabel value="Select Attachment:" for="attachment"/>
+		             <apex:inputFile id="attachment" value="{!attachmentBody}" filename="{!attachmentName}" contentType="{!mimeType}"/> 
+			</apex:pageBlockSectionItem>
+		</apex:pageBlockSection>
+		 		 
+	</apex:pageBlock>
+	 
+	</apex:form>
+
+</apex:page>

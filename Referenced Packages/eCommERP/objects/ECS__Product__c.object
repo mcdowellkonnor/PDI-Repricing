@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <enableEnhancedLookup>true</enableEnhancedLookup>
+    <fields>
+        <fullName>Inventory_Velocity_Long_Term__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Inventory Velocity Long Term</label>
+        <precision>14</precision>
+        <required>false</required>
+        <scale>4</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Inventory_Velocity_Mid_Term__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Inventory Velocity Mid Term</label>
+        <precision>14</precision>
+        <required>false</required>
+        <scale>4</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Inventory_Velocity_Short_Term__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Inventory Velocity Short Term</label>
+        <precision>14</precision>
+        <required>false</required>
+        <scale>4</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Minimum_Order_Quantity__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Minimum Order Quantity</label>
+        <precision>5</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>PO_Quantity_in_Transit__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>PO Quantity in Transit</label>
+        <summarizedField>Purchase_Order_Line__c.Quantity_in_Transit__c</summarizedField>
+        <summaryForeignKey>Purchase_Order_Line__c.B2C_Product__c</summaryForeignKey>
+        <summaryOperation>sum</summaryOperation>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>PO_Quantity_on_Order__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>PO Quantity on Order</label>
+        <summarizedField>Purchase_Order_Line__c.Quantity_On_Order__c</summarizedField>
+        <summaryForeignKey>Purchase_Order_Line__c.B2C_Product__c</summaryForeignKey>
+        <summaryOperation>sum</summaryOperation>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>Purchase_Order_Line__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Purchase Order Line</label>
+        <referenceTo>Purchase_Order_Line__c</referenceTo>
+        <relationshipLabel>B2C Products</relationshipLabel>
+        <relationshipName>B2C_Products</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Warehouse_Location_Lookup__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Warehouse Location Lookup</label>
+        <referenceTo>Location__c</referenceTo>
+        <relationshipLabel>B2C Products</relationshipLabel>
+        <relationshipName>B2C_Products</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <webLinks>
+        <fullName>Add_to_PO</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <height>600</height>
+        <linkType>page</linkType>
+        <masterLabel>Add to Purchase Order</masterLabel>
+        <openType>noSidebar</openType>
+        <page>AddProductsToPurchaseOrder</page>
+        <protected>false</protected>
+    </webLinks>
+    <webLinks>
+        <fullName>Add_to_Purchase_Order</fullName>
+        <availability>online</availability>
+        <displayType>massActionButton</displayType>
+        <linkType>javascript</linkType>
+        <masterLabel>Add to Purchase Order</masterLabel>
+        <openType>onClickJavaScript</openType>
+        <protected>false</protected>
+        <requireRowSelection>true</requireRowSelection>
+        <url>var ids= {!GETRECORDIDS($ObjectType.ECS__Product__c)}; if(ids.length &lt; 1 ) alert(&apos;Please select at least one product.&apos;); else var mywin = window.open(&apos;/apex/serp__AddProductsToPurchaseOrder?ids=&apos;+ids.join(&apos;,&apos;));</url>
+    </webLinks>
+    <webLinks>
+        <fullName>Create_PO</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <linkType>page</linkType>
+        <masterLabel>Create PO</masterLabel>
+        <openType>replace</openType>
+        <page>CreatePOFromProduct</page>
+        <protected>false</protected>
+    </webLinks>
+    <webLinks>
+        <fullName>Create_Purchase_Order</fullName>
+        <availability>online</availability>
+        <displayType>massActionButton</displayType>
+        <linkType>javascript</linkType>
+        <masterLabel>Create Purchase Order</masterLabel>
+        <openType>onClickJavaScript</openType>
+        <protected>false</protected>
+        <requireRowSelection>true</requireRowSelection>
+        <url>var ids= {!GETRECORDIDS($ObjectType.ECS__Product__c)}; if(ids.length &lt; 1 ) alert(&apos;Please select at least one product.&apos;); else var mywin = window.open(&apos;/apex/serp__CreatePO?productIds=&apos;+ids.join(&apos;,&apos;));</url>
+    </webLinks>
+    <webLinks>
+        <fullName>Manage_Forecasts</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <height>600</height>
+        <linkType>page</linkType>
+        <masterLabel>Manage Forecasts</masterLabel>
+        <openType>noSidebar</openType>
+        <page>AnalyzeForecastFromProduct</page>
+        <protected>false</protected>
+    </webLinks>
+    <webLinks>
+        <fullName>Manage_Forecasts_List</fullName>
+        <availability>online</availability>
+        <displayType>massActionButton</displayType>
+        <linkType>javascript</linkType>
+        <masterLabel>Manage Forecasts</masterLabel>
+        <openType>onClickJavaScript</openType>
+        <protected>false</protected>
+        <requireRowSelection>true</requireRowSelection>
+        <url>var ids= {!GETRECORDIDS($ObjectType.ECS__Product__c)}; if(ids.length &lt; 1 ) alert(&apos;Please select at least one product.&apos;); else var mywin = window.open(&apos;/apex/serp__Analyze_Forecast?ids=&apos;+ids.join(&apos;,&apos;));</url>
+    </webLinks>
+    <webLinks>
+        <fullName>Move</fullName>
+        <availability>online</availability>
+        <displayType>massActionButton</displayType>
+        <linkType>javascript</linkType>
+        <masterLabel>Move</masterLabel>
+        <openType>onClickJavaScript</openType>
+        <protected>false</protected>
+        <requireRowSelection>true</requireRowSelection>
+        <url>var ids= {!GETRECORDIDS($ObjectType.ECS__Product__c)}; if(ids.length &lt; 1 ) alert(&apos;Please select at least one product.&apos;); else var mywin = window.open(&apos;/apex/serp__ManageInventoryMovements?productIds=&apos;+ids.join(&apos;,&apos;));</url>
+    </webLinks>
+</CustomObject>

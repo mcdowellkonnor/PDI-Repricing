@@ -1,0 +1,10 @@
+------------------------Forwarded Message---------------------------
+Date: {!Case.Inquiry_Time__c}
+From:  {!Case.Contact}
+To:   {!Case.Email_Sent_To__c}
+
+Subject:  {!Case.Subject}
+
+Body:
+
+{!Case.Description}

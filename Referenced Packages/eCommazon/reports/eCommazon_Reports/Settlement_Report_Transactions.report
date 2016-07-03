@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <field>Amazon_Setting__c.Amazon_Settlement_Reports__r.Amazon_Settlement_Report_Transactions__r$Posted_Date__c</field>
+    </columns>
+    <columns>
+        <field>Amazon_Setting__c.Amazon_Settlement_Reports__r.Amazon_Settlement_Report_Transactions__r$Order_Number__c</field>
+    </columns>
+    <columns>
+        <field>Amazon_Setting__c.Amazon_Settlement_Reports__r.Amazon_Settlement_Report_Transactions__r$Amount__c</field>
+    </columns>
+    <filter>
+        <criteriaItems>
+            <column>Amazon_Setting__c.Amazon_Settlement_Reports__r$Id</column>
+            <operator>equals</operator>
+            <value></value>
+        </criteriaItems>
+    </filter>
+    <format>Summary</format>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>Amazon_Setting__c.Amazon_Settlement_Reports__r$Name</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>Amazon_Setting__c.Amazon_Settlement_Reports__r.Amazon_Settlement_Report_Transactions__r$Name</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <name>Settlement Report Transactions</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>Amazon_Settings_with_Amazon_Settlement_Reports_with_Amazon_Settlement_Report_T__c</reportType>
+    <scope>organization</scope>
+    <showDetails>true</showDetails>
+    <timeFrameFilter>
+        <dateColumn>Amazon_Setting__c$CreatedDate</dateColumn>
+        <interval>INTERVAL_CUSTOM</interval>
+    </timeFrameFilter>
+</Report>

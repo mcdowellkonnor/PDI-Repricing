@@ -1,0 +1,29 @@
+<apex:page sidebar="false" id="page" controller="ECS.CreateOrderController" standardStylesheets="false" doctype="html-5.0">
+	<script type="text/javascript" language="javascript">
+	    if(jQuery) {
+	        jQuery.noConflict();
+	    }
+	</script>
+	<c:CreateOrder id="c"
+				   topController="{!theController}"
+	               displayLineDollarPromo="true" 
+				   displayDollarPromo="true" 
+	               displayLinePercentPromo="true" 
+	               displayPercentPromo="true"
+				   productReadOnly="false" 
+				   priceReadOnly="false" 
+				   quantityReadOnly="false"
+				   displayCustomerSearch="true" 
+				   displayTaxExempt="true" 
+				   displayLineShipping="false"
+				   displayOrderType="true" 
+				   displayPromoCode="true" 
+				   displayShippingOptions="true"
+				   displayAddresses="true"
+				   displayNotes="true"
+				   displayPricebooks="true"
+				   displayRecurringOrder="true"
+				   displayAddOrderLine="true"
+				   displayOrderSettings="true"
+				   completeOrderRedirectURL=""/> 
+</apex:page>

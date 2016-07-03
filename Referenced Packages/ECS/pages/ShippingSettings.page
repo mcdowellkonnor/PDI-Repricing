@@ -1,0 +1,20 @@
+<apex:page controller="ECS.ShippingSettingsController">
+
+	<c:Analytics event="INFO" app="ECS" />
+		
+	<apex:pageMessages />
+	
+	<apex:image value="https://easypost-static.s3.amazonaws.com/assets/easypost/easypost-logo-ed242e684461674c0703c2bdf85baba6.png"/>
+	
+	<apex:form >
+		API Token: <apex:inputText value="{!easyPostToken}"/><br/>
+		
+		<H2>Default Dimensions</H2><br/>
+		Length: <apex:inputText value="{!defaultLength}"/><br/>
+		Width: <apex:inputText value="{!defaultWidth}"/><br/>
+		Height: <apex:inputText value="{!defaultHeight}"/><br/>
+		Weight: <apex:inputText value="{!defaultWeight}"/><br/>
+		<apex:commandLink action="{!save}" value="Save"/>
+	</apex:form>
+
+</apex:page>

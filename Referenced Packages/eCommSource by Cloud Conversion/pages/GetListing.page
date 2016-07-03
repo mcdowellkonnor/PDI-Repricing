@@ -1,0 +1,19 @@
+<apex:page controller="CloudConversion.ManageListingsController">
+
+   <apex:form id="theForm">
+     <apex:pageBlock id="pageBlock">
+			 <apex:pageBlockButtons location="bottom"> 
+			    <apex:commandButton action="{!getItem}" value="Get Listing"/>
+			 </apex:pageBlockButtons>
+
+			 <apex:pageBlockSection id="pgsResponse2" columns="1">
+				 <apex:pageBlockSectionItem id="itemId">
+				     <apex:outputLabel value="Item Id" for="itemId"/>
+				     <apex:inputText id="restockingFee" value="{!itemId}"/>
+				 </apex:pageBlockSectionItem>
+			 </apex:pageBlockSection>
+
+        </apex:pageBlock>
+   </apex:form>
+
+</apex:page>

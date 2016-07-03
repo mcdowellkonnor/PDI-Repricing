@@ -1,0 +1,143 @@
+<apex:page controller="eCommazon.CreateFBAShipmentItemB2CController">
+
+<style>
+.ct{
+text-align:center;
+}
+.draghandle.dragged
+        {
+            border-left: 1px solid #333;
+        }
+        
+        .draghandle
+        {
+            position: absolute; 
+            z-index:5; 
+            width:5px;
+            cursor:e-resize;
+        }
+        TH
+        {
+            border-left: 1px solid #333;
+            border-bottom: 1px solid #333;
+        }
+        table.tablesorter thead tr th, table.tablesorter tfoot tr th {
+            background-color:#F3F3EC;
+            border: 2px solid #A0BEBE;
+            font-size: 8pt;
+            padding: 4px;
+             
+            
+        }
+        table.tablesorter tbody td {
+            color: #F3F3EC;
+            padding: 4px;
+            background-color: white;
+            vertical-align: top;
+        }
+        table.tablesorter tbody td.background{background-color:rgb(255, 199, 206);}
+        body .pbBody table.list tr.headerRow td, body .pbBody table.list tr.headerRow th {
+            background: white url('/img/alohaSkin/grid_headerbg.gif') 0 bottom repeat-x;
+            border-width: 0 0 1px 1px;
+            color: black;
+            font-size: .9em;
+            font-weight: bold;
+            padding: 5px 2px 4px 5px;
+       }
+       table.tablesorter thead tr .headerSortDown, table.tablesorter thead tr .headerSortUp {
+            background-color:#F3F3EC;
+       }
+       body .bPageBlock, body #bodyCell .bResource .secondaryPalette, body .secondaryPalette.bPageBlock, body .individualPalette .secondaryPalette.bPageBlock, body .bodyDiv .genericTable, body .genericPageBlockTable, body .bodyDiv .bSubBlock, body .bComponentBlock .bPageBlock, body .bMyDashboard .bPageBlock, body.rlHoverFrame .bPageBlock, body.subjectSelectionPopup div.choicesBox, body.lookupTab .secondaryPalette.bPageBlock, body.popupTab .secondaryPalette.bPageBlock, body.UserTagStatsPage .secondaryPalette.bPageBlock {
+           background-color:white;
+           border-bottom: white;
+           border-left: white;
+           border-right: white;
+           -moz-border-radius: 0px;
+           -webkit-border-radius: 0px;
+           border-radius: 0px;
+       }
+       .bPageBlock {
+           border-top:white;
+           margin-bottom: 9px;
+           background-color: #222;
+           background-image: url(/img/bgPageBlockLeft.gif);
+           background-repeat: no-repeat;
+           background-position: left bottom;
+           padding-bottom: 9px;
+           clear: both;
+        }
+        table.list thead tr th, table.tablesorter tfoot tr th {
+            background-color:#F3F3EC;
+            border: 2px solid #A0BEBE;
+            font-size: 8pt;
+            padding: 5px;
+        }
+        //table.editClass thead tr.filters{
+            //display:none;
+        //}
+      
+    body .pbBody table.list tr td{
+        border: 1px solid #ededed !important;
+    }
+    table.list.big thead tr th{
+        font-size:14px !important;
+    }
+    /*Style for tooltip tables*/
+    .tooltip tr th{
+border: 1px solid #ddd !important;
+color: #000 !important;
+background-color: #E6EEEE !important;
+}
+.tooltip tr td{
+border: 1px solid #ededed !important;
+color: #000 !important;
+background-color: #FFF !important;
+font-size:13px !important;
+}
+table.tablesorter tbody tr.approvedSelected td{
+    color:rgb(0,97,0);
+    background-color:rgb(198,239,206);
+}
+table.tablesorter tbody tr.approvedSelected td {
+color:#000;
+background-color:rgb(198,239,206);
+}
+
+body .pbBody table.list tr.dataRow.actionSelected.highlight:hover td{
+background-color:rgb(255, 199, 206) !important;
+}
+body .pbBody table.list tr.dataRow.actionSelected td{
+background-color:rgb(255, 199, 206) !important;
+}
+table.tablesorter tbody tr.dataRow.highlight.approvedSelected:hover td{
+background-color:rgb(198,239,206) !important;
+}
+</style>
+
+  <apex:form id="frmid">
+      <apex:pageBlock >
+      <apex:pageBlockButtons >
+          <apex:commandButton value="Create" action="{!createFBAShipmentItem}"/>
+          <apex:commandButton value="Cancel" action="{!Cancel}"/>
+       </apex:pageBlockButtons>
+        <Table class = "list" id="demotable1" cellspacing="0" cellpadding="0"  style=" overflow:auto;table-layout:fixed">
+        <thead>
+           <tr>
+             <apex:repeat value="{!$ObjectType.ECS__Product__c.FieldSets.eCommazon__Create_FBA_Shipment}" var="fse">
+            	<th><center style="padding: 0px 3px 0px 0px">{!fse.Label}</center></th>
+             </apex:repeat>
+             <th><center style="padding: 0px 3px 0px 0px">Quantity To Ship</center></th>
+            </tr>
+    		</thead>
+            <apex:repeat value="{!b2cList}" var="b2c" id="repid">
+               <tr id="rowId" class="dataRow" onmouseover="if (window.hiOn){hiOn(this);}" onmouseout="if (window.hiOff){hiOff(this);}" >
+                  <apex:repeat value="{!$ObjectType.ECS__Product__c.FieldSets.eCommazon__Create_FBA_Shipment}" var="fse">
+                     <td class="dataCell" style="text-align: center;"><apex:outputField value="{!b2c[fse]}"/></td>
+                  </apex:repeat>
+                  <td class="dataCell" style="text-align: center;"><apex:inputField value="{!b2c.ECS__Shipped_Quantity__c}"/></td>
+               </tr>
+            </apex:repeat>
+        </Table>
+     </apex:pageBlock>
+   </apex:form>
+</apex:page>

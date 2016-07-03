@@ -1,0 +1,18 @@
+<apex:page showHeader="false" standardController="serp__Purchase_Order__c" extensions="serp.InvoiceController" renderAs="pdf" applyhtmltag="false">
+
+<html>
+	<head>
+		<apex:stylesheet value="{!URLFOR($Resource.ECS__bootstrap_cc)}" />
+		<style type="text/css">
+		{!
+		erpSetting
+		.PO_CSS__c
+		}
+		</style>
+	</head>
+	<body>
+		<c:ViewPurchaseOrder3 poId="{!serp__Purchase_Order__c.Id}" invoiceType="PO"/>
+	</body>
+</html>
+
+</apex:page>

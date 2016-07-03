@@ -1,0 +1,6 @@
+<apex:page standardController="ECS__Product__c">
+
+	<c:Analytics event="INFO" app="ECS" />
+	
+	<c:ManageInventoryAdjustments />
+</apex:page>

@@ -1,0 +1,230 @@
+<apex:page controller="serp.Cls_POSearchRecord" sidebar="true"
+	showHeader="true" cache="true" expires="600">
+	<apex:stylesheet value="{!URLFOR($Resource.serp__sf1css, 'sf1css.css')}" />
+	<script
+		src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+	<style>
+.col-2 {
+	text-align: left;
+	margin-bottom: 20px;
+}
+
+.col-2 div {
+	display: inline-block;
+	width: 49%;
+}
+
+.col-2 span {
+	font-size: 120px;
+	line-height: 30px;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 14px;
+	color: #606060;
+}
+
+.col-2 div:nth-of-type(2) {
+	float: right;
+}
+</style>
+	<Script>
+  function myfunction()
+  {
+   callfunction();
+  }
+  function clearThis(target){
+        target.value= "";
+    }
+
+    $(document).ready(function(){  
+       $(".list tr").click(function(){
+           $(this).find("a").click();           
+       });        
+    });
+</Script>
+	<apex:form id="autoCompleteForm">
+
+		<apex:actionFunction name="callfunction" action="{!searchPOorder}" />
+		<div class="container">
+			<div class="form-panel">
+
+
+				<div class="new-task">
+					<apex:commandButton action="{!Cancel}" value="Cancel"
+						immediate="true" />
+					&nbsp;&nbsp;&nbsp;
+					<apex:commandButton action="{!searchPOorder}" value="Search"
+						id="ctrlsearch" />
+
+				</div>
+				<div class="searchBox">
+					<apex:inputText id="movieTextBox" value="{!searchTerm}"
+						styleClass="placeHolder" onclick="clearThis(this)"
+						onkeydown="if(event.keyCode==13){myfunction();this.blur();}" />
+				</div>
+				<div class="col-2">
+					<div>
+						<span>PO Status :</span>
+						<apex:selectlist value="{!s1}" multiselect="false" size="1">
+
+							<apex:selectoptions value="{!options}"></apex:selectoptions>
+							<apex:actionsupport event="onchange" action="{!SearchBasdFiltr}">
+							</apex:actionsupport>
+						</apex:selectlist>
+					</div>
+					<div>
+						<span>Status :</span>
+						<apex:selectlist value="{!s2}" multiselect="false" size="1">
+
+							<apex:selectoptions value="{!options2}"></apex:selectoptions>
+							<apex:actionsupport event="onchange" action="{!SearchBasdFiltr}">
+							</apex:actionsupport>
+						</apex:selectlist>
+					</div>
+				</div>
+
+				<apex:outputPanel rendered="{!(POrd!=NULL && serchfiltr=False)}">
+					<apex:outputPanel rendered="{!FnlpolList.Size>0}">
+						<Table id="table" width="100%" class="list" border="0"
+							cellpadding="0" cellspacing="0">
+							<thead class="rich-table-thead">
+								<tr class="headerRow ">
+									<th class="headerRow  ">Date</th>
+									<th class="headerRow  ">Supplier</th>
+									<th class="headerRow  ">PO #</th>
+									<th class="headerRow  ">Invoice #</th>
+									<th class="headerRow  ">Status</th>
+									<th class="headerRow  ">PO Status</th>
+								</tr>
+							</thead>
+							<apex:repeat value="{!FnlpolList}" var="mov">
+								<tr class="dataRow even  first">
+									<td class="dataCell" colspan="1"><apex:outputText value="{0,date,MM'/'dd'/'yyyy}">
+											<apex:param value="{!mov.serp__Purchase_Order__r.serp__Accepted_Date__c}" />
+										</apex:outputText></td>
+									<td class="dataCell" colspan="1">{!mov.serp__Supplier__c}</td>
+									<td><apex:commandLink action="{!gotomain}">
+                               {!mov.serp__Purchase_Order__r.name}<apex:param name="id" value="{!mov.serp__Purchase_Order__r.id}" />
+										</apex:commandLink></td>
+									<td class="dataCell" colspan="1">{!mov.serp__Purchase_Order__r.serp__Supplier_Order_Number__c}</td>
+									<td class="dataCell" colspan="1">{!mov.serp__Purchase_Order__r.serp__Status__c}</td>
+									<td class="dataCell" colspan="1">{!mov.serp__Purchase_Order__r.serp__PO_Status__c}</td>
+								</tr>
+							</apex:repeat>
+						</Table>
+					</apex:outputPanel>
+					<apex:outputPanel rendered="{!FnlpolList.Size=0}">
+						<Font size="4">No Result Found.</Font>
+					</apex:outputPanel>
+				</apex:outputPanel>
+
+
+
+				<apex:outputPanel rendered="{!(POrd!=NULL && serchfiltr=True)}">
+					<apex:outputPanel rendered="{!serpo.Size>0}">
+						<Table id="table4" width="100%" class="list " border="0"
+							cellpadding="0" cellspacing="0">
+							<thead class="rich-table-thead">
+								<tr class="headerRow ">
+									<th class="headerRow ">Date</th>
+									<th class="headerRow ">Supplier</th>
+									<th class="headerRow ">PO #</th>
+									<th class="headerRow ">Invoice #</th>
+									<th class="headerRow ">Status</th>
+									<th class="headerRow ">PO Status</th>
+								</tr>
+							</thead>
+							<apex:repeat value="{!serpo}" var="mov">
+								<tr class="dataRow even  first">
+									<td class="dataCell" colspan="1"><apex:outputText value="{0,date,MM'/'dd'/'yyyy}">
+											<apex:param value="{!mov.serp__Purchase_Order__r.serp__Accepted_Date__c}" />
+										</apex:outputText></td>
+									<td class="dataCell" colspan="1">{!mov.serp__Supplier__c}</td>
+									<td class="dataCell" colspan="1"><apex:commandLink action="{!gotomain}">
+                                         {!mov.serp__Purchase_Order__r.name}<apex:param name="id" value="{!mov.serp__Purchase_Order__r.id}" />
+										</apex:commandLink></td>
+									<td class="dataCell" colspan="1">{!mov.serp__Purchase_Order__r.serp__Supplier_Order_Number__c}</td>
+									<td class="dataCell" colspan="1">{!mov.serp__Purchase_Order__r.serp__Status__c}</td>
+									<td class="dataCell" colspan="1">{!mov.serp__Purchase_Order__r.serp__PO_Status__c}</td>
+								</tr>
+							</apex:repeat>
+						</Table>
+					</apex:outputPanel>
+					<apex:outputPanel rendered="{!serpo.Size=0}">
+						<Font size="4">No Result Found.</Font>
+					</apex:outputPanel>
+				</apex:outputPanel>
+
+				<apex:outputPanel rendered="{!(Supp!=Null && serchfiltr=False)}">
+					<apex:outputPanel rendered="{!FnlpolList.Size>0}">
+						<Table id="table5" width="100%" border="0" class="list "
+							cellpadding="0" cellspacing="0">
+							<thead class="rich-table-thead">
+								<tr class="headerRow ">
+									<th class="headerRow ">Date</th>
+									<th class="headerRow ">Supplier</th>
+									<th class="headerRow ">PO #</th>
+									<th class="headerRow ">Invoice #</th>
+									<th class="headerRow ">Status</th>
+									<th class="headerRow ">PO Status</th>
+								</tr>
+							</thead>
+							<apex:repeat value="{!FnlpolList}" var="mov">
+								<tr class="dataRow even  first">
+									<td class="dataCell" colspan="1"><apex:outputText value="{0,date,MM'/'dd'/'yyyy}">
+											<apex:param value="{!mov.serp__Purchase_Order__r.serp__Accepted_Date__c}" />
+										</apex:outputText></td>
+									<td class="dataCell" colspan="1">{!mov.serp__Supplier__c}</td>
+									<td class="dataCell" colspan="1"><apex:commandLink action="{!gotomain}">
+                               {!mov.serp__Purchase_Order__r.name}<apex:param name="id" value="{!mov.serp__Purchase_Order__r.id}" />
+										</apex:commandLink></td>
+									<td class="dataCell" colspan="1">{!mov.serp__Purchase_Order__r.serp__Supplier_Order_Number__c}</td>
+									<td class="dataCell" colspan="1">{!mov.serp__Purchase_Order__r.serp__Status__c}</td>
+									<td class="dataCell" colspan="1">{!mov.serp__Purchase_Order__r.serp__PO_Status__c}</td>
+								</tr>
+							</apex:repeat>
+						</Table>
+					</apex:outputPanel>
+					<apex:outputPanel rendered="{!FnlpolList.Size=0}">
+						<Font size="4">No Result Found.</Font>
+					</apex:outputPanel>
+				</apex:outputPanel>
+
+				<apex:outputPanel rendered="{!(Supp!=NULL && serchfiltr=True)}">
+					<apex:outputPanel rendered="{!serpo.Size>0}">
+						<Table id="table7" width="100%" border="0" class="list"
+							cellpadding="0" cellspacing="0">
+							<thead class="rich-table-thead">
+								<tr>
+									<th class="headerRow ">Date</th>
+									<th class="headerRow ">Supplier</th>
+									<th class="headerRow ">PO #</th>
+									<th class="headerRow ">Invoice #</th>
+									<th class="headerRow ">Status</th>
+									<th class="headerRow ">PO Status</th>
+								</tr>
+							</thead>
+							<apex:repeat value="{!serpo}" var="mov">
+								<tr class="dataRow even  first">
+									<td class="dataCell" colspan="1"><apex:outputText value="{0,date,MM'/'dd'/'yyyy}">
+											<apex:param value="{!mov.serp__Purchase_Order__r.serp__Accepted_Date__c}" />
+										</apex:outputText></td>
+									<td class="dataCell" colspan="1">{!mov.serp__Supplier__c}</td>
+									<td class="dataCell" colspan="1"><apex:commandLink action="{!gotomain}">
+                                         {!mov.serp__Purchase_Order__r.name}<apex:param name="id" value="{!mov.serp__Purchase_Order__r.id}" />
+										</apex:commandLink></td>
+									<td class="dataCell" colspan="1">{!mov.serp__Purchase_Order__r.serp__Supplier_Order_Number__c}</td>
+									<td class="dataCell" colspan="1">{!mov.serp__Purchase_Order__r.serp__Status__c}</td>
+									<td class="dataCell" colspan="1">{!mov.serp__Purchase_Order__r.serp__PO_Status__c}</td>
+								</tr>
+							</apex:repeat>
+						</Table>
+					</apex:outputPanel>
+					<apex:outputPanel rendered="{!serpo.Size=0}">
+						<Font size="4">No Result Found.</Font>
+					</apex:outputPanel>
+				</apex:outputPanel>
+			</div>
+		</div>
+	</apex:form>
+
+</apex:page>

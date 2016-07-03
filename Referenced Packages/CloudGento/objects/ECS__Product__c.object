@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <enableEnhancedLookup>true</enableEnhancedLookup>
+    <fields>
+        <fullName>Magento_Last_Updated__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Magento Last Updated</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>Magento_Product_Id__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Magento Product Id</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <webLinks>
+        <fullName>Get_Images_from_Magento</fullName>
+        <availability>online</availability>
+        <displayType>massActionButton</displayType>
+        <linkType>javascript</linkType>
+        <masterLabel>Get Images from Magento</masterLabel>
+        <openType>onClickJavaScript</openType>
+        <protected>false</protected>
+        <requireRowSelection>true</requireRowSelection>
+        <url>var ids= {!GETRECORDIDS($ObjectType.ECS__Product__c)}; if(ids.length &lt; 1 ) alert(&apos;Please select at least one product.&apos;); else var mywin = window.open(&apos;/apex/CloudGento__GetMagentoImagesFromProduct?ids=&apos;+ids.join(&apos;,&apos;));</url>
+    </webLinks>
+    <webLinks>
+        <fullName>Get_Magento_Images</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <height>600</height>
+        <linkType>page</linkType>
+        <masterLabel>Get Magento Images</masterLabel>
+        <openType>sidebar</openType>
+        <page>GetMagentoImagesFromProduct</page>
+        <protected>false</protected>
+    </webLinks>
+    <webLinks>
+        <fullName>Manage_Images</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <height>600</height>
+        <linkType>page</linkType>
+        <masterLabel>Manage Images</masterLabel>
+        <openType>sidebar</openType>
+        <page>ManageImages</page>
+        <protected>false</protected>
+    </webLinks>
+    <webLinks>
+        <fullName>Update_Magento</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <height>600</height>
+        <linkType>page</linkType>
+        <masterLabel>Update Magento</masterLabel>
+        <openType>sidebar</openType>
+        <page>UpdateMagentoProduct</page>
+        <protected>false</protected>
+    </webLinks>
+    <webLinks>
+        <fullName>Update_Magento_Products</fullName>
+        <availability>online</availability>
+        <displayType>massActionButton</displayType>
+        <linkType>javascript</linkType>
+        <masterLabel>Update Magento</masterLabel>
+        <openType>onClickJavaScript</openType>
+        <protected>false</protected>
+        <requireRowSelection>true</requireRowSelection>
+        <url>var ids= {!GETRECORDIDS($ObjectType.ECS__Product__c)}; if(ids.length &lt; 1 ) alert(&apos;Please select at least one product.&apos;); else var mywin = window.open(&apos;/apex/CloudGento__UpdateMagentoProduct?ids=&apos;+ids.join(&apos;,&apos;));</url>
+    </webLinks>
+    <webLinks>
+        <fullName>Update_Products_From_Magento</fullName>
+        <availability>online</availability>
+        <displayType>massActionButton</displayType>
+        <linkType>javascript</linkType>
+        <masterLabel>Update from Magento</masterLabel>
+        <openType>onClickJavaScript</openType>
+        <protected>false</protected>
+        <requireRowSelection>true</requireRowSelection>
+        <url>var ids= {!GETRECORDIDS($ObjectType.ECS__Product__c)}; if(ids.length &lt; 1 ) alert(&apos;Please select at least one product.&apos;); else var mywin = window.open(&apos;/apex/CloudGento__UpdateMagentoInventoryFromProduct?ids=&apos;+ids.join(&apos;,&apos;));</url>
+    </webLinks>
+    <webLinks>
+        <fullName>Update_from_Magento</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <height>600</height>
+        <linkType>page</linkType>
+        <masterLabel>Update from Magento</masterLabel>
+        <openType>sidebar</openType>
+        <page>UpdateMagentoInventoryFromProduct</page>
+        <protected>false</protected>
+    </webLinks>
+</CustomObject>

@@ -1,0 +1,122 @@
+<apex:component allowDML="true">
+
+	<apex:attribute name="amazon_id" required="true" type="String" description="The Amazon ID of the product"/>
+	<apex:attribute name="price" required="true" type="String" description="The price of the Amazon item"/>
+	<apex:attribute name="shipping" required="true" type="String" description="The shipping price of the Amazon item"/>
+	<apex:attribute name="raw_price" required="true" type="String" description="The raw price (Shipping + Price) of the Amazon item."/>
+	<apex:attribute name="partslink" required="true" type="String" description="The partslink number of the associated b2c product. Universal."/>
+	<apex:attribute name="competitor" required="true" type="String" description="The competitor the dropdown is relevant to."/>
+	<apex:attribute name="repricing" type="PDI_Repricing__Repricing_Info__c"  required="true" description="The repricing object currently processed."/>
+
+
+	<div class="dropdown" style="display:{!If(AND(amazon_id != null,AND(price != null, price != 'NA')),'','none')}">
+		<p class="clickablefont">
+			${!raw_price}
+		</p>
+		<div class="dropdown-content">
+			<p>Price:  ${!price}</p>
+			<p>Shipping: ${!shipping}</p>
+			<a href="https://www.amazon.com/s/ref=nb_sb_noss?url=search-alias%3Daps&field-keywords=partslink" target="_blank">
+				View Product
+			</a>
+		</div>
+	</div>
+	<div class="dropdown" style="display:{!If(AND(amazon_id != null,AND(price == null, price == 'NA')),'','none')}">
+		<p class="clickablefont">
+			<img src="http://i.imgur.com/mkW4M8v.png" width="20" height="20" class="clickable"/>
+		</p>
+		<div class="dropdown-content">
+			<p>Missing Data! Rerun Batch!</p>
+		</div>
+	</div>
+	<div class="dropdown" style="display:{!If(AND(amazon_id != null, price == 'NA'),'','none')}">
+		<p class="clickablefont">
+			<img src="http://www.iconarchive.com/download/i90882/icons8/windows-8/Healthcare-Skull.ico" width="20" height="20" class="clickable"/>
+		</p>
+		<div class="dropdown-content">
+			<p>Could not get data.</p>
+		</div>
+	</div>
+	<div class="dropdown" style="display:{!If(amazon_id == null,'','none')}">
+		<img src="http://icons.iconarchive.com/icons/custom-icon-design/mono-general-1/512/alert-icon.png" width="20" height="20" class="clickable"/>
+		<div class="dropdown-content">
+			<p>No Item ID found!</p>
+			
+			<div style="display:{!If(competitor == 'A', '', 'none')}">
+				<apex:inputField value="{!repricing.Competitor_A_Amazon_ID__c}" html-placeholder="As Amazon ID"/>
+			</div>
+			
+			<div style="display:{!If(competitor == 'B', '', 'none')}">
+				<apex:inputField value="{!repricing.Competitor_B_Amazon_ID__c}" html-placeholder="Bs Amazon ID"/>
+			</div>
+			
+			<div style="display:{!If(competitor == 'C', '', 'none')}">
+				<apex:inputField value="{!repricing.Competitor_C_Amazon_ID__c}" html-placeholder="Cs Amazon ID"/>
+			</div>
+			
+			<div style="display:{!If(competitor == 'US', '', 'none')}">
+				<apex:inputField value="{!repricing.Our_Amazon_ID__c}" html-placeholder="Our Amazon ID"/>
+			</div>
+			
+			<button type="button" onclick="updateAll()">
+			Update
+			</button>
+			
+			<a href="https://www.amazon.com/s/ref=nb_sb_noss?url=search-alias%3Daps&field-keywords=partslink" target="_blank">
+				Find ID
+			</a>
+		</div>
+	</div>
+	
+	<style type="text/css">
+	
+	.clickablefont {
+        font-size: 12px;
+        font-family: "Roboto", sans-serif;
+        cursor: pointer;
+    }
+    
+    /* Dropdown Content (Hidden by Default) */
+	.dropdown-content {
+   		display: none;
+   		position: absolute;
+   		z-index:1;
+   		background-color: #f9f9f9;
+  			min-width: 160px;
+   		box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+   		right: 0;
+	}
+
+	/* Links inside the dropdown */
+	.dropdown-content a {
+   		color: black;
+   		padding: 12px 16px;
+   		text-decoration: none;
+   		display: block;
+	}
+	
+	.dropdown-content p {
+		color: black;
+   		padding: 0px 16px;
+   		text-decoration: none;
+   		display: block;
+	}
+	
+	.dropdown-content input {
+		width: 75%;
+	}
+
+	/* Change color of dropdown links on hover */
+	.dropdown-content a:hover {background-color: #f1f1f1}
+
+	/* Show the dropdown menu on hover */
+	.dropdown:hover .dropdown-content {
+   		display: block;
+	}
+	
+	input[type=text]:focus {
+   		border: 3px solid #555;
+	}
+	
+	</style>
+</apex:component>

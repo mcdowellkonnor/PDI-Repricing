@@ -1,0 +1,18 @@
+<apex:page standardController="ECS__eCommSource_Order__c" extensions="ECS.OrderButtonsController">
+
+	<apex:stylesheet value="{!URLFOR($Resource.ECS__bootstrap_cc)}" />
+	
+	<center>
+		<div class="cc">
+			<apex:form >
+					<apex:commandButton status="formActionStatus" styleClass="btn-danger" value="Update"/>&nbsp;&nbsp;&nbsp;
+					<apex:commandButton styleClass="btn-primary" status="createOrderStatus" value="Refund"/>&nbsp;&nbsp;&nbsp;
+					<apex:commandButton styleClass="btn-secondary" status="updatingOrderStatus" value="Edit"/>&nbsp;&nbsp;&nbsp;
+					<apex:commandButton styleClass="btn-success" status="createQuoteStatus" value="Email Quote"/>&nbsp;&nbsp;&nbsp;
+					<apex:commandButton styleClass="btn-info" status="createQuoteStatus" value="Cancel"/>&nbsp;&nbsp;&nbsp;
+					<apex:commandButton styleClass="btn-warning" status="createQuoteStatus" value="Create RMA"/>&nbsp;&nbsp;&nbsp;
+			</apex:form>
+		</div>
+	</center>
+	
+</apex:page>

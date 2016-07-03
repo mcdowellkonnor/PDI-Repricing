@@ -1,0 +1,47 @@
+<apex:page controller="ECS.SplitOrderLinesController">
+	
+   <c:Analytics event="INFO" app="ECS" />
+	
+   <apex:sectionHeader title="Split Order Lines"/>  
+	
+	
+   <apex:pagemessages />
+   
+   <apex:form id="theForm">
+     <apex:pageBlock id="pageBlock">
+		 <apex:pageBlockButtons >
+		    <apex:commandButton action="{!splitOrderLines}" value="Split"/>
+		    <apex:commandButton action="{!cancel}" value="Cancel"/>
+		 </apex:pageBlockButtons>
+		 <center>
+		 <apex:outputPanel id="table">
+	     <table cellspacing="3" cellpadding="3" border="0" width="90%">
+	        <thead>
+	           <tr>
+	             <td><span><b>SKU</b></span></td>
+	             <td><span><b>Quantity</b></span></td>  
+	             <apex:repeat value="{!$ObjectType.ECS__eCommSource_Order_Line__c.FieldSets.ECS__Split_Order_Lines}" var="fs">
+					<td><span><b>{!fs.Label}</b></span></td>
+				 </apex:repeat>
+	           </tr>
+	        </thead>
+	        <tbody>
+	            <apex:repeat value="{!orderLineList}" var="ol">
+	                 <tr id="{!ol.Id}">
+	                     <td title="{!ol.ECS__Product__r.Name}"><div>{!ol.ECS__Product__r.Name}</div></td>
+	                     <td><div><apex:inputField value="{!ol.ECS__Quantity__c}"/></div></td>
+	                     <apex:repeat value="{!$ObjectType.ECS__eCommSource_Order_Line__c.FieldSets.ECS__Split_Order_Lines}" var="fs"> 
+							 <td><span><apex:outputField value="{!ol[fs]}" /></span></td>
+						 </apex:repeat>
+	                  </tr> 
+	            </apex:repeat>
+	            
+	        </tbody>
+	    </table>
+	    </apex:outputPanel>
+	    </center>
+        </apex:pageBlock>
+   </apex:form>
+	
+	
+</apex:page>

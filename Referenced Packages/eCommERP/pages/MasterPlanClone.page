@@ -1,0 +1,7 @@
+<apex:page standardController="serp__Master_Plan__c" extensions="serp.MasterPlanCloneController" action="{!cloneWithItems}">
+	
+	<ECS:Analytics event="INFO" app="ERP" />
+	   
+	<apex:pageMessages />
+
+</apex:page>

@@ -1,0 +1,65 @@
+<apex:page standardController="eCommazon__Amazon_Setting__c" extensions="eCommazon.GetServiceStatusController"  sidebar="true">
+<style>
+.green{
+    background:#2C9920;color:#fff !important;
+}
+.red{
+    background:#D81500;color:#fff !important;
+}
+.yellow{
+    background:#EAE023;
+}
+.tabular{
+    border-radius:4px;
+    border:2px solid #CCC;
+}
+.tabular td:first-child{border-right:1px solid #CCC;}
+.tabular td{padding:5px 0;text-indent:10px;font-weight:bold;border-bottom:1px solid #CCC;}
+body .secondaryPalette.bPageBlock, body .individualPalette .secondaryPalette.bPageBlock{background-color:#fff !important}
+</style>
+ <apex:form >
+       
+       <apex:pageBlock >
+            <apex:pageBlockButtons >
+                <apex:commandButton action="{!StatusButton}" value="Refresh Status"/>
+            </apex:pageBlockButtons>
+             <table width="80%" class="tabular" cellspacing="0">
+                  <tr><td>Status Last Updated</td><td><apex:outputfield value="{!amazonSetting.eCommazon__Status_Last_Updated__c}"/></td></tr>
+                
+                 <apex:outputPanel rendered="{!if(amazonSetting.eCommazon__Inbound_Status__c=Null,True,False)}"><tr><td>Inbound Status    </td><td><apex:outputText value="{!amazonSetting.eCommazon__Inbound_Status__c}"/></td></tr></apex:outputPanel>
+                 <apex:outputPanel rendered="{!if(OR(amazonSetting.eCommazon__Inbound_Status__c='OK',amazonSetting.eCommazon__Inbound_Status__c='OK W/ INFO'),True,False)}"><tr><td>Inbound Status    </td><td class="green"><apex:outputText value="{!amazonSetting.eCommazon__Inbound_Status__c}"/></td></tr></apex:outputPanel>
+                 <apex:outputPanel rendered="{!if(amazonSetting.eCommazon__Inbound_Status__c='WARNING',True,False)}"><tr><td>Inbound Status    </td><td class="yellow"><apex:outputText value="{!amazonSetting.eCommazon__Inbound_Status__c}"/></td></tr></apex:outputPanel>
+                 <apex:outputPanel rendered="{!if(amazonSetting.eCommazon__Inbound_Status__c='ERROR',True,False)}"><tr><td>Inbound Status    </td><td class="red"><apex:outputText value="{!amazonSetting.eCommazon__Inbound_Status__c}"/></td></tr></apex:outputPanel>
+                
+                  <apex:outputPanel rendered="{!if(amazonSetting.eCommazon__Inventory_Status__c=Null,True,False)}"> <tr><td>Inventory Status   </td><td><apex:outputText value="{!amazonSetting.eCommazon__Inventory_Status__c}"/></td></tr></apex:outputPanel>
+                  <apex:outputPanel rendered="{!if(OR(amazonSetting.eCommazon__Inventory_Status__c='OK',amazonSetting.eCommazon__Inventory_Status__c='GROK W/ INFOEEN_I'),True,False)}"> <tr><td>Inventory Status   </td><td class="green"><apex:outputText value="{!amazonSetting.eCommazon__Inventory_Status__c}"/></td></tr></apex:outputPanel>
+                  <apex:outputPanel rendered="{!if(amazonSetting.eCommazon__Inventory_Status__c='WARNING',True,False)}"> <tr><td>Inventory Status   </td><td class="yellow"><apex:outputText value="{!amazonSetting.eCommazon__Inventory_Status__c}"/></td></tr></apex:outputPanel>
+                  <apex:outputPanel rendered="{!if(amazonSetting.eCommazon__Inventory_Status__c='ERROR',True,False)}"> <tr><td>Inventory Status   </td><td class="red"><apex:outputText value="{!amazonSetting.eCommazon__Inventory_Status__c}"/></td></tr></apex:outputPanel>
+                 
+                  <apex:outputPanel rendered="{!if(amazonSetting.eCommazon__Outbound_Status__c=Null,True,False)}"><tr><td>Outbound Status    </td><td><apex:outputText value="{!amazonSetting.eCommazon__Outbound_Status__c}"/></td></tr></apex:outputPanel>
+                  <apex:outputPanel rendered="{!if(OR(amazonSetting.eCommazon__Outbound_Status__c='OK',amazonSetting.eCommazon__Outbound_Status__c='OK W/ INFO'),True,False)}"><tr><td>Outbound Status    </td><td class="green"><apex:outputText value="{!amazonSetting.eCommazon__Outbound_Status__c}"/></td></tr></apex:outputPanel>
+                  <apex:outputPanel rendered="{!if(amazonSetting.eCommazon__Outbound_Status__c='WARNING',True,False)}"><tr><td>Outbound Status    </td><td class="yellow"><apex:outputText value="{!amazonSetting.eCommazon__Outbound_Status__c}"/></td></tr></apex:outputPanel>
+                  <apex:outputPanel rendered="{!if(amazonSetting.eCommazon__Outbound_Status__c='ERROR',True,False)}"><tr><td>Outbound Status    </td><td class="red"><apex:outputText value="{!amazonSetting.eCommazon__Outbound_Status__c}"/></td></tr></apex:outputPanel>
+               
+                 
+                  <apex:outputPanel rendered="{!if(amazonSetting.eCommazon__Order_Status__c=Null,True,False)}"><tr><td>Order Status       </td><td><apex:outputText value="{!amazonSetting.eCommazon__Order_Status__c}"/></td></tr></apex:outputPanel>
+                  <apex:outputPanel rendered="{!if(OR(amazonSetting.eCommazon__Order_Status__c='OK',amazonSetting.eCommazon__Order_Status__c='OK W/ INFO'),True,False)}"><tr><td>Order Status       </td><td class="green"><apex:outputText value="{!amazonSetting.eCommazon__Order_Status__c}"/></td></tr></apex:outputPanel>
+                  <apex:outputPanel rendered="{!if(amazonSetting.eCommazon__Order_Status__c='WARNING',True,False)}"><tr><td>Order Status       </td><td class="yellow"><apex:outputText value="{!amazonSetting.eCommazon__Order_Status__c}"/></td></tr></apex:outputPanel>
+                  <apex:outputPanel rendered="{!if(amazonSetting.eCommazon__Order_Status__c='ERROR',True,False)}"><tr><td>Order Status       </td><td class="red"><apex:outputText value="{!amazonSetting.eCommazon__Order_Status__c}"/></td></tr></apex:outputPanel>
+                 
+                 
+                  <apex:outputPanel rendered="{!if(amazonSetting.eCommazon__Product_Status__c=Null,True,False)}"><tr><td>Product Status     </td><td><apex:outputText value="{!amazonSetting.eCommazon__Product_Status__c}"/></td></tr></apex:outputPanel>
+                  <apex:outputPanel rendered="{!if(OR(amazonSetting.eCommazon__Product_Status__c='OK',amazonSetting.eCommazon__Product_Status__c='OK W/ INFO'),True,False)}"><tr><td>Product Status     </td><td class="green"><apex:outputText value="{!amazonSetting.eCommazon__Product_Status__c}"/></td></tr></apex:outputPanel>
+                  <apex:outputPanel rendered="{!if(amazonSetting.eCommazon__Product_Status__c='WARNING',True,False)}"><tr><td>Product Status     </td><td class="yellow"><apex:outputText value="{!amazonSetting.eCommazon__Product_Status__c}"/></td></tr></apex:outputPanel>
+                 <apex:outputPanel rendered="{!if(amazonSetting.eCommazon__Product_Status__c='ERROR',True,False)}"><tr><td>Product Status     </td><td class="red"><apex:outputText value="{!amazonSetting.eCommazon__Product_Status__c}"/></td></tr></apex:outputPanel>
+                 
+                  <apex:outputPanel rendered="{!if(amazonSetting.eCommazon__Seller_Status__c=Null,True,False)}"><tr><td>Seller Status      </td><td><apex:outputText value="{!amazonSetting.eCommazon__Seller_Status__c}"/></td></tr></apex:outputPanel>
+                  <apex:outputPanel rendered="{!if(OR(amazonSetting.eCommazon__Seller_Status__c='OK',amazonSetting.eCommazon__Seller_Status__c='OK W/ INFO'),True,False)}"><tr><td>Seller Status      </td><td class="green"><apex:outputText value="{!amazonSetting.eCommazon__Seller_Status__c}"/></td></tr></apex:outputPanel>
+                 <apex:outputPanel rendered="{!if(amazonSetting.eCommazon__Seller_Status__c='WARNING',True,False)}"><tr><td>Seller Status      </td><td class="yellow"><apex:outputText value="{!amazonSetting.eCommazon__Seller_Status__c}"/></td></tr></apex:outputPanel>
+                 <apex:outputPanel rendered="{!if(amazonSetting.eCommazon__Seller_Status__c='ERROR',True,False)}"><tr><td>Seller Status      </td><td class="red"><apex:outputText value="{!amazonSetting.eCommazon__Seller_Status__c}"/></td></tr></apex:outputPanel>
+                    
+            </table>
+              
+       </apex:pageBlock>
+    </apex:form>
+</apex:page>

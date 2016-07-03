@@ -1,0 +1,5 @@
+<apex:page standardController="Case" >
+   
+   <c:CreateRMA caseId="{!Case.Id}"/>
+       
+</apex:page>

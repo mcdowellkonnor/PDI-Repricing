@@ -1,0 +1,15 @@
+<apex:page controller="ECS.ManageSupplierProductsController">
+
+	<apex:pageMessages />
+
+	<apex:form >
+    <apex:pageBlock id="pageBlock" >
+			<apex:pageBlockButtons location="bottom">
+			    <apex:commandButton action="{!getAndProcess}" value="Get and Process Supplier Product Data" />
+			</apex:pageBlockButtons>
+			
+			URL: <apex:inputText value="{!url}" size="200"/>
+	</apex:pageBlock>
+	</apex:form>
+
+</apex:page>

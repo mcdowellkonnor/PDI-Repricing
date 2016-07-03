@@ -1,0 +1,29 @@
+<apex:page standardController="CloudGento__Magento_Setting__c" extensions="CloudGento.UpdateMagentoProductController">
+
+   <apex:pagemessages />
+   
+   <apex:form id="theForm">
+     <center>
+     <apex:pageBlock id="pageBlock">
+      <apex:pageBlockButtons location="bottom">
+        <apex:commandButton action="{!updateMagentoProducts}" value="Update Magento Products"/> 
+        <apex:commandButton action="{!cancel}" value="Cancel"/>
+      </apex:pageBlockButtons>
+      <apex:outputPanel id="outputPanelSelectBoxes">
+      <table border="0" cellpadding="0" cellspacing="0" width="90%">
+          <tr>
+	         <td nowrap="true"> 
+			        <apex:pageBlockSection id="pgsRow1" columns="1">
+			            <apex:pageBlockSectionItem id="pgsiSkus">
+			                <apex:outputLabel value="SKUs" for="skus"/>
+					        <apex:inputTextarea id="skus" value="{!skus}" cols="100" rows="10"/>
+			            </apex:pageBlockSectionItem>
+			        </apex:pageBlockSection>
+	         </td>
+	        </tr>
+	        </table>
+	      </apex:outputPanel>
+    </apex:pageBlock>
+    </center>
+   </apex:form>
+</apex:page>

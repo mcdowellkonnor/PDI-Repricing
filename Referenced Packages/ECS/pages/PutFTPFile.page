@@ -1,0 +1,5 @@
+<apex:page standardController="ECS__FTP_File__c" extensions="ECS.PutFTPFileController" action="{!putFile}">
+
+	<apex:pageMessages />
+	
+</apex:page>

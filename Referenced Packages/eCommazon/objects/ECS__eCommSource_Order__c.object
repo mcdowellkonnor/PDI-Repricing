@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <enableEnhancedLookup>true</enableEnhancedLookup>
+    <fields>
+        <fullName>FBA_Order_Created__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>MCF Order Created</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>FBA_Reimbursed__c</fullName>
+        <defaultValue>0.00</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>FBA Reimbursed</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>MCF_Fulfillment_Action__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>MCF Fulfillment Action</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Hold</fullName>
+                <default>true</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Ship</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Ship OK</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Error</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <webLinks>
+        <fullName>Add_Identifier</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <height>600</height>
+        <linkType>page</linkType>
+        <masterLabel>Add Identifier</masterLabel>
+        <openType>sidebar</openType>
+        <page>AddClientOrderIdentifier</page>
+        <protected>false</protected>
+    </webLinks>
+    <webLinks>
+        <fullName>Add_Tracking</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <height>600</height>
+        <linkType>page</linkType>
+        <masterLabel>Add Tracking</masterLabel>
+        <openType>sidebar</openType>
+        <page>AddAmazonTracking</page>
+        <protected>false</protected>
+    </webLinks>
+    <webLinks>
+        <fullName>Cancel_FBA_Order</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <height>600</height>
+        <linkType>page</linkType>
+        <masterLabel>Cancel MCF Order</masterLabel>
+        <openType>sidebar</openType>
+        <page>CancelFBAOrders</page>
+        <protected>false</protected>
+    </webLinks>
+    <webLinks>
+        <fullName>Cancel_Refund</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <height>600</height>
+        <linkType>page</linkType>
+        <masterLabel>Cancel/Refund</masterLabel>
+        <openType>sidebar</openType>
+        <page>RefundAmazonOrder</page>
+        <protected>false</protected>
+    </webLinks>
+    <webLinks>
+        <fullName>Get_MCF_Order</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <linkType>page</linkType>
+        <masterLabel>Get MCF Order</masterLabel>
+        <openType>replace</openType>
+        <page>GetMCFOrder</page>
+        <protected>false</protected>
+    </webLinks>
+    <webLinks>
+        <fullName>Get_MCF_Orders</fullName>
+        <availability>online</availability>
+        <displayType>massActionButton</displayType>
+        <linkType>javascript</linkType>
+        <masterLabel>Get MCF Orders</masterLabel>
+        <openType>onClickJavaScript</openType>
+        <protected>false</protected>
+        <requireRowSelection>true</requireRowSelection>
+        <url>var ids= {!GETRECORDIDS($ObjectType.ECS__eCommSource_Order__c)}; if(ids.length &lt; 1 ) alert(&apos;Please select at least one order.&apos;); else if(ids.length &gt; 10 ) alert(&apos;Please select only 10 orders.&apos;);else var mywin = window.open(&apos;/apex/eCommazon__GetMCFOrder?ids=&apos;+ids.join(&apos;,&apos;));</url>
+    </webLinks>
+    <webLinks>
+        <fullName>Send_Order_to_FBA</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <height>600</height>
+        <linkType>page</linkType>
+        <masterLabel>Create MCF Order</masterLabel>
+        <openType>sidebar</openType>
+        <page>SendFBAOrder</page>
+        <protected>false</protected>
+    </webLinks>
+    <webLinks>
+        <fullName>Send_Orders_to_FBA</fullName>
+        <availability>online</availability>
+        <displayType>massActionButton</displayType>
+        <linkType>javascript</linkType>
+        <masterLabel>Create MCF Orders</masterLabel>
+        <openType>onClickJavaScript</openType>
+        <protected>false</protected>
+        <requireRowSelection>true</requireRowSelection>
+        <url>var ids= {!GETRECORDIDS($ObjectType.ECS__eCommSource_Order__c)}; if(ids.length &lt; 1 ) alert(&apos;Please select at least one Order to send to Amazon.&apos;); else if(ids.length &gt; 10 ) alert(&apos;Sorry, you can only select 10 orders.&apos;); else var mywin = window.open(&apos;/apex/eCommazon__SendFBAOrder?ids=&apos;+ids.join(&apos;,&apos;));</url>
+    </webLinks>
+    <webLinks>
+        <fullName>Update_MCF_Order</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <encodingKey>UTF-8</encodingKey>
+        <linkType>url</linkType>
+        <masterLabel>Update MCF Order</masterLabel>
+        <openType>replace</openType>
+        <protected>false</protected>
+        <url>/apex/eCommazon__UpdateMCFOrder?id={!ECS__eCommSource_Order__c.Id}</url>
+    </webLinks>
+    <webLinks>
+        <fullName>Update_MCF_Orders</fullName>
+        <availability>online</availability>
+        <displayType>massActionButton</displayType>
+        <linkType>javascript</linkType>
+        <masterLabel>Update MCF Orders</masterLabel>
+        <openType>onClickJavaScript</openType>
+        <protected>false</protected>
+        <requireRowSelection>true</requireRowSelection>
+        <url>var ids= {!GETRECORDIDS($ObjectType.ECS__eCommSource_Order__c)}; if(ids.length &lt; 1 ) alert(&apos;Please select at least one order.&apos;); else if(ids.length &gt; 10 ) alert(&apos;Please select only 10 orders.&apos;);else var mywin = window.open(&apos;/apex/eCommazon__UpdateMCFOrder?ids=&apos;+ids.join(&apos;,&apos;));</url>
+    </webLinks>
+    <webLinks>
+        <fullName>Update_These_Orders</fullName>
+        <availability>online</availability>
+        <displayType>massActionButton</displayType>
+        <linkType>javascript</linkType>
+        <masterLabel>Update These Orders</masterLabel>
+        <openType>onClickJavaScript</openType>
+        <protected>false</protected>
+        <requireRowSelection>true</requireRowSelection>
+        <url>var ids= {!GETRECORDIDS($ObjectType.ECS__eCommSource_Order__c)}; if(ids.length &lt; 1 ) alert(&apos;Please select at least one order.&apos;); else if(ids.length &gt; 30 ) alert(&apos;Please select only 30 orders.&apos;);else var mywin = window.open(&apos;/apex/eCommazon__UpdateOrderListPage?Selected=&apos;+ids.join(&apos;,&apos;));</url>
+    </webLinks>
+    <webLinks>
+        <fullName>Update_This_Order</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <linkType>page</linkType>
+        <masterLabel>Update This Order</masterLabel>
+        <openType>replace</openType>
+        <page>UpdateOrderPage</page>
+        <protected>false</protected>
+    </webLinks>
+</CustomObject>

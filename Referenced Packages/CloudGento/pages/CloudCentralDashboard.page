@@ -1,0 +1,416 @@
+<apex:page controller="CloudGento.MagentoSetupController">
+
+	<apex:stylesheet value="{!URLFOR($Resource.CloudGento__bootstrap_zip, 'bootstrap/css/bootstrap_cc.css')}" />
+	<link rel="stylesheet" type="text/css" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/start/jquery-ui.css" />
+
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js"></script>
+	<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.8.23/jquery-ui.min.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.1.1/bootstrap.min.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.3.3/underscore-min.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/mustache.js/0.5.0-dev/mustache.min.js"></script>
+	<apex:outputPanel id="completion-percentage">
+		<div id="completion-percentage" style="display: none;">0</div>
+	</apex:outputPanel>
+	<script type="text/javascript">
+		// Needed to prevent conflicts with Visualforce javascript
+		$j = jQuery.noConflict();
+		
+		// Pull the Salesforce instance out of the page URL
+		var instance_patt = /na[0-9]{1,2}/;
+		var sf_instance = instance_patt.exec(window.location);
+		
+		var endpoint;
+		var username;
+		var password;
+		var customAdmin; 
+		
+		$j(document).ready(function () {		
+			// Progress
+			refreshCompletionPercentage();
+			$j('#launch-button').click(function() {
+				launchSetup();
+			});
+			$j('#toggle-custom-admin').click(function() {
+				$j('#toggle-custom-admin').css('display', 'none');
+				$j('#custom-admin-section').css('display', 'block');
+			});
+		});
+		
+		function refreshCompletionPercentage() {
+			// Progress
+			var setupCompletion = parseInt($j('#completion-percentage').html(), 10);
+			$j('#progressbar').progressbar({value: setupCompletion});
+			$j('#setup-status').html('Setup of CloudGento is ' + setupCompletion + '% complete.');
+		}
+		
+		function launchSetup() {
+			endpoint = $j('#magento-endpoint').val();
+			username = $j('#magento-username').val();
+			password = $j('#magento-password').val();
+			customAdmin = $j('#magento-custom-admin').val();
+			
+			setTimeout(function () {refreshCompletionPercentage();}, 1000);
+
+			markNeutral('#validate-credentials');
+			markNeutral('#create-api-user');
+			markNeutral('#create-api-role');
+			markNeutral('#create-magento-setting');
+			markNeutral('#create-remote-site');
+			markNeutral('#test-magento-connection');
+			markNeutral('#fetch-store-info');
+			markNeutral('#schedule-jobs');
+			markNeutral('#detect-timezone');
+			markNeutral('#create-orders-email-service');
+			markNeutral('#forward-sales-emails');
+			markNeutral('#start-import');
+			$j('#launch-button').addClass('disabled'); 
+			// It is necessary to separate remote calls otherwise Salesforce batches them
+			markWorking('#validate-credentials');
+			CloudGento.MagentoSetupController.validateCredentials(endpoint, username, password, customAdmin, handleValidationResponse);
+		}
+		
+		function handleValidationResponse(result, event) {
+   			if (event.status) {
+    			if (result.status == 'SUCCESS') {
+     				markSuccessful('#validate-credentials');
+     				var comper = $j('#completion-percentage');
+     				comper.html(parseInt(comper.html(), 10) + 8);
+     				markWorking('#create-api-role');
+     				CloudGento.MagentoSetupController.createApiRole(endpoint, username, password, customAdmin, handleRoleResponse);
+     				return;
+    			}
+   			}
+   			markError('#validate-credentials', 'You have entered invalid Magento credentials. Please correct them and try again.');
+  		}
+  
+  		function handleRoleResponse(result, event) {
+   			if (event.status) {
+    			if (result.status == 'SUCCESS') {
+     				markSuccessful('#create-api-role');
+     				markWorking('#create-api-user');
+     				CloudGento.MagentoSetupController.createApiUser(endpoint, username, password, customAdmin, handleUserResponse);
+     				return;
+    			}
+   			}
+   			markError($j('#create-api-role'), 'API role creation failed. Please see wiki.');
+  		}
+  
+  		function handleUserResponse(result, event) {
+   			if (event.status) {
+    			if (result.status == 'SUCCESS') {
+     				markSuccessful('#create-api-user');
+     				handleSettingCreationResponse();
+     				return;
+    			}
+   			} 
+   			markError('#create-api-user', 'API user creation failed. Please see wiki.');
+  		} 
+  		
+  		function handleSettingCreationResponse() {
+  			markSuccessful('#create-magento-setting');
+  			markWorking('#create-remote-site');
+  			CloudGento.MagentoSetupController.createRemoteSiteSetting(endpoint, handleRemoteSiteResponse);
+  			return;
+  		} 
+  		
+  		function handleRemoteSiteResponse(result, event) {
+  			if (event.status) {
+  				if (result.status == 'SUCCESS') {
+     				markSuccessful('#create-remote-site');
+     				markWorking('#test-magento-connection');
+     				CloudGento.MagentoSetupController.testMagentoConnection(handleConnectionTestResponse);
+     				return;
+    			}
+  			}
+			markError('#create-remote-site', 'Remote site creation failed. Please see wiki.');
+  		} 
+  		
+  		function handleConnectionTestResponse(result, event) {
+  			if (event.status) {
+  				if (result.status == 'SUCCESS') {
+     				markSuccessful('#test-magento-connection');
+     				markWorking('#fetch-store-info');
+     				CloudGento.MagentoSetupController.fetchStoreInfo(handleStoreInfoResponse);
+     				return;
+    			}
+  			}
+			markError('#test-magento-connection', 'Magento connection failed. Please see wiki.');
+  		} 
+  		
+  		function handleStoreInfoResponse(result, event) {
+   			if (event.status) {
+    			if (result.status == 'SUCCESS') {
+     				markSuccessful('#fetch-store-info');
+     				markWorking('#schedule-jobs');
+						CloudGento.MagentoSetupController.scheduleMagentoJobs(handleMagentoJobsResponse);
+     				return;
+    			}
+   			} 
+   			markError('#fetch-store-info', 'Store info retreival failed. Please see wiki.');
+  		} 
+  		
+  		function handleMagentoJobsResponse(result, event) {
+   			if (event.status) {
+    			if (result.status == 'SUCCESS') {
+     				markSuccessful('#schedule-jobs'); 
+     				markWorking('#detect-timezone');
+     				CloudGento.MagentoSetupController.detectTimezone(endpoint, username, password, customAdmin, handleTimezoneResponse);
+     				return;
+    			}
+   			} 
+   			markError('#schedule-jobs', 'Scheduling automatic jobs failed. Please see wiki.');
+  		} 
+  		
+  		function handleTimezoneResponse(result, event) {
+   			if (event.status) {
+    			if (result.status == 'SUCCESS') {
+     				markSuccessful('#detect-timezone');
+     				markWorking('#create-orders-email-service');
+     				CloudGento.MagentoSetupController.createOrdersEmailService(handleSalesEmailServiceResponse);
+     				return;
+    			}
+   			} 
+   			markError('#detect-timezone', 'Timezone detection failed. Please see wiki.');
+  		} 
+  		
+  		function handleSalesEmailServiceResponse(result, event) {
+   			if (event.status) {
+    			if (result.status == 'SUCCESS') {
+     				markSuccessful('#create-orders-email-service');
+     				markWorking('#forward-sales-emails');
+     				CloudGento.MagentoSetupController.forwardSalesEmails(endpoint, username, password, customAdmin, handleSalesEmailsResponse);
+     				return;
+    			}
+   			} 
+   			markError('#create-orders-email-service', 'Orders email service creation. Please see wiki.');
+  		} 
+  		
+  		function handleSalesEmailsResponse(result, event) {
+   			if (event.status) {
+    			if (result.status == 'SUCCESS') {
+     				markSuccessful('#forward-sales-emails');
+   					markWorking('#start-import');
+   					CloudGento.MagentoSetupController.startHistoricalImport(handleImportResponse);
+     				return;
+    			}
+   			} 
+   			markError('#forward-sales-emails', 'Forwarding sales emails failed. Please see wiki.');
+  		} 
+  		
+  		function handleImportResponse(result, event) {  
+   			if (event.status) {
+    			if (result.status == 'SUCCESS') {
+     				markSuccessful('#start-import');
+     				return;
+    			}
+   			} 
+   			markError('#start-import', 'Historical data import failed. Please see wiki.');
+  		} 	 
+  		
+  		function finish() {
+  			$j('#launch-button').removeClass('disabled');
+  		}
+		
+		function markSuccessful(e) {
+   			$j(e).addClass('success');
+   			$j(e).removeClass('error');
+   			$j(e).removeClass('unstarted');
+   			$j(e).removeClass('working');
+   			$j(e).find('.error-instructions').html('');
+  		}
+  
+  		function markError(e, instructions) {
+   			$j(e).addClass('error');
+   			$j(e).removeClass('success');
+   			$j(e).removeClass('unstarted');
+   			$j(e).removeClass('working');
+   			$j(e).find('.error-instructions').html(instructions);
+  		}
+  		
+  		function markNeutral(e) {
+  			$j(e).addClass('unstarted');
+  			$j(e).removeClass('success');
+   			$j(e).removeClass('error');
+   			$j(e).removeClass('working');
+   			$j(e).find('.error-instructions').html('');
+  		} 
+  		
+  		function markWorking(e) {
+  			$j(e).addClass('working');
+  			$j(e).removeClass('success');
+   			$j(e).removeClass('error');
+   			$j(e).removeClass('unstarted');
+   			$j(e).find('.error-instructions').html('');
+  		} 
+
+	</script>
+	
+	<style type="text/css">
+		.dashboard-title {
+			margin: 10px 0 0px 0px;
+		}
+		.dashboard-title h1 {
+			font-size: 30px; 
+		}
+		.dashboard-section {
+			margin: 10px 0 10px 0; 
+		}
+		.dashboard-section h1 {
+			font-size: 20px;
+			margin: 10px 0 10px 0;
+		}
+		.dashboard-section-separator {
+			clear: both;
+			border: 1px solid #DDD;
+			margin-top: 15px;
+			margin-bottom: 15px;
+		}
+		.creds-label { 
+			
+		}
+		.cc .magento-creds .creds-input {
+			margin-left: 15px;
+		}
+		.setup-step {
+			padding: 2px 20px;
+			margin: 3px 0px;
+			-webkit-border-radius: 5px;
+			-moz-border-radius: 5px;
+			border-radius: 5px;
+		}
+		.success {
+			background-color: #8AE65C;
+		}
+		.error {
+			background-color: #FF4747;
+		}
+		.unstarted h3:before {
+			content: "&#x2022;&nbsp;";
+		}
+		.success h3:before {
+			content: "&#x2713;&nbsp;";
+		}
+		.error h3:before {
+			content: "&#x2716;&nbsp;";
+		}
+		.working h3:before {
+			content: "+&nbsp;";
+		}
+
+	</style>
+	
+<div class="dashboard-title">
+	<h1>CloudGento Setup</h1>
+</div>
+<apex:outputPanel id="contentContainer" styleClass="cc">
+<apex:outputPanel id="pageMessages">
+	<apex:pageMessages />
+</apex:outputPanel>
+
+		<div class="dashboard-section">
+			<div id="progressbar"/>
+			<p id="setup-status"/>
+		</div>
+		<div class="dashboard-section-separator"/>
+		<div class="dashboard-section">
+			<h1>Enter credentials and launch setup</h1>	
+			<div style="margin-top: 10px;">
+				<span class="creds-label">Endpoint</span>
+				<input style="margin-left: 5px; width: 300px;" class="creds-input" id="magento-endpoint" type="text" name="magento-endpoint"></input>
+				<span style="margin-left: 15px;" class="creds-label">Username</span>
+				<input style="margin-left: 5px;" class="creds-input" id="magento-username" type="text" name="magento-username"></input>
+				<span style="margin-left: 15px;" class="creds-label">Password</span>
+				<input style="margin-left: 5px;" class="creds-input" id="magento-password" type="text" name="magento-password"></input>
+				<div id="custom-admin-section" style="clear: both; display: none;">
+					<span class="creds-label">Custom Admin Login URL</span>
+					<input style="margin-left: 5px;" class="creds-input" id="magento-custom-admin" type="text" name="magento-custom-admin"></input>
+				</div>
+				<div style="clear: both;">
+					<a id="toggle-custom-admin">Custom admin location?</a> 
+				</div>
+				<div style="clear: both;">
+					<button id="launch-button" class="btn btn-primary">Launch Setup</button>
+				</div>
+			</div>
+		
+		</div>
+		<div class="dashboard-section-separator"/>
+		<div id="validate-credentials" class="setup-step unstarted">
+			<p>
+				<h3>Validate Magento credentials</h3>
+				<p class="error-instructions"></p>
+			</p>
+		</div>
+		<div id="create-api-role" class="setup-step unstarted">
+			<p>
+				<h3>Create web service role</h3>
+				<p class="error-instructions"></p>
+			</p>
+		</div>
+		<div id="create-api-user" class="setup-step unstarted">
+			<p>
+				<h3>Create web service user</h3>
+				<p class="error-instructions"></p>
+			</p>
+		</div>
+		<div id="create-magento-setting" class="setup-step unstarted">
+			<p>
+				<h3>Create Magento setting</h3>
+				<p class="error-instructions"></p>
+			</p>
+		</div>
+		<div id="create-remote-site" class="setup-step unstarted">
+			<p>
+				<h3>Create remote site setting</h3>
+				<p class="error-instructions"></p>
+			</p>
+		</div>
+		<div id="test-magento-connection" class="setup-step unstarted">
+			<p>
+				<h3>Test Magento connection</h3> 
+				<p class="error-instructions"></p>
+			</p>
+		</div>
+		<div id="fetch-store-info" class="setup-step unstarted">
+			<p>
+				<h3>Fetch Magento store info</h3>
+				<p class="error-instructions"></p>
+			</p>
+		</div>
+		<div id="schedule-jobs" class="setup-step unstarted">
+			<p>
+				<h3>Schedule automatic jobs</h3>
+				<p class="error-instructions"></p>
+			</p>
+		</div>
+		<div id="detect-timezone" class="setup-step unstarted">
+			<p>
+				<h3>Detect Magento store timezone</h3>
+				<p class="error-instructions"></p>
+			</p>
+		</div>
+		<div id="create-orders-email-service" class="setup-step unstarted">
+			<p>
+				<h3>Create email service for real time order sync</h3>
+				<p class="error-instructions"></p>
+			</p>
+		</div>
+		<div id="forward-sales-emails" class="setup-step unstarted">
+			<p>
+				<h3>Forward sales emails for real time order sync</h3>
+				<p class="error-instructions"></p>
+			</p>
+		</div>
+		<div id="start-import" class="setup-step unstarted">
+			<p>
+				<h3>Start import of historical data</h3>
+				<p class="error-instructions"></p>
+			</p>
+		</div>
+
+</apex:outputPanel>
+<p>Powered by Cloud Conversion, LLC</p>
+
+ 
+
+</apex:page>

@@ -1,0 +1,16 @@
+<apex:page showHeader="false">
+
+<style type="text/css">
+#content { margin: 100px auto 0px; height: 429px; width: 648px; }
+#content .loader { float: left; height: 20px; width: 648px; background: url(http://www.cloudconversion.com/kb/images/ajax-loader.gif) no-repeat center center; }
+</style>
+
+<div id="content"><img src="http://www.cloudconversion.com/kb/images/feedback-thanks.jpg" alt="Thank You For Your Feedback" width="648" height="409" border="0" usemap="#Map" />
+  <map name="Map" id="Map">
+    <area shape="rect" coords="466,375,524,393" href="{!$Site.CurrentSiteUrl}" />
+
+  </map>
+  <div class="loader"></div>
+</div>
+
+</apex:page>

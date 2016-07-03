@@ -1,0 +1,330 @@
+<apex:page controller="eCommazon.PrepareShipmentPackagesController" action="{!CheckInboundShipment}">
+  <style>
+     .Processing
+        {
+            position: fixed;
+            background-color: white;
+            background: url('/img/loading32.gif') no-repeat;
+            background-repeat: no-;
+            background-position: center;
+            z-index: 1000;
+            width: 100%;
+            height: 100%;
+            z-index: 1004;
+            left: 0%; 
+            top: 0%;
+        }
+        
+        .bPageBlock.brandSecondaryBrd.apexDefaultPageBlock.secondaryPalette{background-color:#fff;}
+        .dataGrid th{padding:10px 0;background:#ddd;}
+        .dataGrid td{padding-top:10px;}
+        .pbSubsection .dataCol{padding:0}
+        .button1{
+        background-color:Red;
+        font-weight:bold;
+        color:#E56717;
+        }
+   </style>
+   <style type="text/css">
+     table.exceptionText td {
+                    
+                     font-size:15px;
+                     font-weight:bold;
+                     text-align:left;
+                     color:red;}
+      
+    </style>
+  
+   
+    <apex:form id="theForm">
+      <!---<apex:messages id="pgm" layout="table" styleClass="exceptionText"/>--->
+          <!--  <apex:messages id="pgm" />
+      <apex:actionFunction name="doInit" action="{!CheckInboundShipment}"/>--->
+      <apex:pageblock >
+         <apex:pageblockButtons location="Bottom">
+                <apex:commandButton value="Put Transport Content" action="{!Save}" reRender="theForm,table"/>
+                <apex:commandButton value="Estimate Transport Request" action="{!EstimateTransportRequest}" reRender="theForm,table"/>
+                <apex:commandButton value="Get Transport Content" action="{!GetTransportContent}" reRender="theForm,table"/>
+                <apex:commandButton value="Confirm Transport Request" action="{!ConfirmTransportRequest}" reRender="theForm,table"/>
+                <apex:commandButton value="Void Transport Request" action="{!VoidTransportRequest}" reRender="theForm,table"/>
+         </apex:pageblockButtons>
+         <center>    
+           <table style="width:100%" id="table">
+               <th style="align:center">Shipment Name/ID &nbsp;&nbsp;&nbsp;</th>
+               <th>Ship from</th>
+               <th>Ship to</th>
+               <th>Shipment contents</th>
+               <th>Shipment status</th>
+               <tr>
+                 <td width="20%">
+                   <table>
+                       <tr><td><b>Name:</b></td><td><apex:outputField value="{!FBAShipment.Name}"/></td></tr>
+                       <tr><td><b>ID:</b></td><td><apex:outputField value="{!FBAShipment.eCommazon__External_Id__c}"/></td></tr>
+                        <tr>
+                        <td>
+                           <apex:inputField value="{!FBAShipment.eCommazon__FBA_Amazon_Shipment__c}"/>     
+                        </td>
+                        <td>
+                           <apex:commandLink action="{!RefreshPage}">
+                               <apex:image value="{!$Resource.eCommazon__RefreshImage}" width="47" height="47"/>
+                           </apex:commandLink>
+                        </td></tr>
+                   </table>
+                 </td>
+                 <td width="20%">
+                    <table>
+                       <tr><td><apex:outputField value="{!FBAShipment.eCommazon__FBA_Shipment_Plan__r.eCommazon__FBA_Ship_From_Address__r.name}"/></td></tr>
+                       <tr><td><apex:outputField value="{!FBAShipment.eCommazon__FBA_Shipment_Plan__r.eCommazon__FBA_Ship_From_Address__r.MailingStreet}"/></td></tr>
+                       <tr><td><apex:outputField value="{!FBAShipment.eCommazon__FBA_Shipment_Plan__r.eCommazon__FBA_Ship_From_Address__r.MailingCity}"/><apex:outputPanel >,</apex:outputPanel>
+                               <apex:outputField value="{!FBAShipment.eCommazon__FBA_Shipment_Plan__r.eCommazon__FBA_Ship_From_Address__r.MailingState}"/>&nbsp;&nbsp;
+                               <apex:outputField value="{!FBAShipment.eCommazon__FBA_Shipment_Plan__r.eCommazon__FBA_Ship_From_Address__r.MailingPostalCode}"/>
+                       </td></tr>
+                       <tr><td><apex:outputField value="{!FBAShipment.eCommazon__FBA_Shipment_Plan__r.eCommazon__FBA_Ship_From_Address__r.MailingCountry}"/></td></tr>
+                       <tr><td><apex:outputField value="{!FBAShipment.eCommazon__FBA_Shipment_Plan__r.eCommazon__FBA_Ship_From_Address__r.MobilePhone}"/></td></tr>
+                   </table>
+                 </td>
+                 <td width="20%">
+                     <table>
+                       <tr><td><apex:outputField value="{!FBAShipment.eCommazon__FBA_Ship_To_Address__r.name}"/></td></tr>
+                       <tr><td><apex:outputField value="{!FBAShipment.eCommazon__FBA_Ship_To_Address__r.MailingStreet}"/></td></tr>
+                       <tr><td><apex:outputField value="{!FBAShipment.eCommazon__FBA_Ship_To_Address__r.MailingCity}"/><apex:outputPanel >,</apex:outputPanel>
+                               <apex:outputField value="{!FBAShipment.eCommazon__FBA_Ship_To_Address__r.MailingState}"/>&nbsp;&nbsp;
+                               <apex:outputField value="{!FBAShipment.eCommazon__FBA_Ship_To_Address__r.MailingPostalCode}"/>
+                       </td></tr>
+                       <tr><td><apex:outputField value="{!FBAShipment.eCommazon__FBA_Ship_To_Address__r.MailingCountry}"/><apex:outputPanel >(<apex:outputField value="{!FBAShipment.eCommazon__Fulfillment_Center_Id__c}"/>)</apex:outputPanel></td></tr>
+                      
+                   </table>
+                 </td>
+                 <td width="20%">
+                    <table>
+                       <tr><td><apex:outputField value="{!FBAShipment.eCommazon__of_MSKUs__c}"/></td><td>MSKUs</td></tr>
+                       <tr><td><apex:outputField value="{!FBAShipment.eCommazon__Total_Quantity_Discrepancy__c}"/></td><td>Units</td></tr>
+                   </table>
+                 </td>
+                 <td width="20%">
+                    <table>
+                       <tr><td><apex:outputField value="{!FBAShipment.eCommazon__Status__c}"/></td><td></td></tr>
+                       <tr><td><b>Created:</b></td><td><apex:outputField value="{!FBAShipment.Createddate}"/></td></tr>
+                       <tr><td><b>Updated:</b></td><td><apex:outputField value="{!FBAShipment.eCommazon__Shipment_Last_Updated__c}"/></td></tr>
+                   </table>
+                 </td>
+               </tr>
+            </table> <br/><br/> <br/> 
+        </center>
+        
+       <Font color="Chocolate " Size="4"><b> 1. Shipping service</b></Font>
+        <center>
+            <table style="width:100%">
+               <th>Shipping method/ID</th>
+               <th>Shipping carrier</th>
+               <tr>
+                  <td width="30%">
+                    <apex:selectRadio layout="pageDirection" value="{!ShippingType}">
+                        <apex:selectOption itemValue="SPD" itemLabel="Small parcel delivery(SPD)" />
+                        <apex:selectOption itemValue="LTL" itemLabel="Less than truckload(LTL)" />
+                    </apex:selectRadio> 
+                   </td>
+                  <td width="35%">
+                      <apex:selectRadio layout="pageDirection" value="{!ShippingCarrier}">
+                        <apex:selectOption itemValue="UPS" itemLabel="Amazon-Partnered Carrier(UPS)" />
+                        <apex:selectOption itemValue="USA" itemLabel="Other Carrier:" />
+                      </apex:selectRadio>  
+                      <apex:selectList value="{!ShippingCarrierOption}" size="1" style="margin-left:38px;">
+                            <apex:selectOptions value="{!ShippingCarriers}" />
+                     </apex:selectList><br/><br/>
+                    </td>
+                  <td width="35%">
+                  </td>
+               </tr>
+            </table> 
+            <br/><br/> <br/>
+        </center>
+       <Font  color="Chocolate " Size="4"><b> 2. Shipment packing</b></Font>
+           <center>
+            
+              <table style="width:100%">
+               <tr>
+                  <td width="100%">
+                    <table style="width:100%" class="dataGrid" cellspacing="0">
+                        <tr>
+                           <th style="text-align:center">Box#</th>
+                           <th style="text-align:center">Box weight (Pound)</th>
+                           <th style="text-align:center">Box dimensions (in. L x W x H)</th>
+                          <!--- <th style="text-align:center"></th>---->
+                           <th style="text-align:center">Remove</th>
+                           <th></th>
+                        </tr>
+                        <apex:repeat value="{!WrapperPackageList}" var="wpl">
+                            <tr>
+                                <td width="5%" style="text-align:center">
+                                   <apex:outputtext value="{!wpl.rowWrapNumber}"/>
+                                </td>
+                                <td width="12%" style="text-align:center">
+                                   <apex:inputField value="{!wpl.ShippmentWrapPackage.eCommazon__Weight__c}" style="line-height:18px;height:20px;Width:45%;text-align: center;" >
+                                   </apex:inputField>
+                                </td>
+                                <td width="30%" style="text-align:center">
+                                      <apex:outputPanel > 
+                                          <apex:inputField value="{!wpl.ShippmentWrapPackage.eCommazon__Length__c}" style="line-height:18px;height:20px;Width:20%;text-align: center;" >
+                                           </apex:inputField><apex:outputPanel style="text-align: center;">&nbsp;x&nbsp;</apex:outputPanel> 
+                                          <apex:inputField value="{!wpl.ShippmentWrapPackage.eCommazon__Width__c}"  style="line-height:18px;height:20px;Width:20%;text-align: center;" >
+                                           </apex:inputField><apex:outputPanel style="text-align: center;">&nbsp;x&nbsp;</apex:outputPanel>
+                                          <apex:inputField value="{!wpl.ShippmentWrapPackage.eCommazon__Height__c}" style="line-height:18px;height:20px;Width:20%;text-align: center;" >
+                                               <!---<apex:actionSupport event="onchange" action="{!AddWeightTotal}" reRender="theForm" />---->
+                                          </apex:inputField>
+                                       </apex:outputPanel>&nbsp;
+                                       <apex:outputPanel rendered="{!If(wpl.ShippmentWrapPackage.Createddate != null,true,false)}"><Font color="Green" ><b>Created</b></Font></apex:outputPanel>
+                                        <apex:outputPanel rendered="{!If(wpl.ShippmentWrapPackage.Createddate = null,true,false)}"><Font color="Green" ><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></Font></apex:outputPanel>
+                             
+                               </td>
+                               <!--- <td width="5%" style="text-align:center,align:left">
+                                    <apex:outputPanel rendered="{!If(wpl.ShippmentWrapPackage.Createddate != null,true,false)}"><Font color="Green" ><b>Created</b></Font></apex:outputPanel>
+                               </td>---->
+                                <td width="8%" style="text-align:center">
+                                  <apex:commandLink action="{!RemovePackage}" reRender="theForm,table" tabindex="-1">
+                                   <apex:image id="theImage" value="{!$Resource.eCommazon__RemoveImage}" width="25" height="25"/>
+                                  <apex:param name="rownum" value="{!wpl.rowWrapNumber}" />
+                                  </apex:commandLink>
+                                </td>
+                                <td></td>
+                            </tr>
+                        </apex:repeat>
+                         <tr>
+                                <td width="10%" style="text-align:center">
+                                    <Font size="3"><b>Total</b></Font>
+                                </td>
+                                <td width="10%" style="text-align:center">
+                                    <apex:outputText value="{!TotalWeight}"></apex:outputText>
+                                </td>
+                         </tr>
+                    </table><br/>
+                    <apex:inputText value="{!totalrow}" style="line-height:16px;height:18px;Width:75px;text-align: center;"/>&nbsp;&nbsp;
+                    <apex:commandButton action="{!AddPackage}" value="Add another box"/>&nbsp;&nbsp;
+                    <apex:commandButton action="{!CopyValueFromLast}" value="Copy last box" rendered="{!WrapperPackageList.size>0}"/>
+                  </td>
+                  <td width="30%">
+                  </td>
+               </tr>
+              </table> 
+           </center>
+          <br/><br/> <br/>
+         <Font  color="Chocolate " Size="4"><b> 3. Shipping charges</b></Font>
+           <center>
+               <table style="width:100%">
+               <tr>
+                  <td width="100%">
+                    <table style="width:100%" class="dataGrid" cellspacing="0">
+                        <tr>
+                           <th style="text-align:center">Shipping carrier</th>
+                           <th style="text-align:center"># of boxes</th>
+                           <th style="text-align:center">Shipment weight</th>
+                           <th style="text-align:center">Billable weight</th>
+                           <th style="text-align:center">Estimated shipping cost</th>
+                           <th></th>
+                        </tr>
+                       
+                            <tr>
+                                <td width="5%" style="text-align:center">
+                                   <apex:outputtext value="{!FBAShipment.eCommazon__FBA_Carrier_Name__c}"/>
+                                </td>
+                                <td width="10%" style="text-align:center">
+                                   <apex:outputText value="{!HasBoxes}" style="line-height:18px;height:20px;Width:75px;text-align: center;" >
+                                   </apex:outputText>
+                                </td>
+                                <td width="8%" style="text-align:center">
+                                  <apex:outputText value="{!TotalWeight} lb." style="line-height:18px;height:20px;Width:75px;text-align: center;" >
+                                   </apex:outputText>
+                                </td>
+                                <td width="8%" style="text-align:center">
+                                   <apex:outputText value="{!TotalWeight} lb." style="line-height:18px;height:20px;Width:75px;text-align: center;" >
+                                   </apex:outputText>
+                                 </td>
+                                <td width="10%" style="text-align:left"><Center>
+                                 <b> <apex:outputField value="{!FBAShipment.eCommazon__FBA_Shipping_Cost__c}" style="line-height:18px;height:20px;Width:75px;align: center;" rendered="{!showEstimateCost}" >
+                                   </apex:outputField></b></Center>&nbsp;
+                                   <apex:commandButton action="{!CreatePackages}" value="Create Packages" styleClass="button1" style="background:#FFA500;align:left;" rendered="{!AND(NOT(showCalculateButton),NOT(showEstimateCost))}"/>
+                                   <apex:commandButton action="{!calculate}" value="Calculate" styleClass="button1" style="background:#FFA500;" rendered="{!(showCalculateButton)}"/>
+                                   
+                                   
+                                </td>
+                                <td width="20%" style="text-align:left">
+                                    <apex:outputPanel rendered="{!ErrorMessage != null}"><Font color="Red"><b>{!ErrorMessage}</b></Font></apex:outputPanel>
+                                </td> 
+                            </tr>
+                            <tr>
+                              <td></td> 
+                              <td></td> 
+                              <td></td> 
+                              <td width="10%" style="text-align:right" colspan="2"> 
+                                 <apex:commandButton action="{!AcceptCharges}" value="Accept charges" rendered="{!showAcceptButton}" style="background:#FFA500;"/>
+                                  <apex:outputPanel rendered="{!ShowVoidButton}"><Font color="Green" size="1">Charges accepted &nbsp;</Font></apex:outputPanel>
+                                  <apex:commandButton action="{!VoidCharges}" value="Void charges" rendered="{!ShowVoidButton}"  style="background:#FFA500;"/><br/>
+                              </td> 
+                               <td></td> 
+                            </tr>
+                            <tr>
+                              <td></td> 
+                              <td></td> 
+                              <td></td> 
+                              <td width="10%" style="text-align:center" colspan="2"> 
+                                  <apex:outputPanel rendered="{!AND(ShowVoidButton,TimeInHours != null)}"><Font color="Blue" size="1">You have {!TimeInHours} hours,{!TimeInMinutes} Minutes left if you wish to void shipping charges &nbsp;</Font></apex:outputPanel>
+                              </td>
+                               <td></td>  
+                            </tr>
+                        
+                    </table><br/><br/>
+                   
+                  </td>
+                  <td width="30%">
+                  </td>
+               </tr>
+              </table>  
+           </center>
+        <br/><br/> <br/>
+        <Font  color="Chocolate " Size="4"><b> 4. Shipping labels</b></Font>
+           <center>
+               <table style="width:100%">
+               <tr>
+                  <td width="100%">
+                    <table style="width:100%" class="dataGrid" cellspacing="0">
+                        <tr>
+                           <th style="text-align:center"># of boxes</th>
+                           <th style="text-align:center">Paper Type</th>
+                          <th>Instructions</th>
+                        </tr>
+                       
+                            <tr>
+                                <td width="5%" style="text-align:center">
+                                   <apex:outputtext value="{!HasBoxes}"/>
+                                </td>
+                                <td width="20%" style="text-align:center">
+                                   <apex:outputText value="{!FBAShipment.eCommazon__Label_Type__c}" style="line-height:18px;height:20px;Width:75px;text-align:center;" >
+                                   </apex:outputText><br/><apex:commandButton action="{!GetPackageLabels}" value="Print box labels" style="background:#FFA500;"/>
+                                </td>
+                                <td style="text-align:left">
+                                    Packing your Boxes  
+                                    <ul>
+                                      <li><b>Packing slips are no longer required.</b></li>
+                                      <li>For safety reasons,Boxes containing more than one unit must not exceed 50 lb.A box containing one unit weighing over 50 units must be marked "Team Lift" on the top and sides. </li>
+                                      <li>Use only approved only packing material.</li>
+                                    </ul>
+                                   Labeling your boxes
+                                   <ul>
+                                     <li><b>Print the full set of labels.Because each label is unique,do not photocopy,reuse or modify labels for use on additional boxes.</b></li>
+                                     <li>For each box,affix a shipping label and its accompanying carrier label.</li>
+                                     <li>Place labels so they don't cover box seams.</li>
+                                   </ul>
+                                   Learn more about shipping and routing requiremnts
+                                </td>
+                            </tr>   
+                    </table>&nbsp;&nbsp;
+                   
+                  </td>
+                  <td width="30%">
+                  </td>
+               </tr>
+              </table>  
+           </center>
+      </apex:pageblock>
+   </apex:form> 
+</apex:page>

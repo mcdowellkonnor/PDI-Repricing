@@ -1,0 +1,371 @@
+<apex:page controller="CloudConversion.SimpleRmaController" showHeader="false" renderAs="{!renderMode}">
+
+    <!-- <apex:stylesheet value="{!$Resource.ECS__bootstrap_cc}"/> -->
+    <!-- <link rel="stylesheet" type="text/css" href="http://www.gocare.com/skin/frontend/gocare/default/css/styles.css" media="all"></link>
+    <link rel="stylesheet" type="text/css" href="http://www.gocare.com/skin/frontend/base/default/css/widgets.css" media="all"></link>
+    <link rel="stylesheet" type="text/css" href="http://www.gocare.com/skin/frontend/base/default/css/gomage/procart.css" media="all"></link> -->
+
+    <style type="text/css">
+        <apex:outputText value="{!settings.CloudConversion__Return_Portal_CSS__c}"></apex:outputText>
+    </style>
+
+    <div style="padding-left: 30px; clear: both; width: 600px;" class="cc">
+    <apex:outputPanel id="masterContainer">
+        <apex:outputPanel rendered="{!infoMissing}">
+            <h1>RMA portal needs configuration!</h1>
+        </apex:outputPanel>
+        <apex:outputPanel rendered="{!!rmaCreated && !infoMissing && !!renderSerialNumberFlow}">
+            <apex:form styleClass="form-vertical">
+            <apex:outputPanel rendered="{!renderSerialNumberEntry}">
+                <div class="title-container">
+                    <h3 style="display: block;">Locate your Policy</h3>
+                </div> 
+                <apex:pageMessages />
+                <div class="form-entry">
+                    <label>Serial Number</label>
+                    <apex:inputText required="true" value="{!serialNumber}"/>
+                </div>
+                <apex:commandLink style="display: block; clear: both; width: 60px; margin-top: 15px;" styleClass="submit-btn" action="{!locateSerialNumber}" rerender="masterContainer">Submit</apex:commandLink>
+            </apex:outputPanel>
+            <apex:outputPanel rendered="{!!renderSerialNumberEntry}">
+                <h3>Complete Your Claim for&nbsp;{!ClaimForName}</h3>
+                <apex:pageMessages />
+                
+                <p>Product:&nbsp;{!ProductName}</p>
+                <p>Serial Number:&nbsp;<apex:outputText value="{!serialNumber}"/></p>
+                
+                <apex:outputPanel rendered="{!paymentRequired}">
+	                <div class="form-entry">
+	                    Pay Deductible <b><apex:outputField value="{!stockUnit.CloudConversion__Amount__c}"/></b> 
+	                </div>
+	            </apex:outputPanel>
+                
+                <div style="border: 1px solid #DDD; margin-top: 15px; margin-bottom: 15px;"></div>
+                <apex:outputPanel rendered="{!paymentRequired}">
+	                <div>
+	                        <apex:outputLabel style="float: left; width: 165px;" for="ccNumber">Credit Card Number</apex:outputLabel>
+	                        <apex:inputText id="ccNumber" value="{!creditCardNumber}" ></apex:inputText>
+	                </div>
+	                <div>
+	                        <apex:outputLabel style="float: left; width: 165px;" for="cvvNumber">Security Code</apex:outputLabel>
+	                        <apex:inputText id="cvvNumber" value="{!cvv}" />
+	                </div>
+	                <div>
+	                        <apex:outputLabel style="float: left; width: 165px;" for="cardTypeSelectList">Card Type</apex:outputLabel>
+	                        <apex:selectList size="1" id="cardTypeSelectList" multiselect="false" value="{!cardType}" style="width: 125px;"><apex:selectOptions value="{!cardTypeOptions}"  /></apex:selectList>
+	                </div>
+	                <div>
+	                        <apex:outputLabel style="float: left; width: 165px;" for="cardExp">Credit Card Expiration</apex:outputLabel>
+	                        <apex:selectList id="expMonth" value="{!expirationMonth}" size="1" style="width: 125px"><apex:selectOptions value="{!expMonthOptions}" /></apex:selectList>
+	                        <apex:selectList id="expYear" value="{!expirationYear}" size="1" style="width: 125px; margin-left: 15px;"><apex:selectOptions value="{!expYearOptions}" /></apex:selectList>
+	                </div>
+	            </apex:outputPanel>
+                <div>
+                        <apex:outputLabel style="float: left; width: 165px;" for="billingfirstname">First Name</apex:outputLabel>
+                        <apex:inputText id="billingfirstname" value="{!billingAddress.ECS__First_Name__c}"></apex:inputText>
+                </div>
+                <div>
+                        <apex:outputLabel style="float: left; width: 165px;" for="billinglastname">Last Name</apex:outputLabel>
+                        <apex:inputText id="billinglastname" value="{!billingAddress.ECS__Last_Name__c}"></apex:inputText>
+                </div>
+                <div>
+                        <apex:outputLabel style="float: left; width: 165px;" for="billingCompany">Company</apex:outputLabel>
+                        <apex:inputText id="billingCompany" value="{!billingAddress.ECS__Company__c}"></apex:inputText>
+                </div>
+                <div>
+                        <apex:outputLabel style="float: left; width: 165px;" for="billingstreet">Address Line 1</apex:outputLabel>
+                        <apex:inputText id="billingstreet" value="{!billingAddress.ECS__Address_Line_1__c}"></apex:inputText>
+                </div>
+                <div>
+                        <apex:outputLabel style="float: left; width: 165px;" for="billingstreet2">Address Line 2</apex:outputLabel>
+                        <apex:inputText id="billingstreet2" value="{!billingAddress.ECS__Address_Line_2__c}"></apex:inputText>
+                </div>
+                <div>
+                        <apex:outputLabel style="float: left; width: 165px;" for="billingcity">City</apex:outputLabel>
+                        <apex:inputText id="billingcity" value="{!billingAddress.ECS__City__c}"></apex:inputText>
+                </div>
+                <div>
+                        <apex:outputLabel style="float: left; width: 165px;" >State/Province/Region</apex:outputLabel>
+                        <apex:inputText value="{!billingAddress.ECS__State_Province_Region__c}"></apex:inputText>
+                </div>
+                <div>
+                        <apex:outputLabel style="float: left; width: 165px;" for="billingpostalcode">Zip/Postal Code</apex:outputLabel>
+                        <apex:inputText id="billingpostalcode" value="{!billingAddress.ECS__Zip_Postal_Code__c}"></apex:inputText>
+                </div>
+                <div>
+                        <apex:outputLabel style="float: left; width: 165px;" for="billingcountry">Country</apex:outputLabel>
+                        <apex:selectList size="1" id="billingCountryOption" value="{!billingAddress.ECS__Country__c}" style="width: 125px;"><apex:selectOptions value="{!countryOptions}" /><apex:actionSupport event="onchange" rerender="addresses-panel" status="formActionStatus" /></apex:selectList>
+                </div>
+                <div>
+                        <apex:outputLabel style="float: left; width: 165px;" for="billingphone">Phone</apex:outputLabel>
+                        <apex:inputText id="billingphone" value="{!billingAddress.ECS__Phone_Number__c}"></apex:inputText>
+                </div>
+                <div>
+                        <apex:outputLabel style="float: left; width: 165px;" for="billingEmail">Email Address</apex:outputLabel>
+                        <apex:inputText id="billingEmail" value="{!customer.ECS__Customer_External_Id__c}"></apex:inputText>
+                </div>
+                
+                <ECS:TakeSurvey surveyController="{!surveyController}" /> 
+
+                <p>By checking the box, you agree that you have reviewed all information above and that it is correct and factual to the best of your knowledge.</p>
+                <div class="form-entry">
+                    <label>I agree</label> 
+                    <apex:inputCheckbox value="{!iAgree}"/>
+                </div>
+                <apex:commandLink style="display: block; clear: both; width: 60px; margin-top: 15px;" styleClass="submit-btn" action="{!takePaymentAndCreateRMA}" rerender="masterContainer">Submit</apex:commandLink>
+            </apex:outputPanel>
+            </apex:form>
+        </apex:outputPanel>
+        <apex:outputPanel rendered="{!!rmaCreated && !infoMissing && !renderSerialNumberFlow}">
+        <h1>Submit Your Return Request</h1>
+        <apex:pageMessages />
+        <p>
+            <apex:outputText escape="false" value="{!settings.CloudConversion__Policies__c}"/>
+        </p>
+        <apex:form styleClass="form-vertical">
+            <h3>Personal Information</h3>
+            <div class="form-entry">
+                <label>First Name</label>
+                <apex:inputField required="true" value="{!customer.FirstName}"/>
+            </div>
+            <div class="form-entry">
+                <label>Last Name</label>
+                <apex:inputField required="true" value="{!customer.LastName}"/>
+            </div>
+            <apex:outputPanel rendered="{!eBayMode}">
+                <div class="form-entry">
+                    <label>eBay User Id</label>
+                    <apex:inputField required="true" value="{!customer.ECS__eBay_User_Id__c}"/>
+                </div>
+            </apex:outputPanel>
+            <div class="form-entry">
+                <label>Email</label>
+                <apex:inputField required="true" value="{!customer.Email}"/>
+            </div>
+            <div class="form-entry">
+                <label>Phone</label>
+                <apex:inputField value="{!customer.Phone}"/>
+            </div>
+            <apex:outputPanel rendered="{!settings.CloudConversion__Require_Return_Address__c}">
+                <h3>Return Address</h3>
+                <div class="form-entry">
+                    <label>Street</label>
+                    <apex:inputField value="{!returnAddress.ECS__Address_Line_1__c}"/>
+                </div>
+                <div class="form-entry">
+                    <label>City</label>
+                    <apex:inputField value="{!returnAddress.ECS__City__c}"/>
+                </div>
+                <div class="form-entry">
+                    <label>State</label>
+                    <apex:selectList size="1" value="{!returnAddress.ECS__State_Province_Region__c}">
+                        <apex:selectOption itemValue="AL" itemLabel="AL" />
+                        <apex:selectOption itemValue="AK" itemLabel="AK" />
+                        <apex:selectOption itemValue="AZ" itemLabel="AZ" />
+                        <apex:selectOption itemValue="AR" itemLabel="AR" />
+                        <apex:selectOption itemValue="CA" itemLabel="CA" />
+                        <apex:selectOption itemValue="CO" itemLabel="CO" />
+                        <apex:selectOption itemValue="CT" itemLabel="CT" />
+                        <apex:selectOption itemValue="DE" itemLabel="DE" />
+                        <apex:selectOption itemValue="DC" itemLabel="DC" />
+                        <apex:selectOption itemValue="FL" itemLabel="FL" />
+                        <apex:selectOption itemValue="GA" itemLabel="GA" />
+                        <apex:selectOption itemValue="HI" itemLabel="HI" />
+                        <apex:selectOption itemValue="ID" itemLabel="ID" />
+                        <apex:selectOption itemValue="IL" itemLabel="IL" />
+                        <apex:selectOption itemValue="IN" itemLabel="IN" />
+                        <apex:selectOption itemValue="IA" itemLabel="IA" />
+                        <apex:selectOption itemValue="KS" itemLabel="KS" />
+                        <apex:selectOption itemValue="KY" itemLabel="KY" />
+                        <apex:selectOption itemValue="LA" itemLabel="LA" />
+                        <apex:selectOption itemValue="ME" itemLabel="ME" />
+                        <apex:selectOption itemValue="MT" itemLabel="MT" />
+                        <apex:selectOption itemValue="NE" itemLabel="NE" />
+                        <apex:selectOption itemValue="NV" itemLabel="NV" />
+                        <apex:selectOption itemValue="NH" itemLabel="NH" />
+                        <apex:selectOption itemValue="NJ" itemLabel="NJ" />
+                        <apex:selectOption itemValue="NM" itemLabel="NM" />
+                        <apex:selectOption itemValue="NY" itemLabel="NY" />
+                        <apex:selectOption itemValue="NC" itemLabel="NC" />
+                        <apex:selectOption itemValue="ND" itemLabel="ND" />
+                        <apex:selectOption itemValue="OH" itemLabel="OH" />
+                        <apex:selectOption itemValue="OK" itemLabel="OK" />
+                        <apex:selectOption itemValue="OR" itemLabel="OR" />
+                        <apex:selectOption itemValue="MD" itemLabel="MD" />
+                        <apex:selectOption itemValue="MA" itemLabel="MA" />
+                        <apex:selectOption itemValue="MI" itemLabel="MI" />
+                        <apex:selectOption itemValue="MN" itemLabel="MN" />
+                        <apex:selectOption itemValue="MS" itemLabel="MS" />
+                        <apex:selectOption itemValue="MO" itemLabel="MO" />
+                        <apex:selectOption itemValue="PA" itemLabel="PA" />
+                        <apex:selectOption itemValue="RI" itemLabel="RI" />
+                        <apex:selectOption itemValue="SC" itemLabel="SC" />
+                        <apex:selectOption itemValue="SD" itemLabel="SD" />
+                        <apex:selectOption itemValue="TN" itemLabel="TN" />
+                        <apex:selectOption itemValue="TX" itemLabel="TX" />
+                        <apex:selectOption itemValue="UT" itemLabel="UT" />
+                        <apex:selectOption itemValue="VT" itemLabel="VT" />
+                        <apex:selectOption itemValue="VA" itemLabel="VA" />
+                        <apex:selectOption itemValue="WA" itemLabel="WA" />
+                        <apex:selectOption itemValue="WV" itemLabel="WV" />
+                        <apex:selectOption itemValue="WI" itemLabel="WI" />
+                        <apex:selectOption itemValue="WY" itemLabel="WY" />
+                    </apex:selectList>
+                </div>
+                <div class="form-entry">
+                    <label>Zip Code</label>
+                    <apex:inputField value="{!returnAddress.ECS__Zip_Postal_Code__c}"/>
+                </div>
+            </apex:outputPanel>
+            <h3>Purchase Information</h3>
+            <apex:outputPanel rendered="{!!eBayMode}">
+                <div class="form-entry">
+                    <label>Order Number</label>
+                    <apex:inputText value="{!orderNumber}"/>
+                </div>
+            </apex:outputPanel>
+            <apex:outputPanel rendered="{!eBayMode}">
+                <div class="form-entry">
+                    <label>eBay Item Id</label>
+                    <apex:inputText value="{!eBayItemId}"/>
+                </div>
+            </apex:outputPanel>
+            <div class="form-entry">
+                <label>Purchase Date</label>
+                    <apex:selectList style="width: 50px; float: left;" size="1" value="{!purchaseDay}">
+                        <apex:selectOption itemValue="01" itemLabel="01"/>
+                        <apex:selectOption itemValue="02" itemLabel="02"/>
+                        <apex:selectOption itemValue="03" itemLabel="03"/>
+                        <apex:selectOption itemValue="04" itemLabel="04"/>
+                        <apex:selectOption itemValue="05" itemLabel="05"/>  
+                        <apex:selectOption itemValue="06" itemLabel="06"/>
+                        <apex:selectOption itemValue="07" itemLabel="07"/>
+                        <apex:selectOption itemValue="08" itemLabel="08"/>
+                        <apex:selectOption itemValue="09" itemLabel="09"/>
+                        <apex:selectOption itemValue="10" itemLabel="10"/>
+                        <apex:selectOption itemValue="11" itemLabel="11"/>
+                        <apex:selectOption itemValue="12" itemLabel="12"/>
+                        <apex:selectOption itemValue="13" itemLabel="13"/>
+                        <apex:selectOption itemValue="14" itemLabel="14"/>
+                        <apex:selectOption itemValue="15" itemLabel="15"/>
+                        <apex:selectOption itemValue="16" itemLabel="16"/>
+                        <apex:selectOption itemValue="17" itemLabel="17"/>  
+                        <apex:selectOption itemValue="18" itemLabel="18"/>
+                        <apex:selectOption itemValue="19" itemLabel="19"/>
+                        <apex:selectOption itemValue="20" itemLabel="20"/>
+                        <apex:selectOption itemValue="21" itemLabel="21"/>
+                        <apex:selectOption itemValue="22" itemLabel="22"/>
+                        <apex:selectOption itemValue="23" itemLabel="23"/>
+                        <apex:selectOption itemValue="24" itemLabel="24"/>
+                        <apex:selectOption itemValue="25" itemLabel="25"/>
+                        <apex:selectOption itemValue="26" itemLabel="26"/>
+                        <apex:selectOption itemValue="27" itemLabel="27"/>  
+                        <apex:selectOption itemValue="28" itemLabel="28"/>
+                        <apex:selectOption itemValue="29" itemLabel="29"/>
+                        <apex:selectOption itemValue="30" itemLabel="30"/>
+                        <apex:selectOption itemValue="31" itemLabel="31"/>
+                    </apex:selectList> 
+                    <apex:selectList style="width: 50px; margin-left: 15px; float: left;" size="1" value="{!purchaseMonth}">
+                        <apex:selectOption itemValue="01" itemLabel="01"/>
+                        <apex:selectOption itemValue="02" itemLabel="02"/>
+                        <apex:selectOption itemValue="03" itemLabel="03"/>
+                        <apex:selectOption itemValue="04" itemLabel="04"/>
+                        <apex:selectOption itemValue="05" itemLabel="05"/>  
+                        <apex:selectOption itemValue="06" itemLabel="06"/>
+                        <apex:selectOption itemValue="07" itemLabel="07"/>
+                        <apex:selectOption itemValue="08" itemLabel="08"/>
+                        <apex:selectOption itemValue="09" itemLabel="09"/>
+                        <apex:selectOption itemValue="10" itemLabel="10"/>
+                        <apex:selectOption itemValue="11" itemLabel="11"/>
+                        <apex:selectOption itemValue="12" itemLabel="12"/>
+                    </apex:selectList> 
+                    <apex:selectList style="width: 75px; margin-left: 15px;" size="1" value="{!purchaseYear}">
+                        <apex:selectOption itemValue="2005" itemLabel="2005"/>
+                        <apex:selectOption itemValue="2006" itemLabel="2006"/>
+                        <apex:selectOption itemValue="2007" itemLabel="2007"/>
+                        <apex:selectOption itemValue="2008" itemLabel="2008"/>
+                        <apex:selectOption itemValue="2009" itemLabel="2009"/>
+                        <apex:selectOption itemValue="2010" itemLabel="2010"/>
+                        <apex:selectOption itemValue="2011" itemLabel="2011"/>
+                        <apex:selectOption itemValue="2012" itemLabel="2012"/>
+                        <apex:selectOption itemValue="2013" itemLabel="2013"/>
+                    </apex:selectList> 
+            </div>
+            <apex:outputPanel rendered="{!settings.CloudConversion__Require_Serial_Number__c}">
+                <div style="clear: both;" class="form-entry">
+                    <label>Serial Number</label>
+                    <apex:inputText value="{!serialNumber}"/>
+                </div>
+            </apex:outputPanel>
+            <h3 style="clear: both;">Return Information</h3>
+            <div class="form-entry">
+                <label>Return Reason</label>
+                <apex:inputField value="{!rma.CloudConversion__Return_Reason__c}"/> 
+            </div>
+            <div class="form-entry">
+                <label>Desired Resolution</label>
+                <apex:inputField value="{!rma.CloudConversion__Desired_Resolution__c}"/> 
+            </div>
+            <div class="form-entry">
+                <label>Description</label>
+                <apex:inputField style="height: 150px;" value="{!message.CloudConversion__Message__c}"/> 
+            </div>
+            <apex:commandLink style="display: block; clear: both; width: 60px; margin-top: 15px;" styleClass="btn btn-primary" action="{!createRma}" rerender="masterContainer">Submit</apex:commandLink>
+        </apex:form>
+        </apex:outputPanel>
+        <apex:outputPanel rendered="{!rmaCreated && !infoMissing}">
+            <div style="width: 100%; display: block;">
+                <img src="/resource/{!settings.CloudConversion__Logo_Resource_Name__c}" style="height: 200px; margin: 0px auto; display: block;"/>
+            </div>
+            <div style="padding-top: 30px;">
+                <apex:outputText escape="false" value="{!settings.CloudConversion__Success_Message__c}"/>
+            </div>
+            <p style="padding-bottom: 35px;">
+                <h3>For your reference, your request number is:&nbsp;<apex:outputText value="{!rma.Name}"/></h3>
+            </p>
+            <div style="width: 250px; margin-left: 50px; float: right;">
+                <h3>Details</h3>
+                <p>
+                    <strong>Customer</strong>&nbsp;&nbsp;&nbsp;{!rma.Customer__r.Name}
+                </p>
+                <p>
+                    <strong>Email</strong>&nbsp;&nbsp;&nbsp;{!rma.Customer__r.Email}
+                </p>
+                <p>
+                    <strong>Return Reason</strong>&nbsp;&nbsp;&nbsp;{!rma.CloudConversion__Return_Reason__c}
+                </p>
+                <p>
+                    <strong>Desired Resolution</strong>&nbsp;&nbsp;&nbsp;{!rma.CloudConversion__Desired_Resolution__c}
+                </p>
+                <p>
+                    <strong>Original Order</strong>&nbsp;&nbsp;&nbsp;{!rma.Original_Order__r.Name}
+                </p>
+                <p>
+                    <strong>Description</strong>&nbsp;&nbsp;&nbsp;{!rma.Message__r.Message__c}
+                </p>
+            </div>
+            <p>
+                <apex:outputText escape="false" value="{!settings.CloudConversion__Return_Instructions__c}"/>
+            </p>
+            <div style="width: 100%; clear: both; border: 1px solid #000;"></div>
+            <div style="width: 200px; float: right; padding-right: 100px; padding-top: 30px;">
+                <p>{!settings.Return_Address__r.Name}</p>
+                <p>{!settings.Return_Address__r.ECS__Address_Line_1__c}</p>
+                <p>{!settings.Return_Address__r.ECS__City__c},&nbsp;{!settings.Return_Address__r.ECS__State_Province_Region__c}&nbsp;
+                    {!settings.Return_Address__r.ECS__Zip_Postal_Code__c}</p>
+            </div>
+            <div style="padding-top: 30px; padding-right: auto; padding-left: auto;">
+                <ECS:BarcodeContainer barcodeText="{!rma.Name}" barcodeType="128B" height="30" width="1" subwidth="0"/>
+                <p>
+                    <apex:outputText value="{!rma.Name}"/>
+                </p>
+            </div>
+            <apex:outputPanel rendered="{!renderMode != 'pdf'}">
+                <div>
+                    <a class="btn btn-primary" onclick="window.print()">Print</a>
+                </div>
+            </apex:outputPanel>
+        </apex:outputPanel>
+    </apex:outputPanel>
+    </div>
+</apex:page>

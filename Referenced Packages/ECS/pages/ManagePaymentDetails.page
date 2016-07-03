@@ -1,0 +1,51 @@
+<apex:page controller="ECS.PaymentDetailsController">
+
+	<c:Analytics event="INFO" app="ECS" />
+	
+	<apex:pageMessages />
+	<apex:form >
+		 <apex:pageBlock >
+		     <apex:pageBlockButtons location="bottom" >
+		        <apex:commandButton action="{!getPayments}" value="Get Payment Deatils"/>
+		     </apex:pageBlockButtons>
+             <apex:pageBlockSection columns="1">
+	           <apex:pageBlockSectionItem >
+	             <apex:outputLabel value="Payment Gateway" for="paymentGateway"/> 
+	             <apex:inputText id="paymentGateway" value="{!paymentGateway}"/>
+	           </apex:pageBlockSectionItem>
+	           <apex:pageBlockSectionItem >
+	             <apex:outputLabel value="Transaction Class" for="txnClass"/> 
+	             <apex:inputText id="txnClass" value="{!transactionClass}"/>
+	           </apex:pageBlockSectionItem>
+	           <apex:pageBlockSectionItem >
+	             <apex:outputLabel value="Transaction Id" for="txnId"/> 
+	             <apex:inputText id="txnId" value="{!txnId}"/>
+	           </apex:pageBlockSectionItem>
+	           <apex:pageBlockSectionItem >
+	             <apex:outputLabel value="Time Offset" for="timeOffset"/> 
+	             <apex:inputText id="timeOffset" value="{!timeOffset}"/>
+	           </apex:pageBlockSectionItem>
+	           <apex:pageBlockSectionItem >
+	             <apex:outputLabel value="Time Offset End" for="timeOffsetEnd"/> 
+	             <apex:inputText id="timeOffsetEnd" value="{!timeOffsetEnd}"/>
+	           </apex:pageBlockSectionItem>
+	           <apex:pageBlockSectionItem >
+	             <apex:outputLabel value="Receiver Email" for="receiverEmail"/> 
+	             <apex:inputText id="receiverEmail" value="{!receiverEmail}"/>
+	           </apex:pageBlockSectionItem>
+	           <apex:pageBlockSectionItem >
+	             <apex:outputLabel value="Customer Email" for="customerEmail"/> 
+	             <apex:inputText id="customerEmail" value="{!customerEmail}"/>
+	           </apex:pageBlockSectionItem>
+	           <apex:pageBlockSectionItem >
+	             <apex:outputLabel value="Invoice Num" for="invoiceNum"/> 
+	             <apex:inputText id="invoiceNum" value="{!invoiceNum}"/>
+	           </apex:pageBlockSectionItem>
+	           <apex:pageBlockSectionItem >
+	             <apex:outputLabel value="eBay Item Id" for="eBayItemId"/> 
+	             <apex:inputText id="eBayItemId" value="{!eBayItemId}"/>
+	           </apex:pageBlockSectionItem>
+	         </apex:pageBlockSection>
+	     </apex:pageBlock>
+	</apex:form>
+</apex:page>

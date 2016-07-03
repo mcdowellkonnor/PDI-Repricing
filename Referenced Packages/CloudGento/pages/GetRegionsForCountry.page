@@ -1,0 +1,2 @@
+<apex:page standardController="ECS__Country__c" extensions="CloudGento.ManageCountryRegionController" action="{!getRegions}"> 
+</apex:page>

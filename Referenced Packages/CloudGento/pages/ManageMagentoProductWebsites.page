@@ -1,0 +1,13 @@
+<apex:page standardController="ECS__Product__c" extensions="CloudGento.ManageMagentoProductWebsiteController" showHeader="false">
+
+	<apex:form >
+		<apex:repeat value="{!websiteProducts}" var="wp">
+		    <apex:inputCheckbox value="{!wp.selected}"/>
+			<apex:outputText value="{!wp.website.Name}"/>
+			&nbsp;&nbsp;&nbsp;&nbsp;
+            Price: <apex:inputText value="{!wp.websiteProduct.CloudGento__Price__c}"/>
+            Special Price: <apex:inputText value="{!wp.websiteProduct.CloudGento__Special_Price__c}"/><br/> 
+		</apex:repeat>
+		<apex:commandLink action="{!save}" value="Save"/>
+	</apex:form>
+</apex:page>

@@ -1,0 +1,1000 @@
+<apex:page controller="eCommazon.CreateFBAShipmentPackagesControllerV4" sidebar="false" showheader="false" docType="HTML-5.0">
+<apex:stylesheet value="{!URLFOR($Resource.eCommazon__sf1css, 'sf1css.css')}"/>
+
+<apex:stylesheet value="{!URLFOR($Resource.eCommazon__Bootstrap_CSS, 'css/bootstrap.min.css')}" />
+<apex:stylesheet value="{!URLFOR($Resource.eCommazon__Bootstrap_CSS, 'css/creative.css')}"/>
+<apex:stylesheet value="{!URLFOR($Resource.eCommazon__Bootstrap_CSS, 'font-awesome/css/font-awesome.min.css')}"/>
+<apex:includeScript value="{!URLFOR($Resource.eCommazon__Bootstrap_JS, 'js/bootstrap.min.js')}"/>
+<apex:includeScript value="{!URLFOR($Resource.eCommazon__Bootstrap_JS, 'js/jquery.js')}"/>
+<apex:includeScript value="{!URLFOR($Resource.eCommazon__Bootstrap_JS, 'js/jquery.easing.min.js')}"/>
+<apex:includeScript value="{!URLFOR($Resource.eCommazon__Bootstrap_JS, 'js/jquery.fittext.js')}"/>
+<apex:includeScript value="{!URLFOR($Resource.eCommazon__Bootstrap_JS, 'js/wow.min.js')}"/>
+<apex:includeScript value="{!URLFOR($Resource.eCommazon__Bootstrap_JS, 'js/dom.js')}"/>
+<apex:includeScript value="{!URLFOR($Resource.eCommazon__Bootstrap_JS, 'js/creative.js')}"/>
+   <style>
+     .Processing
+        {
+            position: fixed;
+            background-color: white;
+            background: url('/img/loading32.gif') no-repeat;
+            background-repeat: no-;
+            background-position: center;
+            z-index: 1000;
+            width: 100%;
+            height: 100%;
+            z-index: 1004;
+            left: 0%; 
+            top: 0%;
+        }
+        
+        .bPageBlock.brandSecondaryBrd.apexDefaultPageBlock.secondaryPalette{background-color:#fff;}
+        .dataGrid th{padding:10px 0;background:#ddd;}
+        .dataGrid td{padding-top:10px;}
+        .pbSubsection .dataCol{padding:0}
+        
+ 
+ 
+      
+  
+    .list td {
+        background-color: #FFFFFF !important;
+    }
+    .list td:nth-child(2),.list td:nth-child(3) {
+        width: 10% !important;
+    }
+    .list td:nth-child(4) {
+        width: 10% !important;
+    }
+    .list td:nth-child(5),.list td:nth-child(6) {
+        width: 10% !important;
+        min-width:57px;
+    }
+    .list tr td:first-child {
+        width: 10% !important;
+        padding: 0;
+        margin: 0;
+    }
+    .list tr td:first-child a{
+        padding:0 !important;
+        /*width:125px;*/
+    }
+    .headerRow{
+        text-align:center;        
+    }
+    .dataCell {
+        width: 1% !important;
+    }
+    .dataCell font {
+    display: block;
+    }
+    .dataCell .three-input{
+        margin-top: 19px;
+    }
+    #demotable2 .headerRow th, #demotable2 .headerRow th:last-child{
+        padding:10px 0 !important;
+        border-left:2px solid #CCC !important;
+    }
+    .list td{
+        border:2px solid #CCC !important;
+    }
+    select{
+        text-indent:5px;
+    }
+    .multiSelectPicklistRow td:nth-child(1),.multiSelectPicklistRow td:nth-child(3){
+        width:40%
+    }
+    table.multiSelectPicklistTable {
+        width: 100%;
+    }
+    td.multiSelectPicklistCell {
+        text-align: center;
+    }
+    optgroup {
+  visibility: hidden;
+  position:relative;
+  left:-10px;
+  top:-15px;
+}
+optgroup option {
+  visibility: visible;
+}
+.form-panel {
+    width: 100%;
+    background: #ffffff;
+    padding: 0;
+    text-align: center;
+}
+.row{
+max-width: initial;
+}
+
+    body {
+       background-color:#ffffff; 
+    }
+    .customImage{ height: 500px !important; width: 500px;}
+    
+    
+    
+    
+    .row .bt-in input {
+    /* width: 100%; */
+    width: initial;
+    text-indent: 0;
+    }
+    
+    .row .bt-in.qty input {
+        margin-top: 10px !important;
+    }
+    
+    .btn{
+        margin:0 5px !important;
+    }
+    .list .headerRow th {
+    
+        padding: 10px 10px 10px 10px !important;
+    }
+    .tab-cor .list td:nth-child(4) {
+        width: 1% !important;
+    }
+    
+    
+    .title-prod-alr{
+            margin-top: 30px !important;
+    display: block;
+    text-align: left;
+    }
+    
+    .title-code{
+    color: red;
+    font-size: 40px;
+    }
+    .dataGrid td {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    }
+    .dataRow.dataCell.qty-box{
+        width: 1% !important;
+    }
+    p {
+    margin-bottom: 0px;
+    margin-top: 20px;
+    }
+   
+    tr.rowhighlight {background-color:#f0f8ff;}
+</style>
+     <script>
+       function noenter() 
+       {
+           return false;
+       }
+    </script>
+     <Script>
+        function myfunction()
+        {
+          callfunction();
+        }
+       
+       function myfunction2()
+        {
+          callfunction2();
+        }
+       function myfunction3()
+        {
+          callfunction3();
+        }
+       function myfunction4()
+        {
+          callfunction4();
+        }
+       function ChangeColor(tableRow, highLight)
+    {
+    if (highLight)
+    {
+      tableRow.style.backgroundColor = '#B0E0E6'
+    }
+    else
+    {
+      tableRow.style.backgroundColor = 'white';
+    }
+  } 
+       function DoNav(theUrl)
+  {
+  document.location.href = theUrl;
+  }
+  
+   </Script>
+      
+   <apex:form id="theForm">
+   <div class="container-fluid">
+     <div class="row">  
+         <div class="col-xs-12">
+     <div class="form-panel">
+       <apex:actionFunction name="callfunction" action="{!SearchFnsku}" />
+       <apex:actionFunction name="callfunction3" action="{!SearchFnskuForPackage}" />
+       <apex:actionFunction name="callfunction2" action="{!CloneBoxRecord}" />
+       <apex:actionFunction name="callfunction4" action="{!SearchFnskuForClone}" />
+       
+       <apex:outputPanel rendered="{!Page1}">
+                <apex:pageMessages ></apex:pageMessages>
+                 <apex:outputPanel >
+                 <table style="width:100%">
+                     <tr>
+                         <td class="col-xs-6">
+                             <apex:outputPanel >
+                                 <p>Search FNSKU&nbsp;&nbsp;:</p>
+                             </apex:outputPanel>
+                             
+                             <apex:inputText value="{!Fnsku}" Title="Search FNSKU: " html-autocomplete="off"  html-autofocus="true" onkeydown="if(event.keyCode==13){myfunction();this.blur();}"/> 
+                         </td> 
+                         <td class="col-xs-6">
+                         <p>FBA Shipment&nbsp;&nbsp; :</p>
+                         <apex:selectList value="{!recentSelectedShipmentPage1}" size="1" style="padding-top: 11px !important; padding-bottom: 7px !important;" >
+                                <apex:selectOptions value="{!recentShipmentsPage1}" />
+                                <apex:actionSupport action="{!OnChangePage1}" event="onchange"/>
+                           </apex:selectList> </td> 
+                    </tr>
+                </table>
+                <br/>
+                 <apex:outputPanel rendered="{!if(ErrorMsg = 'Product Not Found. Please Check with the Office',True,False)}"> <section class="error">{!ErrorMsg}</section></apex:outputPanel>
+                 <br/> <br/>
+                 
+                 <apex:outputPanel rendered="{!if(AND(ErrorMsg = 'Product found.',NOT(FbaShipment.Size = 0),Fnsku = null),true,false)}">
+                 <center>
+                 <table style="width:100%  overflow:auto;border:2px solid #CCC" class="col-xs-12 dataGrid list draggable tablesorter resizabletable"  cellspacing="0">
+                        <tr class="headerRow">
+                           <th  class="headerRow" style="text-align:center">Name</th>
+                           <!--<th  class="headerRow" style="text-align:center">External Id</th>-->
+                           <th  class="headerRow" style="text-align:center">Status</th>
+                           <th  class="headerRow" style="text-align:center">Fulfillment Center Id</th>
+                           <th  class="headerRow" style="text-align:center"># of MSKUs</th>
+                           <th class="headerRow" style="text-align:center">Total Qty MSKUs</th>
+                        </tr >
+                        <apex:repeat value="{!FbaShipment}" var="shipment"> 
+                        
+                        <tr  class="dataRow even first" onmouseover="ChangeColor(this, true);" onmouseout="ChangeColor(this, false);" onclick="DoNav('/apex/CreateFBAShipmentPackagesv4?fbashipmentid={!shipment.Id}');">
+              
+                         <td class="dataCell" width="18%" height="40" style="text-align:center;valign:Center;"><apex:outputField value="{!shipment.Name}" style="line-height:18px;height:75px;Width:75px;"  >
+                             </apex:outputField>
+                          </td>
+                          <!--<td class="dataCell" width="18%" height="40" style="text-align:center;valign:Center;"><apex:outputField value="{!shipment.External_Id__c}" style="line-height:18px;"  >
+                             </apex:outputField>
+                          </td>-->
+                          <td class="dataCell" width="18%" height="40" style="text-align:center;valign:Center;">
+                             <apex:outputField value="{!shipment.eCommazon__Status__c}" style="line-height:18px;"/>
+                          </td>
+                          <td class="dataCell" width="18%" height="40" style="text-align:center;valign:Center;"><apex:outputField value="{!shipment.eCommazon__Fulfillment_Center_Id__c}" style="line-height:18px;width:50px;">
+                              </apex:outputField>
+                          </td>
+                         <td class="dataCell" width="18%" height="40" style="text-align:center;valign:Center;"><apex:outputField value="{!shipment.eCommazon__of_MSKUs__c}" style="line-height:18px;width:50px;">
+                              </apex:outputField>
+                          </td>
+                          <td class="dataCell" width="18%" height="40" style="text-align:center;valign:Center;"><apex:outputField value="{!shipment.eCommazon__Total_Quantity_Shipped__c}" style="line-height:18px;width:50px;">
+                              </apex:outputField>
+                          </td>
+                       
+                      </tr>
+                      
+                      </apex:repeat>
+                 </table>
+                   <br/>   
+                </center>
+                </apex:outputPanel>
+                
+                <apex:outputPanel rendered="{!if(AND(ListShipmentItems.Size>0,ErrorMsg = 'Product found.'),true,false)}">
+                 
+                 <table style="width:100%; margin-top: 25px; overflow:auto;border:2px solid #CCC" class="col-xs-12 dataGrid list draggable tablesorter resizabletable"  cellspacing="0">
+                        <tr class="headerRow" >
+                           <th class="headerRow" style="text-align:center;height:35px !important;">B2C Image</th>
+                            <th class="headerRow" style="text-align:center">FBA Shipment</th>
+                            <th class="headerRow" style="text-align:center">FNSKU</th>
+                            <th class="headerRow" style="text-align:center">B2C SKU</th>
+                            <th class="headerRow" style="text-align:center">Title</th>
+                            <th class="headerRow" style="text-align:center">Status</th>
+                          <!---  <th style="text-align:center">Prep Guidance</th>
+                           <th style="text-align:center">Pending Quantity</th>
+                           <th style="text-align:center">Quantity Received</th>
+                           <th style="text-align:center">Quantity Discrepancy</th>---->
+                        </tr >
+                        <apex:repeat value="{!ListShipmentItems}" var="shipmentItem"> 
+                        
+                        <tr class="dataRow even first" onmouseover="ChangeColor(this, true);" onmouseout="ChangeColor(this, false);" onclick="DoNav('/apex/CreateFBAShipmentPackagesv4?fbashipmentid={!shipmentItem.eCommazon__FBA_Shipment__r.id}&fnsku={!shipmentItem.eCommazon__FNSKU__c}');">
+              
+                         <td class="dataCell" width="11%" style="text-align:center;height:35px !important;"><apex:outputField value="{!shipmentItem.eCommazon__SKU_Image__c}" style="line-height:18px;height:35px !important;Width:35px !important;"  >
+                             </apex:outputField>
+                          </td>
+                          <td class="dataCell" width="11%" style="text-align:center">
+                             <apex:outputField value="{!shipmentItem.eCommazon__FBA_Shipment__r.name}" style="line-height:18px;"/>
+                          </td>
+                           <td class="dataCell" width="11%" style="text-align:center"><apex:outputField value="{!shipmentItem.eCommazon__FNSKU__c}" style="line-height:18px;width:50px;">
+                              </apex:outputField>
+                          </td>
+                          <td class="dataCell" width="11%" style="text-align:center"><apex:outputField value="{!shipmentItem.eCommazon__B2C_SKU__r.name}" style="line-height:18px;width:50px;">
+                              </apex:outputField>
+                          </td>
+                          
+                         
+                          <td class="dataCell" width="11%" style="text-align:center"><apex:outputField value="{!shipmentItem.eCommazon__SKU_Title__c}" style="line-height:18px;"  >
+                             </apex:outputField>
+                          </td>
+                          <td class="dataCell" width="11%" style="text-align:center"><apex:outputField value="{!shipmentItem.eCommazon__Status__c}" style="line-height:18px;width:50px;">
+                              </apex:outputField>
+                          </td> 
+                          
+                       
+                      </tr>
+                      
+                      </apex:repeat>
+                 </table>
+                 
+                  </apex:outputPanel>
+               </apex:outputPanel>
+         </apex:outputPanel>
+         <br/>
+        
+         <apex:outputPanel rendered="{!AND(NOT(ClonePackage= null),Page3)}">
+             <div class="col-xs-12" style="    margin-bottom: 15px;">
+                 <div class="col-xs-6 col-xs-offset-3">
+                     <apex:outputPanel ><span style="float:left;">Search FNSKU: </span></apex:outputPanel>&nbsp;&nbsp;
+                     <apex:inputText value="{!FnskuPackage}" Title="Search FNSKU: " html-autocomplete="off"  onkeydown="if(event.keyCode==13){myfunction4();this.blur();}"/>
+                 </div>
+             </div>
+             
+             
+             <br/>
+             <apex:outputPanel rendered="{!if(ErrorMsgPackage != null,True,False)}"><br/><br/>
+             <section class="error">{!ErrorMsgPackage}</section><!--<Font size="3"><b>{!ErrorMsgPackage}</b></Font>--> </apex:outputPanel>
+                   
+             <apex:outputPanel rendered="{!if(listWrapperFbaItemsInPage2.Size>0,true,false)}">
+                  <center>
+                   <br/>
+                  <table style="width:100%; margin-top: 25px; margin-bottom: 30px; overflow:auto;border:2px solid #CCC" class="col-xs-12 dataGrid list draggable tablesorter resizabletable"  cellspacing="0">
+                        <tr class="headerRow" >
+                           <apex:outputPanel rendered="{!if(listWrapperFbaItemsInPage2.Size>1,true,false)}"><th style="text-align:center">Action</th></apex:outputPanel>
+                           <th class="headerRow" style="text-align:center;height:35px !important;">B2C Image</th>
+                           <th class="headerRow" style="text-align:center">FBA Shipment</th>
+                           <!--<th class="headerRow" style="text-align:center">Seller SKU</th>-->
+                           <th class="headerRow" style="text-align:center">B2C SKU</th>
+                           <th class="headerRow" style="text-align:center">FNSKU</th>
+                           <th class="headerRow" style="text-align:center">Title</th>
+                           
+                          <!---  <th style="text-align:center">Qty</th>---->
+                           
+                        </tr>
+                         <apex:repeat value="{!listWrapperFbaItemsInPage2}" var="shipmentItem"> 
+                         <tr class="dataRow even first">
+                           <apex:outputPanel rendered="{!if(listWrapperFbaItemsInPage2.Size>1,true,false)}">
+                           <td class="dataCell" width="15%" height="40" style="text-align:center;valign:Center;"><apex:inputCheckbox value="{!shipmentItem.Action}" style="line-height:18px;"  />
+                            
+                         </td></apex:outputPanel>
+                         <td class="dataCell" width="15%;" height="40" style="text-align:center;valign:Center;height:35px !important;">
+                             <apex:outputField value="{!shipmentItem.fbaItems.eCommazon__SKU_Image__c}" style="line-height:18px;height:35px;Width:35px;"  >
+                             </apex:outputField>
+                          </td>
+                          <td class="dataCell" width="15%" height="40" style="text-align:center;valign:Center;">
+                             <apex:outputField value="{!shipmentItem.fbaItems.eCommazon__FBA_Shipment__r.name}" style="line-height:18px;"/>
+                          </td>
+                          <!--
+                           <td class="dataCell" width="15%" height="40" style="text-align:center;valign:Center;"><apex:outputField value="{!shipmentItem.fbaItems.Name}" style="line-height:18px;"  >
+                             </apex:outputField>
+                          </td>
+                          -->
+                           <td class="dataCell" width="15%" height="40" style="text-align:center;valign:Center;"><apex:outputField value="{!shipmentItem.fbaItems.eCommazon__B2C_SKU__r.name}" style="line-height:18px;"  >
+                             </apex:outputField>
+                          </td>
+                           <td class="dataCell" width="15%" height="40" style="text-align:center;valign:Center;"><apex:outputField value="{!shipmentItem.fbaItems.eCommazon__FNSKU__c}" style="text-align:center;width: 1% !important;"  >
+                             </apex:outputField>
+                          </td>
+                          <td class="dataCell" width="15%" height="40" style="text-align:center;valign:Center;"><apex:outputField value="{!shipmentItem.fbaItems.eCommazon__SKU_Title__c}" style="line-height:18px;width: 10% !important;"  >
+                             </apex:outputField>
+                          </td>
+                          
+                       <!--<td width="15%" height="40" style="text-align:center;valign:Center;">
+                             <apex:outputField value="{!shipmentItem.fbaItems.Quantity_Shipped__c}" style="line-height:18px;"/>
+                          </td>---->
+                       
+                      </tr>
+                      </apex:repeat>
+                     
+                 </table>
+                       
+                        <br/>
+               </center>
+               <!--
+                <table style="width:100%" class="dataGrid" cellspacing="0">
+                    
+                     <tr>
+                         <td width="17%" style="text-align:center">
+                             <p></p>
+                             <apex:Input type="number" html-autocomplete="off" value="{!FbaPackageQty}" style="text-align:center"/>
+                        </td> 
+                        <td width="17%" style="text-align:center">
+                             <p>Qty of Items Per Box</p>
+                             
+                        </td> 
+                        <td width="17%" style="text-align:center">
+                             <p>Length</p>
+                             <apex:inputText value="{!CloneShipmentPackage.eCommazon__Length__c}" style="text-align:center"/>
+                        </td> 
+                        <td width="17%" style="text-align:center">
+                             <p>Width</p>
+                             
+                        </td> 
+                        <td width="17%" style="text-align:center">
+                             <p>Height</p>
+                             <apex:inputText value="{!CloneShipmentPackage.eCommazon__Height__c}" style="text-align:center"/>
+                        </td> 
+                        <td width="17%" style="text-align:center">
+                             <p>Weight</p>
+                             <apex:inputText value="{!CloneShipmentPackage.eCommazon__Weight__c}" style="text-align:center"/>
+                        </td> 
+                        
+                     </tr>    
+                 </table>
+                 -->
+                 
+                 <table style="width:100%  overflow:auto;border:2px solid #CCC; margin-top:20px;" class="bt-in dataGrid  list draggable tablesorter resizabletable" cellspacing="0">
+                            <tr class="headerRow"  >
+                               <th class="headerRow"   style="text-align:center">Qty of Boxes</th>                               
+                               <th class="headerRow"   style="text-align:center">Qty of Items Per Box</th>    
+                               <th class="headerRow"   style="text-align:center">Box Weight</th>
+                               <th class="headerRow"   style="text-align:center">Box Dimensions<br/> (L x W x H) </th>                               
+                                                          
+                               <th class="headerRow"   style="text-align:center">Confirm</th>
+                               
+                            </tr>
+              
+                 
+                     <tr class="dataRow even first">
+                         <td  class="dataCell " style="text-align:center; width: 1% !important;">
+                             <apex:Input type="number" html-autocomplete="off" value="{!FbaPackageQty}" style="line-height:18px;height:30px;    Width: 50px;text-align: center;"/>
+                         </td>
+                         <td  class="dataCell qty-box " style="text-align:center; width: 1% !important;">
+                             <apex:Input type="number" html-autocomplete="off" value="{!FbaItemQty}" style="line-height:18px;height:30px;    Width: 50px;text-align: center;"/>
+                         </td>
+                         <td class="dataCell " width="17%" style="text-align:center">
+                             <apex:inputText value="{!CloneShipmentPackage.eCommazon__Weight__c}" html-autocomplete="off" style="line-height:18px;height:30px;    Width: 50px;text-align: center;"/>
+                        </td>
+                         <td  class="dataCell " width="30%" style="text-align:center;     width: 20% !important;">
+                             <apex:inputText value="{!CloneShipmentPackage.eCommazon__Length__c}" html-autocomplete="off" style="line-height:18px;height:30px;Width:50px;text-align: center;"/>
+                             <apex:outputPanel style="text-align: center;">&nbsp;x&nbsp;</apex:outputPanel>
+                             <apex:inputText value="{!CloneShipmentPackage.eCommazon__Width__c}" html-autocomplete="off" style="line-height:18px;height:30px;Width:50px;text-align: center;"/>
+                             <apex:outputPanel style="text-align: center;">&nbsp;x&nbsp;</apex:outputPanel>
+                             <apex:inputText value="{!CloneShipmentPackage.eCommazon__Height__c}" html-autocomplete="off" style="line-height:18px;height:30px;Width:50px;text-align: center;"/>
+                         </td>
+                         
+                         <td  class="dataCell " width="30%" style="text-align:center">
+                             <apex:commandLink action="{!CloneBoxConfirm}">
+                                  <apex:image value="{!URLFOR($Resource.eCommazon__Buttons,'confirm.png')}" height="50" />
+                             </apex:commandLink>
+                         </td>
+                     </tr>    
+                 </table>
+                 
+                 
+                 
+                 
+                 <br/> 
+                 
+               </apex:outputPanel>
+               <span class="bt-in">
+                <Center>&nbsp;<apex:commandLink action="{!GoBack2}" >
+                            <apex:image value="{!URLFOR($Resource.eCommazon__Buttons,'gobackrectangle.png')}" height="50" />
+                       </apex:commandLink>     
+                </Center>
+                </span>
+         </apex:outputPanel>
+         
+         <apex:outputPanel rendered="{!addItemValue}">
+            <apex:outputPanel rendered="{!AND(Page3,ClonePackage= null)}" >
+                 
+                 <!---- <apex:pageMessages ></apex:pageMessages>----->
+                <apex:outputPanel rendered="{!if(PackageDetail != null,True,False)}"><Font class="title-code" size="4"><b>{!PackageDetail.name}</b></Font></apex:outputPanel><br/><br/>
+                <!---<apex:outputPanel rendered="{!if(packageValue = null,True,False)}">--->
+                <div class="col-xs-12" style="    margin-bottom: 20px;">
+                <div class="col-xs-6 col-xs-offset-3">
+                    <apex:outputPanel ><span style="float:left;">Search FNSKU:</span> </apex:outputPanel>&nbsp;&nbsp;<apex:inputText value="{!FnskuPackage}" html-autocomplete="off"  Title="Search FNSKU: "  onkeydown="if(event.keyCode==13){myfunction3();this.blur();}"/>
+                    </div>
+                    </div>
+                    <apex:outputPanel rendered="{!if(AND(SuccessAddProduct != null,SuccessAddProduct='Product Added Successfully.'),True,False)}"><br/><br/> <section Style="background-color:#32CD32 !important;" class="error">{!SuccessAddProduct}</section><!---<Font size="3"><b>{!SuccessAddProduct}</b></Font>---></apex:outputPanel>
+                    <apex:outputPanel rendered="{!if(AND(SuccessAddProduct != null,NOT(SuccessAddProduct='Product Added Successfully.')),True,False)}"><br/><br/> <section  class="error">{!SuccessAddProduct}</section><!---<Font size="3"><b>{!SuccessAddProduct}</b></Font>---></apex:outputPanel>
+                    <apex:outputPanel rendered="{!if(ErrorAddProduct!= null,True,False)}"><br/><br/> <section class="error">{!ErrorAddProduct}</section></apex:outputPanel>
+                    <apex:outputPanel rendered="{!if(ErrorMsgPackage != null,True,False)}"><br/><br/> <section class="error">{!ErrorMsgPackage}</section><!---<Font size="3"><b>{!ErrorMsgPackage}</b></Font> ----></apex:outputPanel>
+                    <apex:outputPanel rendered="{!if(AND(ErrorMsgPackage != null,Contains(ErrorMsgPackage,'Product Already Added to This Box.')),True,False)}">
+                     
+                                
+              <span class="bt-in qty">
+                   <Center>
+                       <apex:commandLink action="{!YesOnPage3}" Style="Width:60px;">
+                           <apex:image value="{!URLFOR($Resource.eCommazon__Buttons,'Yes.png')}" height="50" />
+                       </apex:commandLink>
+                    &nbsp;
+                        <apex:commandLink action="{!NoOnPage3}" Style="Width:60px;">
+                            <apex:image value="{!URLFOR($Resource.eCommazon__Buttons,'No.png')}" height="50" />
+                        </apex:commandLink>
+                    </center>
+                </span>
+                           
+                    </apex:outputPanel>
+                <!--- </apex:outputPanel>---->
+                 <br/>
+                
+                  <apex:outputPanel rendered="{!if(listWrapperFbaItemsInPage2.Size>0,true,false)}">
+                  <center>
+                   <br/>
+                  <table style="width:100%; margin-top: 25px;    margin-bottom: 50px; overflow:auto;border:2px solid #CCC" class="col-xs-12 dataGrid list draggable tablesorter resizabletable"  cellspacing="0">
+                        <tr class="headerRow" >
+                           <th class="headerRow" style="text-align:center;height:35px !important;">B2C Image</th>                          
+                           <th class="headerRow" style="text-align:center">B2C SKU</th>
+                           <th class="headerRow" style="text-align:center">FNSKU</th>
+                           <th class="headerRow" style="text-align:center">Title</th>                          
+                           <th class="headerRow" style="text-align:center">Add Qty</th>
+                        </tr>
+                         <apex:repeat value="{!listWrapperFbaItemsInPage2}" var="shipmentItem"> 
+                         <tr class="dataRow even first">
+                         <td class="dataCell" width="15%;" height="40" style="text-align:center;valign:Center;height:35px !important;"><apex:outputField value="{!shipmentItem.fbaItems.eCommazon__SKU_Image__c}" style="line-height:18px;height:35px;Width:35px;"  >
+                             </apex:outputField>
+                          </td>
+                           <!--- <td width="15%" height="40" style="text-align:center;valign:Center;"><apex:outputField value="{!shipmentItem.fbaItems.Name}" style="line-height:18px;"  >
+                             </apex:outputField>
+                          </td>--->
+                           <td class="dataCell" width="15%" height="40" style="text-align:center;valign:Center;"><apex:outputField value="{!shipmentItem.fbaItems.eCommazon__B2C_SKU__r.name}" style="line-height:18px;"  >
+                             </apex:outputField>
+                          </td>
+                           <td class="dataCell" width="15%" height="40" style="text-align:center;valign:Center;"><apex:outputField value="{!shipmentItem.fbaItems.eCommazon__FNSKU__c}" style="line-height:18px;"  >
+                             </apex:outputField>
+                          </td>
+                          <td class="dataCell" width="15%" height="40" style="text-align:center;valign:Center;"><apex:outputField value="{!shipmentItem.fbaItems.eCommazon__SKU_Title__c}" style="line-height:18px;"  >
+                             </apex:outputField>
+                          </td>
+                          <!--- <td width="15%" height="40" style="text-align:center;valign:Center;">
+                             <apex:outputField value="{!shipmentItem.fbaItems.eCommazon__FBA_Shipment__r.name}" style="line-height:18px;"/>
+                          </td>--->
+                         <!--- <td width="15%" height="40" style="text-align:center;valign:Center;">
+                             <apex:outputField value="{!shipmentItem.fbaItems.Quantity_Shipped__c}" style="line-height:18px;"/>
+                          </td>--->
+                          <td class="dataCell" width="15%" height="40" style="text-align:Center;valign:Center;"><!---<Table border="0"><tr><td>---><apex:Input type="number" html-autocomplete="off"  value="{!shipmentItem.AddQty}" html-autofocus="true" onkeydown="if(event.keyCode==13){noenter();this.blur();}" style="line-height:18px;width:50px;text-align:center;" >
+                              </apex:Input>&nbsp;&nbsp;<!---</td><td>--->
+                             <!--- <span class="bt-in qty"> --->
+                              <apex:commandLink action="{!AddProduct}"  >
+                                  <apex:image value="{!URLFOR($Resource.eCommazon__Buttons,'addquantity.png')}" height="50" />
+                                  <apex:param name="ItemId" value="{!shipmentItem.fbaItems.id}" />
+                              </apex:commandLink>
+                             <!--- </span></td></tr></table>--->
+                          </td>
+                       
+                      </tr>
+                      </apex:repeat>
+                     
+                 </table>
+                       
+                        <br/> <br/>
+                        
+                </center>
+               
+               <!--- <apex:commandButton action="{!CloneBox}" value="Clone Box"/><apex:inputText value="{!NumberOfRecord}" rendered="{!ShowBox}" onkeydown="if(event.keyCode==13){myfunction2();this.blur();}"/>--->
+                
+               </apex:outputPanel>
+              <apex:outputPanel rendered="{!ShowClonePackagePage3}">
+              <apex:outputPanel rendered="{!NOT(DimesionError= null)}"><section class="error">{!DimesionError}</section><!---<Font Size="3"><b>{!DimesionError}</b></Font>---><br/><br/></apex:outputPanel>
+            
+              <br/>
+              <table style="width:100%  overflow:auto;border:2px solid #CCC; margin-top:20px;" class="bt-in dataGrid  list draggable tablesorter resizabletable" cellspacing="0">
+                            <tr class="headerRow"  >
+                               
+                               <th class="headerRow"   style="text-align:center">Box Weight</th>
+                               <th class="headerRow"   style="text-align:center">Box Dimensions<br/> (L x W x H) </th>                               
+                               <th class="headerRow"   style="text-align:center">Confirm</th>
+                               
+                            </tr>
+              
+                 
+                     <tr class="dataRow even first">
+                         <td class="dataCell " width="17%" style="text-align:center">
+                             
+                             <apex:inputText value="{!PackageDetail.eCommazon__Weight__c}" html-autocomplete="off" html-autofocus="true" style="line-height:18px;height:30px;Width:65px;text-align: center;" />
+                        </td>
+                         <td  class="dataCell " width="30%" style="text-align:center">
+                             <apex:inputText value="{!PackageDetail.eCommazon__Length__c}" html-autocomplete="off" style="line-height:18px;height:30px;Width:20%;text-align: center;"/>
+                             <apex:outputPanel style="text-align: center;">&nbsp;x&nbsp;</apex:outputPanel>
+                             <apex:inputText value="{!PackageDetail.eCommazon__Width__c}" html-autocomplete="off" style="line-height:18px;height:30px;Width:20%;text-align: center;"/>
+                             <apex:outputPanel style="text-align: center;">&nbsp;x&nbsp;</apex:outputPanel>
+                             <apex:inputText value="{!PackageDetail.eCommazon__Height__c}" html-autocomplete="off" style="line-height:18px;height:30px;Width:20%;text-align: center;" />
+                         </td>
+                         <td  class="dataCell " width="30%" style="text-align:center">
+                             <apex:commandLink action="{!ConfirmBoxPage3}">
+                                 <apex:image value="{!URLFOR($Resource.eCommazon__Buttons,'confirm.png')}" height="50" />
+                             </apex:commandLink>
+                         </td>
+                         <!--
+                        <td width="17%" style="text-align:center">
+                             <p>Length</p>
+                             <apex:inputText value="{!PackageDetail.eCommazon__Length__c}" html-autocomplete="off" style="text-align:center"/>
+                        </td> 
+                        <td width="17%" style="text-align:center">
+                             <p>Width</p>
+                             <apex:inputText value="{!PackageDetail.eCommazon__Width__c}" style="text-align:center"/>
+                        </td> 
+                        <td width="17%" style="text-align:center">
+                             <p>Height</p>
+                             <apex:inputText value="{!PackageDetail.eCommazon__Height__c}" style="text-align:center" />
+                        </td> 
+                        -->
+                         
+                        
+                     </tr>    
+                 </table><br/> 
+                 
+                </apex:outputPanel>
+                
+                <apex:outputPanel rendered="{!if(ListCreateWrapperclassPage3.Size>0,true,false)}">
+                 
+                 <Font class="title-prod-alr" size="4"><b>Products Already Added to This Box:</b></Font>
+                 <center>
+                 <table style="width:100%; margin-top: 25px;    margin-bottom: 25px; overflow:auto;border:2px solid #CCC" class="col-xs-12 dataGrid list draggable tablesorter resizabletable"  cellspacing="0">
+                        <tr class="headerRow" >
+                           <th class="headerRow" style="text-align:center;height:35px !important;">B2C Image</th>
+                         <!--  <th style="text-align:center">Seller SKU</th>--->
+                           <th class="headerRow" style="text-align:center">B2C SKU</th>
+                           <th class="headerRow" style="text-align:center">FNSKU</th>
+                          <!--   <th style="text-align:center">Status</th>--->
+                           <th class="headerRow" style="text-align:center">Title</th>
+                          <!--   <th style="text-align:center">FBA Shipment</th>--->
+                           <!--  <th style="text-align:center">Prep Guidance</th>--->
+                           <th class="headerRow" style="text-align:center">Quantity Added</th>
+                           <th class="headerRow" style="text-align:center">Status</th>
+                           <!---<th style="text-align:center">Quantity Received</th>
+                           <th style="text-align:center">Quantity Discrepancy</th>--->
+                        </tr >
+                        <apex:repeat value="{!ListCreateWrapperclassPage3}" var="shipmentItem"> 
+                        
+                        <tr class="dataRow even first">
+              
+                         <td class="dataCell" width="11%" style="text-align:center;height:35px !important;"><apex:outputField value="{!shipmentItem.FBAShipment.eCommazon__SKU_Image__c}" style="line-height:18px;height:35px !important;Width:35px !important;"  >
+                             </apex:outputField>
+                          </td>
+                          <!--  <td width="11%" style="text-align:center"><apex:outputField value="{!shipmentItem.FBAShipment.Name}" style="line-height:18px;width:50px;">
+                              </apex:outputField>
+                          </td>--->
+                          <td class="dataCell" width="11%" style="text-align:center"><apex:outputField value="{!shipmentItem.FBAShipment.eCommazon__B2C_SKU__r.name}" style="line-height:18px;width:50px;">
+                              </apex:outputField>
+                          </td>
+                           <td class="dataCell" width="11%" style="text-align:center"><apex:outputField value="{!shipmentItem.FBAShipment.eCommazon__FNSKU__c}" style="line-height:18px;width:50px;">
+                              </apex:outputField>
+                          </td>
+                         <!--  <td width="11%" style="text-align:center"><apex:outputField value="{!shipmentItem.FBAShipment.Status__c}" style="line-height:18px;width:50px;">
+                              </apex:outputField>
+                          </td>--->
+                         <td class="dataCell" width="11%" style="text-align:center"><apex:outputField value="{!shipmentItem.FBAShipment.eCommazon__SKU_Title__c}" style="line-height:18px;"  >
+                             </apex:outputField>
+                          </td>
+                         <!--  <td width="11%" style="text-align:center">
+                             <apex:outputField value="{!shipmentItem.FBAShipment.eCommazon__FBA_Shipment__r.name}" style="line-height:18px;"/>
+                          </td>--->
+                          <!-- <td width="11%" style="text-align:center"><apex:outputField value="{!shipmentItem.FBAShipment.Prep_Guidance__c}" style="line-height:18px;width:50px;">
+                              </apex:outputField>
+                          </td>--->
+                          <td class="dataCell" width="11%" style="text-align:center">
+                          <apex:outputField value="{!shipmentItem.FBAShipment.eCommazon__Quantity_Shipped__c}" style="line-height:18px;width:50px;">
+                              </apex:outputField>
+                          </td>
+                           <td class="dataCell" width="11%" style="text-align:center">
+                               <apex:outputPanel rendered="{!shipmentItem.Status='Complete'}"><apex:outputText value="{!shipmentItem.Status}" style="line-height:18px;width:50px;color:GREEN"> </apex:outputText></apex:outputPanel>
+                              <apex:outputPanel rendered="{!shipmentItem.Status='Pending'}"><apex:outputText value="{!shipmentItem.Status}" style="line-height:18px;width:50px;color:RED"> </apex:outputText></apex:outputPanel>
+                             
+                          </td>
+                          <!---<td width="11%" style="text-align:center"><apex:outputField value="{!shipmentItem.Quantity_Received__c}" style="line-height:18px;width:50px;">
+                              </apex:outputField>
+                          </td>
+                          <td width="11%" style="text-align:center"><apex:outputField value="{!shipmentItem.Quantity_Discrepancy__c}" style="line-height:18px;width:50px;">
+                              </apex:outputField>
+                          </td>---->
+                       
+                      </tr>
+                      
+                      </apex:repeat>
+                 </table>
+                      
+                </center>
+                 </apex:outputPanel>
+              <br/><br/>
+              
+             <span class="bt-in qty">
+               <Center><apex:commandLink action="{!CloseBoxPage3}"  rendered="{!AND(NOT(ShowClonePackagePage3),FBAShipmentItemList.SIZE>0)}">
+                   <apex:image value="{!URLFOR($Resource.eCommazon__Buttons,'closebox.png')}" height="50" />
+               </apex:commandLink>
+                 <!---<apex:outputPanel >Quantity to Add : <apex:inputText value="{!AddQtyProduct}"/> <apex:commandButton action="{!AddProduct}" value="Confirm"/>&nbsp;&nbsp;<apex:commandButton action="{!CloseBox}" value="Close Box"/>
+                 <Center><br/><apex:commandButton action="{!GoBack}" value="Go Back"/></Center> </apex:outputPanel>--->
+                 &nbsp;<apex:commandLink action="{!GoBack2}" >
+                     <apex:image value="{!URLFOR($Resource.eCommazon__Buttons,'gobackrectangle.png')}" height="50" />
+                 </apex:commandLink> </Center>
+                 </span>
+            </apex:outputPanel>
+            
+            
+        </apex:outputPanel>
+        <apex:outputPanel rendered="{!Page2}">
+          
+            <apex:outputPanel >
+            <apex:outputPanel rendered="{!if(AND(ErrorMsg != null,FbaShipment.Size>0),True,False)}"> <Font size="4"><b>{!FbaShipment[0].Name}</b></Font></apex:outputPanel>
+                 
+            <apex:outputPanel >
+                 <center>
+                 <span class="tab-cor">
+                 <table style="width:100%;  overflow:auto;border:2px solid #CCC" class=" dataGrid list draggable tablesorter resizabletable"  cellspacing="0">
+                        <tr class="headerRow" >
+                           <th class="headerRow"  style="text-align:center">Name</th>
+                           <th class="headerRow"  style="text-align:center">External Id</th>
+                           <th class="headerRow"  style="text-align:center">Status</th>
+                           <th class="headerRow"  style="text-align:center">Fulfillment<br/> Center Id</th>
+                           <th class="headerRow"  style="text-align:center"># of<br/> MSKUs</th>
+                           <th class="headerRow"  style="text-align:center">Total<br/> Qty MSKUs </th>
+                           <th class="headerRow"  style="text-align:center"># of <br/>Pending MSKUs</th>
+                           <th class="headerRow"  style="text-align:center">Total Pending<br/> Qty MKUs</th>
+                        </tr >
+                       <!-- <apex:repeat value="{!FbaShipment}" var="shipment"> --->
+                        
+                        <tr bgcolor="#B0E0E6" class="dataRow even first" >
+              
+                         <td  class="dataCell" width="12%" height="40" style="text-align:center;valign:Center;"><apex:outputField value="{!FbaShipmentPage2.Name}" style="line-height:18px;height:75px;Width:75px;"  >
+                             </apex:outputField>
+                          </td>
+                          <td  class="dataCell" width="12%" height="40" style="text-align:center;valign:Center;"><apex:outputField value="{!FbaShipmentPage2.eCommazon__External_Id__c}" style="line-height:18px;"  >
+                             </apex:outputField>
+                          </td>
+                          <td  class="dataCell" width="12%" height="40" style="text-align:center;valign:Center;">
+                             <apex:outputField value="{!FbaShipmentPage2.eCommazon__Status__c}" style="line-height:18px;"/>
+                          </td>
+                          <td class="dataCell"  width="12%" height="40" style="text-align:center;valign:Center;"><apex:outputField value="{!FbaShipmentPage2.eCommazon__Fulfillment_Center_Id__c}" style="line-height:18px;width:50px;">
+                              </apex:outputField>
+                          </td>
+                          <td class="dataCell"  width="12%" height="40" style="text-align:center;valign:Center;"><apex:outputText value="{!TotalMSKU}" style="line-height:18px;width:50px;">
+                              </apex:outputText>
+                          </td>
+                          <td  class="dataCell" width="12%" height="40" style="text-align:center;valign:Center;"><apex:outputField value="{!FbaShipmentPage2.eCommazon__Total_Quantity_Shipped__c}" style="line-height:18px;width:50px;">
+                              </apex:outputField>
+                          </td>
+                           <td class="dataCell"  width="12%" height="40" style="text-align:center;valign:Center;"><apex:outputField value="{!FbaShipmentPage2.eCommazon__of_Pending_MSKUs__c}" style="line-height:18px;width:50px;">
+                              </apex:outputField>
+                          </td>
+                          <td  class="dataCell" width="12%" height="40" style="text-align:center;valign:Center;"><apex:outputField value="{!FbaShipmentPage2.eCommazon__Total_Pending_Qty_MKUs__c}" style="line-height:18px;width:50px;">
+                              </apex:outputField>
+                          </td>
+                       
+                      </tr>
+                      
+                    <!--  </apex:repeat>--->
+                 </table>
+                      </span>
+                </center>
+                </apex:outputPanel>
+              <br/>
+              <span class="bt-in">
+             <apex:commandLink action="{!AddPackage}" > <apex:image value="{!URLFOR($Resource.eCommazon__Buttons,'createnewbox.png')}" height="50"/></apex:commandLink> &nbsp;&nbsp; 
+             <apex:commandLink action="{!CloneBoxButton}" > <apex:image value="{!URLFOR($Resource.eCommazon__Buttons,'clonebox.png')}" height="50"/></apex:commandLink>
+             </span>
+             <br/>
+             <apex:outputPanel rendered="{!ShowClonePackage}">
+                 <table style="width:100%" class="dataGrid" cellspacing="0">
+                    
+                     <tr>
+                         <td width="17%" style="text-align:center">
+                             <p>Qty of Boxes</p>
+                             <apex:Input type="number" html-autocomplete="off" value="{!FbaPackageQty}" />
+                        </td> 
+                        <td width="17%" style="text-align:center">
+                             <p>Qty of Items Per Box</p>
+                             <apex:Input type="number" html-autocomplete="off" value="{!FbaItemQty}" />
+                        </td> 
+                        <td width="17%" style="text-align:center">
+                             <p>Length</p>
+                             <apex:inputText value="{!CloneShipmentPackage.eCommazon__Length__c}" html-autocomplete="off" />
+                        </td> 
+                        <td width="17%" style="text-align:center">
+                             <p>Width</p>
+                             <apex:inputText value="{!CloneShipmentPackage.eCommazon__Width__c}" html-autocomplete="off"/>
+                        </td> 
+                        <td width="17%" style="text-align:center">
+                             <p>Height</p>
+                             <apex:inputText value="{!CloneShipmentPackage.eCommazon__Height__c}" html-autocomplete="off"/>
+                        </td> 
+                        <td width="17%" style="text-align:center">
+                             <p>Weight</p>
+                             <apex:inputText value="{!CloneShipmentPackage.eCommazon__Weight__c}" html-autocomplete="off"/>
+                        </td> 
+                        
+                     </tr>    
+                 </table><br/> 
+                 
+                 <Center><apex:commandButton value="Confirm" action="{!CloneBoxConfirm}"/> </Center>
+                 
+             </apex:outputPanel> <br/> 
+             <apex:outputPanel rendered="{!NOT(DimesionError= null)}"><section class="error">{!DimesionError}</section><!---<Font Size="3"><b>{!DimesionError}</b></Font>---><br/><br/></apex:outputPanel>
+            <apex:outputPanel rendered="{!NOT(ErrorRemoveBox= null)}"><section class="error">{!ErrorRemoveBox}</section><!---<Font Size="3"><b>{!DimesionError}</b></Font>---><br/><br/></apex:outputPanel>
+            <!--- <apex:pageMessages ></apex:pageMessages>---->
+            <apex:outputPanel rendered="{!NOT(ErrorMissingNumber = null)}"><section class="error">{!ErrorMissingNumber}</section><!---<Font Size="3"><b>{!ErrorMissingNumber}</b></Font>---><br/><br/></apex:outputPanel>
+            <apex:outputPanel rendered="{!if(WrapperPackageList.size>0,true,false)}">
+            <center>
+                  <table style="width:100%  overflow:auto;border:2px solid #CCC" class="bt-in dataGrid  list draggable tablesorter resizabletable" cellspacing="0">
+                            <tr class="headerRow" >
+                               <th class="headerRow"   style="text-align:center">Remove</th>
+                               <th class="headerRow"   style="text-align:center">Box #</th>
+                               <th class="headerRow"   style="text-align:center">Box Weight</th>
+                               <th class="headerRow"   style="text-align:center">Box Dimensions<br/> (L x W x H) </th>
+                               <th class="headerRow"   style="text-align:center">Save Dims</th>
+                               <th class="headerRow"   style="text-align:center"># of<br/> MSKUs</th>
+                               <th class="headerRow"   style="text-align:center">Total<br/> Qty MSKUs</th>
+                               <th class="headerRow"   style="text-align:center">Add Items</th>
+                               <!--<th class="headerRow"  ></th>-->
+                            </tr>
+                            <apex:repeat value="{!WrapperPackageList}" var="wpl">
+                                <tr class="dataRow even first" >
+                                   <apex:outputPanel rendered="{!wpl.ShippmentWrapPackage.eCommazon__Status__c='WORKING'}"><td  class="dataCell" width="8%" style="text-align:center;background-color: #fddcde !important">
+                                      <apex:commandLink action="{!RemovePackage}"  tabindex="-1">
+                                       <apex:image id="theImage" value="{!$Resource.eCommazon__RemoveImage}" width="25" height="25"/>
+                                      <apex:param name="rownum" value="{!wpl.rowWrapNumber}" />
+                                      </apex:commandLink>
+                                    </td></apex:outputPanel> 
+                                   <apex:outputPanel rendered="{!wpl.ShippmentWrapPackage.eCommazon__Status__c='READY'}"><td  class="dataCell" width="8%" style="text-align:center;background-color: #afe3d6 !important">
+                                      <apex:commandLink action="{!RemovePackage}" tabindex="-1">
+                                       <apex:image id="theImage2" value="{!$Resource.eCommazon__RemoveImage}" width="25" height="25"/>
+                                      <apex:param name="rownum" value="{!wpl.rowWrapNumber}" />
+                                      </apex:commandLink>
+                                    </td></apex:outputPanel> 
+                                     <apex:outputPanel rendered="{!AND(NOT(wpl.ShippmentWrapPackage.eCommazon__Status__c='WORKING'),NOT(wpl.ShippmentWrapPackage.eCommazon__Status__c='READY'))}"><td  class="dataCell" width="8%" style="text-align:center;">
+                                      <apex:commandLink action="{!RemovePackage}"  tabindex="-1">
+                                       <apex:image id="theImage3" value="{!$Resource.eCommazon__RemoveImage}" width="25" height="25"/>
+                                      <apex:param name="rownum" value="{!wpl.rowWrapNumber}" />
+                                      </apex:commandLink>
+                                    </td></apex:outputPanel> 
+                                    
+                                    <apex:outputPanel rendered="{!wpl.ShippmentWrapPackage.eCommazon__Status__c='WORKING'}"> <td  class="dataCell" width="5%" style="text-align:center;background-color: #fddcde !important">
+                                       <apex:outputtext value="{!wpl.BoxNumber}"/>
+                                    </td></apex:outputPanel> 
+                                    <apex:outputPanel rendered="{!wpl.ShippmentWrapPackage.eCommazon__Status__c='READY'}"> <td  class="dataCell" width="5%" style="text-align:center;background-color: #afe3d6 !important">
+                                       <apex:outputtext value="{!wpl.BoxNumber}"/>
+                                    </td></apex:outputPanel> 
+                                     <apex:outputPanel rendered="{!AND(NOT(wpl.ShippmentWrapPackage.eCommazon__Status__c='WORKING'),NOT(wpl.ShippmentWrapPackage.eCommazon__Status__c='READY'))}"> <td  class="dataCell" width="5%" style="text-align:center">
+                                       <apex:outputtext value="{!wpl.BoxNumber}"/>
+                                    </td></apex:outputPanel> 
+                                    
+                                    <apex:outputPanel rendered="{!wpl.ShippmentWrapPackage.eCommazon__Status__c='WORKING'}"> <td  class="dataCell" width="12%" style="text-align:center;background-color: #fddcde !important">
+                                       <apex:inputField value="{!wpl.ShippmentWrapPackage.eCommazon__Weight__c}" style="line-height:18px;height:30px;Width:45%;text-align: center;" >
+                                       </apex:inputField>
+                                    </td></apex:outputPanel> 
+                                   <apex:outputPanel rendered="{!wpl.ShippmentWrapPackage.eCommazon__Status__c='READY'}"> <td  class="dataCell" width="12%" style="text-align:center;background-color: #afe3d6 !important;background-color: #afe3d6 !important">
+                                       <apex:inputField value="{!wpl.ShippmentWrapPackage.eCommazon__Weight__c}" style="line-height:18px;height:30px;Width:45%;text-align: center;" >
+                                       </apex:inputField>
+                                    </td></apex:outputPanel> 
+                                   <apex:outputPanel rendered="{!AND(NOT(wpl.ShippmentWrapPackage.eCommazon__Status__c='WORKING'),NOT(wpl.ShippmentWrapPackage.eCommazon__Status__c='READY'))}"> <td  class="dataCell" width="12%" style="text-align:center">
+                                       <apex:inputField value="{!wpl.ShippmentWrapPackage.eCommazon__Weight__c}" style="line-height:18px;height:30px;Width:45%;text-align: center;" >
+                                       </apex:inputField>
+                                    </td></apex:outputPanel> 
+                                    
+                                   <apex:outputPanel rendered="{!wpl.ShippmentWrapPackage.eCommazon__Status__c='WORKING'}"> <td  class="dataCell " width="30%" style="text-align:center;background-color: #fddcde !important">
+                                          <apex:outputPanel > 
+                                              <apex:inputField value="{!wpl.ShippmentWrapPackage.eCommazon__Length__c}" style="line-height:18px;height:30px;Width:20%;text-align: center; margin-top: 20px" >
+                                              </apex:inputField><apex:outputPanel style="text-align: center;">&nbsp;x&nbsp;</apex:outputPanel> 
+                                              <apex:inputField value="{!wpl.ShippmentWrapPackage.eCommazon__Width__c}"  style="line-height:18px;height:30px;Width:20%;text-align: center;" >
+                                               </apex:inputField><apex:outputPanel style="text-align: center;">&nbsp;x&nbsp;</apex:outputPanel>
+                                              <apex:inputField value="{!wpl.ShippmentWrapPackage.eCommazon__Height__c}" style="line-height:18px;height:30px;Width:20%;text-align: center;" >
+                                              </apex:inputField>
+                                           </apex:outputPanel>&nbsp;
+                                           <apex:outputPanel rendered="{!If(wpl.ShippmentWrapPackage.Createddate != null,true,false)}"><apex:outputText value="{!wpl.ShippmentWrapPackage.eCommazon__Status__c}" rendered="{!wpl.ShippmentWrapPackage.eCommazon__Status__c='WORKING'}" Style="color: RED;font-weight: bold;font-size: 100%;"></apex:outputText>
+                                                                                                                                       </apex:outputPanel>
+                                            <apex:outputPanel rendered="{!If(wpl.ShippmentWrapPackage.Createddate = null,true,false)}"><Font color="Green" ><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></Font></apex:outputPanel>
+                                 
+                                   </td></apex:outputPanel> 
+                                   <apex:outputPanel rendered="{!wpl.ShippmentWrapPackage.eCommazon__Status__c='READY'}"> <td  class="dataCell " width="30%" style="text-align:center;background-color: #afe3d6 !important">
+                                          <apex:outputPanel > 
+                                              <apex:inputField value="{!wpl.ShippmentWrapPackage.eCommazon__Length__c}" style="line-height:18px;height:30px;Width:20%;text-align: center; margin-top: 20px" >
+                                              </apex:inputField><apex:outputPanel style="text-align: center;">&nbsp;x&nbsp;</apex:outputPanel> 
+                                              <apex:inputField value="{!wpl.ShippmentWrapPackage.eCommazon__Width__c}"  style="line-height:18px;height:30px;Width:20%;text-align: center;" >
+                                               </apex:inputField><apex:outputPanel style="text-align: center;">&nbsp;x&nbsp;</apex:outputPanel>
+                                              <apex:inputField value="{!wpl.ShippmentWrapPackage.eCommazon__Height__c}" style="line-height:18px;height:30px;Width:20%;text-align: center;" >
+                                              </apex:inputField>
+                                           </apex:outputPanel>&nbsp;
+                                           <apex:outputPanel rendered="{!If(wpl.ShippmentWrapPackage.Createddate != null,true,false)}"><apex:outputText value="{!wpl.ShippmentWrapPackage.eCommazon__Status__c}" rendered="{!wpl.ShippmentWrapPackage.eCommazon__Status__c='READY'}" Style="color: GREEN;font-weight: bold;font-size: 100%;"></apex:outputText><!--<Font color="Green" ><b>{!wpl.ShippmentWrapPackage.eCommazon__Status__c}</b></Font>---></apex:outputPanel>
+                                            <apex:outputPanel rendered="{!If(wpl.ShippmentWrapPackage.Createddate = null,true,false)}"><Font color="Green" ><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></Font></apex:outputPanel>
+                                 
+                                   </td></apex:outputPanel> 
+                                   <apex:outputPanel rendered="{!AND(NOT(wpl.ShippmentWrapPackage.eCommazon__Status__c='WORKING'),NOT(wpl.ShippmentWrapPackage.eCommazon__Status__c='READY'))}"> <td  class="dataCell " width="30%" style="text-align:center">
+                                          <apex:outputPanel > 
+                                              <apex:inputField value="{!wpl.ShippmentWrapPackage.eCommazon__Length__c}" style="line-height:18px;height:30px;Width:20%;text-align: center; margin-top: 20px" >
+                                              </apex:inputField><apex:outputPanel style="text-align: center;">&nbsp;x&nbsp;</apex:outputPanel> 
+                                              <apex:inputField value="{!wpl.ShippmentWrapPackage.eCommazon__Width__c}"  style="line-height:18px;height:30px;Width:20%;text-align: center;" >
+                                               </apex:inputField><apex:outputPanel style="text-align: center;">&nbsp;x&nbsp;</apex:outputPanel>
+                                              <apex:inputField value="{!wpl.ShippmentWrapPackage.eCommazon__Height__c}" style="line-height:18px;height:30px;Width:20%;text-align: center;" >
+                                              </apex:inputField>
+                                           </apex:outputPanel>&nbsp;
+                                           <apex:outputPanel rendered="{!If(wpl.ShippmentWrapPackage.Createddate != null,true,false)}"><apex:outputText value="{!wpl.ShippmentWrapPackage.eCommazon__Status__c}"  Style="font-weight: bold;font-size: 100%;"></apex:outputText></apex:outputPanel>
+                                                                                                                                          
+                                            <apex:outputPanel rendered="{!If(wpl.ShippmentWrapPackage.Createddate = null,true,false)}"><Font color="Green" ><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></Font></apex:outputPanel>
+                                 
+                                   </td></apex:outputPanel> 
+                                   
+                                   
+                                    <apex:outputPanel rendered="{!wpl.ShippmentWrapPackage.eCommazon__Status__c='WORKING'}"><td  class="dataCell"  width="5%" style="text-align:center;background-color: #fddcde !important">
+                                       <apex:commandLink action="{!SaveDimensions}"   tabindex="-1"> 
+                                            <apex:image value="{!URLFOR($Resource.eCommazon__Buttons,'savedims.png')}" height="50"/>
+                                             <apex:param name="rownum" value="{!wpl.rowWrapNumber}" />
+                                             </apex:commandLink>
+                                    </td></apex:outputPanel>
+                                    <apex:outputPanel rendered="{!wpl.ShippmentWrapPackage.eCommazon__Status__c='READY'}"> <td  class="dataCell"  width="5%" style="text-align:center;background-color: #afe3d6 !important">
+                                       <apex:commandLink action="{!SaveDimensions}"   tabindex="-1">
+                                        <apex:image value="{!URLFOR($Resource.eCommazon__Buttons,'savedims.png')}" height="50"/>
+                                             <apex:param name="rownum" value="{!wpl.rowWrapNumber}" />
+                                             </apex:commandLink>
+                                    </td></apex:outputPanel>
+                                    <apex:outputPanel rendered="{!AND(NOT(wpl.ShippmentWrapPackage.eCommazon__Status__c='WORKING'),NOT(wpl.ShippmentWrapPackage.eCommazon__Status__c='READY'))}"> <td  class="dataCell"  width="5%" style="text-align:center">
+                                       <apex:commandLink action="{!SaveDimensions}"   tabindex="-1"> 
+                                        <apex:image value="{!URLFOR($Resource.eCommazon__Buttons,'savedims.png')}" height="50"/>
+                                             <apex:param name="rownum" value="{!wpl.rowWrapNumber}" />
+                                             </apex:commandLink>
+                                    </td></apex:outputPanel>
+                                    
+                                   <apex:outputPanel rendered="{!wpl.ShippmentWrapPackage.eCommazon__Status__c='WORKING'}"> <td  class="dataCell" width="5%" style="text-align:center;background-color: #fddcde !important">
+                                       <apex:outputtext value="{!wpl.NoofMSKUs}"/>
+                                    </td></apex:outputPanel>
+                                    <apex:outputPanel rendered="{!wpl.ShippmentWrapPackage.eCommazon__Status__c='READY'}"> <td  class="dataCell" width="5%" style="text-align:center;background-color: #afe3d6 !important">
+                                       <apex:outputtext value="{!wpl.NoofMSKUs}"/>
+                                    </td></apex:outputPanel>
+                                    <apex:outputPanel rendered="{!AND(NOT(wpl.ShippmentWrapPackage.eCommazon__Status__c='WORKING'),NOT(wpl.ShippmentWrapPackage.eCommazon__Status__c='READY'))}"> <td  class="dataCell" width="5%" style="text-align:center">
+                                       <apex:outputtext value="{!wpl.NoofMSKUs}"/>
+                                    </td></apex:outputPanel>
+                                    
+                                    <apex:outputPanel rendered="{!wpl.ShippmentWrapPackage.eCommazon__Status__c='WORKING'}"> <td  class="dataCell" width="5%" style="text-align:center;background-color: #fddcde !important">
+                                       <apex:outputtext value="{!wpl.TotalQtyMSKUs}"/>
+                                    </td></apex:outputPanel>
+                                    <apex:outputPanel rendered="{!wpl.ShippmentWrapPackage.eCommazon__Status__c='READY'}"><td  class="dataCell" width="5%" style="text-align:center;background-color: #afe3d6 !important">
+                                       <apex:outputtext value="{!wpl.TotalQtyMSKUs}"/>
+                                    </td></apex:outputPanel>
+                                   <apex:outputPanel rendered="{!AND(NOT(wpl.ShippmentWrapPackage.eCommazon__Status__c='WORKING'),NOT(wpl.ShippmentWrapPackage.eCommazon__Status__c='READY'))}"> <td  class="dataCell" width="5%" style="text-align:center">
+                                       <apex:outputtext value="{!wpl.TotalQtyMSKUs}"/>
+                                    </td></apex:outputPanel>
+                                  
+                                    
+                                   <apex:outputPanel rendered="{!wpl.ShippmentWrapPackage.eCommazon__Status__c='WORKING'}"> <td  class="dataCell" width="5%" style="text-align:center;background-color: #fddcde !important">
+                                       <apex:commandlink action="{!AddFBAItem}"  rerender="theForm" > 
+                                           <apex:image value="{!URLFOR($Resource.eCommazon__Buttons,'additems.png')}" height="50"/>
+                                            <apex:param name="PackageId"  value="{!wpl.ShippmentWrapPackage.id}" />
+                                             </apex:commandlink>
+                                    </td></apex:outputPanel>
+                                    <apex:outputPanel rendered="{!wpl.ShippmentWrapPackage.eCommazon__Status__c='READY'}"> <td  class="dataCell" width="5%" style="text-align:center;background-color: #afe3d6 !important">
+                                       <apex:commandlink action="{!AddFBAItem}" rerender="theForm" > 
+                                           <apex:image value="{!URLFOR($Resource.eCommazon__Buttons,'additems.png')}" height="50"/>
+                                            <apex:param name="PackageId"  value="{!wpl.ShippmentWrapPackage.id}" />
+                                             </apex:commandlink>
+                                    </td></apex:outputPanel>
+                                    <apex:outputPanel rendered="{!AND(NOT(wpl.ShippmentWrapPackage.eCommazon__Status__c='WORKING'),NOT(wpl.ShippmentWrapPackage.eCommazon__Status__c='READY'))}"> <td  class="dataCell" width="5%" style="text-align:center">
+                                       <apex:commandlink action="{!AddFBAItem}" rerender="theForm" > 
+                                           <apex:image value="{!URLFOR($Resource.eCommazon__Buttons,'additems.png')}" height="50"/>
+                                            <apex:param name="PackageId"  value="{!wpl.ShippmentWrapPackage.id}" />
+                                             </apex:commandlink>
+                                    </td></apex:outputPanel>
+                                    <!--<td></td>-->
+                                </tr>
+                            </apex:repeat>
+                        </table>
+                         <apex:pageBlock id="hiddenBlock" rendered="false"></apex:pageBlock>
+                        <span class="bt-in">
+                         <Center><br/>
+                         
+                           <apex:commandLink action="{!CloseShipment}" >
+                               <apex:image value="{!URLFOR($Resource.eCommazon__Buttons,'closeshipment.png')}" height="50" />
+                           </apex:commandLink>&nbsp;
+                            <apex:commandLink action="{!GoBack1}" >
+                               <apex:image value="{!URLFOR($Resource.eCommazon__Buttons,'gobackrectangle.png')}" height="50" />
+                            </apex:commandLink><br/>
+                        </Center> 
+                        </span>
+                </center>
+                </apex:outputPanel>  
+                </apex:outputPanel>
+            </apex:outputPanel>
+            <br/>
+           </div>
+          </div>
+          </div>
+          </div>
+  </apex:form>
+</apex:page>

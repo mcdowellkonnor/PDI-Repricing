@@ -1,0 +1,26 @@
+<apex:page standardController="ECS__Quote__c" sidebar="false" id="page" extensions="ECS.CreateOrderController" action="{!initEditQuote}"> 
+
+	<c:CreateOrder id="c"
+	               topController="{!theController}"
+	               displayLineDollarPromo="true" 
+				   displayDollarPromo="true" 
+	               displayLinePercentPromo="true" 
+	               displayPercentPromo="true"
+				   productReadOnly="false" 
+				   priceReadOnly="false" 
+				   quantityReadOnly="false"
+				   displayCustomerSearch="true" 
+				   displayTaxExempt="true" 
+				   displayLineShipping="false"
+				   displayOrderType="true" 
+				   displayPromoCode="true" 
+				   displayShippingOptions="true"
+				   displayAddresses="true"
+				   displayNotes="true"
+				   displayPricebooks="true"
+				   displayRecurringOrder="true"
+				   displayAddOrderLine="true"
+				   displayOrderSettings="true"
+				   completeOrderRedirectURL=""/> 
+				   
+</apex:page>

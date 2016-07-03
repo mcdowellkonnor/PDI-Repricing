@@ -1,0 +1,236 @@
+<apex:page controller="RepricingController" sidebar="false">
+		<script>
+		function showLoading() {
+		   document.getElementById('loading').style.display = "block";
+		}
+		
+		function showBatchLoading() {
+			document.getElementById('loading-batch').style.display = "block";
+		}
+		
+		function removeLoading() {
+			document.getElementById('loading').style.display = "none";
+		}
+		
+		function removeBatchLoading() {
+			document.getElementById('loading-batch').style.display = "none";
+		}
+		
+		function getNewWindow() {
+			x = window.open(document.location);
+			window.close();
+		}
+		
+		document.addEventListener('DOMContentLoaded', function() {
+   			removeLoading();
+   			removeBatchLoading();
+		}, false);
+
+		</script>
+				
+		<html>
+			<apex:form id="loading-form">
+				<div id="loading" class="loading-div">
+					<img src="https://c92ffb3aa779c0dda00250e787721cebe36bde7d.googledrive.com/host/0B-nOX6uc-BNDb1hZZldPOUZhQ1U/gears.gif" class="centered-on-screen"/>
+				</div>
+			</apex:form>
+			
+			<apex:form id="loading-form-batch">
+				<div id="loading-batch" style="display:{!IF(AND(batch_status != 'Completed', running_batch), '', 'none')}" class="loading-div">
+					<img src="https://c92ffb3aa779c0dda00250e787721cebe36bde7d.googledrive.com/host/0B-nOX6uc-BNDb1hZZldPOUZhQ1U/gears.gif" class="centered-on-screen"/>
+					<div id="completed-batch-process-bar" style="display:{!IF(batch_status == 'Completed', '', 'none')}">
+						<apex:outputText value="Reloading..." rendered="{!batch_is_completed}">
+							<script>
+								getNewWindow();
+							</script>
+						</apex:outputText>
+					</div>
+				</div>
+			</apex:form>
+			
+			<header>
+				<div class="header-div">
+					<p>Repricing Sheet</p>
+				</div>
+			</header>
+			
+			<body>
+				<br/><br/>
+				<div style="display:{!IF(missing_repricing_header != null, '', 'none')}">
+					
+					<apex:outputText value="{!missing_repricing_header}" styleClass="warning_text"/><br/><br/>
+					
+	    			<apex:repeat value="{!missing_repricing}" var="missing" id="missing_repeat">
+	    				<apex:outputText value="{!missing.Name}"/><br/>
+	    			</apex:repeat>
+	    			
+	    			<apex:form >
+	    				<apex:actionFunction name="makeRepricing" action="{!makeRepricing}" reRender="None"/>
+		    			<div style="display:{!IF(missing_repricing_header != null, '', 'none')}">
+		    				<br/><button type="button" onClick="makeRepricing(); showLoading(); return false">Make Repricing Information</button><br/><br/><br/>
+		    			</div>
+		    		</apex:form>
+		    		
+		    		<apex:form id="make-repricing-reload">
+		    			<apex:outputText rendered="{!made_repricing}" value="Reloading...">
+		    				<script>
+			    				getNewWindow();
+			    			</script>
+		    			</apex:outputText>
+		    		</apex:form>
+    			</div>
+				<c:PDIRepricingTable />
+				<br/><br/>
+			</body>
+			
+			<footer>
+				<apex:form >
+			    	<apex:actionFunction name="rerunBatch" action="{!runBatch}" reRender="None"/>
+			    	<apex:actionFunction name="runschedule" action="{!runSchedule}"/>
+					<div class="footer-div">
+						<button class="footer" type="button" onClick="window.open('/apex/PDI_Repricing__RepricingCSV' + '{!UrlValue}')">Download CSV</button>
+						<button class="footer" onClick="rerunBatch(); showBatchLoading(); return false;" >Update</button>
+						<button class="footer" onClick="runschedule(); alert('Scheduled batch restarted.')">Start Scheduled Batch</button>
+					</div>
+					<apex:actionPoller enabled="{!batchRunningCheck}" reRender="loading-form-batch" interval="5"/>
+					<apex:actionPoller enabled="true" reRender="make-repricing-reload" interval="5"/>
+				</apex:form>
+			</footer>
+		</html>
+	
+	<style type="text/css">
+	
+		.header-div {
+			text-align: center;
+			width: 100%;
+			background-color: #D8ECF2;
+			padding: 10px 0px;
+			font-size: 30px;
+			font-family: "Arial Black", Gadget;
+		}
+		
+		.footer-div {
+			text-align: center;
+			width: 100%;
+			background-color: #D8ECF2;
+			padding: 30px 0px;
+		}
+		
+		button.footer {
+			display: inline-block;
+		  	padding: 10px 20px;
+		  	font-size: 24px;
+		  	cursor: pointer;
+		  	text-align: center;
+		  	text-decoration: none;
+		  	border: solid;
+		  	border-radius: 15px;
+		}
+		
+		button.footer:hover {background-color: #3e8e41}
+
+		button.footer:active {
+		  background-color: #3e8e41;
+		}
+		
+		button.disabled {
+    		opacity: 0.6;
+    		cursor: not-allowed;
+		}
+		
+		.dropdown {
+    		position: relative;
+    		display: inline-block;
+		}
+		
+		.dropdown-content {
+    		display: none;
+    		position: absolute;
+    		z-index:1;
+    		background-color: #f9f9f9;
+   			min-width: 160px;
+    		box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    		right: 0;
+		}
+		
+		.dropdown-content a {
+    		color: black;
+    		padding: 12px 16px;
+    		text-decoration: none;
+    		display: block;
+		}
+		
+		.dropdown-content p {
+			color: black;
+    		padding: 0px 16px;
+    		text-decoration: none;
+    		display: block;
+		}
+		
+		.dropdown-content input {
+			width: 75%;
+		}
+
+		.dropdown-content a:hover {background-color: #f1f1f1}
+
+		.dropdown:hover .dropdown-content {
+    		display: block;
+		}
+		
+		.warning_header {
+	        text-align: center;
+	        font-family: "Arial Black", sans-serif;
+	        font-size: 26px;
+	        color: #ff0000;
+	        text-decoration: underline;
+        } 
+        
+        .warning_text {
+	        text-align: center;
+	        font-family: "Lucida Console", monospace;
+	        font-size: 18px;
+	        color: #ff0000;
+        }
+        
+        .warning_small_text {
+        	color: red;
+    		padding: 0px 16px;
+    		text-decoration: bold;
+    		display: block;
+        }
+        
+        .loading-div {
+        	position: absolute;
+        	width: 100%;
+        	height: 100%;
+        	background-color: rgba(255, 255, 255, 0.5);
+        	z-index: 100;
+        }
+        
+        .loading-div:before {    /* create a full-height inline block pseudo=element */
+		    content: ' ';
+		    display: inline-block;
+		    vertical-align: middle;  /* vertical alignment of the inline element */
+		    height: 100%;
+		}
+		
+		.loading-div p {
+			text-align: center;
+			display: inline-block;
+			vertical-align: middle;
+			font-size: 40px;
+			font-family: "Lucida Console", monospace;
+			color: red;
+			z-index: 110;
+		}
+        
+        .centered-on-screen {
+        	display: inline-block;
+        	text-align: center;
+        	vertical-align: middle;
+        	z-index: 101;
+        }
+        
+        
+	</style>
+</apex:page>

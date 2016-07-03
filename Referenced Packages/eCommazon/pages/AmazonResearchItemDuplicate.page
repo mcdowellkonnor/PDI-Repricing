@@ -1,0 +1,21 @@
+<apex:page controller="eCommazon.AmazonResearchItemController" showheader="true" sidebar="true">
+    <apex:form >
+        <apex:pageBlock >
+            <apex:pageblockButtons >
+                <apex:commandButton action="{!Save}" value="Save" />
+            </apex:pageblockButtons>
+            <Center>
+            <Table width="80%">
+               <th>Amazon Research Item Name</th><th>ASIN</th><th>UPC</th>
+               <apex:repeat value="{!AmazonResearchItemDuplicate}" var="amri">
+                    <tr>
+                       <td><apex:inputField value="{!amri.Name}"/></td>
+                       <td><apex:inputField value="{!amri.eCommazon__ASIN__c}"/></td>
+                       <td><apex:inputField value="{!amri.eCommazon__UPC__c}"/></td>
+                   </tr>    
+               </apex:repeat>
+           </Table>
+           </Center>
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

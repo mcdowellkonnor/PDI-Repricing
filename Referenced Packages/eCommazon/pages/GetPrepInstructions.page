@@ -1,0 +1,16 @@
+<apex:page controller="eCommazon.GetPrepInstructionsForASINController" >
+ <apex:pageMessages id="pgm" />
+  <apex:form id="theForm">
+     <apex:pageBlock >
+        <apex:pageBlockButtons >
+            <apex:commandButton action="{!GetPrepInstructions}" value="Submit"/>
+        </apex:pageBlockButtons>
+          <apex:pageBlockSection >
+              <apex:inputText value="{!Value}" label="ASIN or MSKU::"/> 
+               <apex:selectList value="{!SelectValue}" size="1" label="Option:">
+                           <apex:selectOptions value="{!ValueOptions}" />
+                     </apex:selectList>
+          </apex:pageBlockSection>
+     </apex:pageBlock>
+  </apex:form>
+</apex:page>

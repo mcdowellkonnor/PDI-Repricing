@@ -1,0 +1,89 @@
+<apex:page standardController="ECS__Product__c" extensions="serp.AddProductsToPurchaseOrderController">
+
+	<ECS:Analytics event="INFO" app="ERP" />
+
+	<apex:sectionHeader title="Add Products to Purchase Order" />
+
+	<apex:pagemessages />
+
+	<apex:form id="theForm">
+		<apex:pageBlock id="pageBlock">
+			<apex:pageBlockButtons location="bottom">
+				<apex:commandButton action="{!addProducts}" value="Add Products" />
+				<apex:commandButton action="{!cancel}" value="Cancel" />
+			</apex:pageBlockButtons>
+			<center>
+				<apex:outputPanel id="table">
+					<apex:actionRegion >
+						<table cellspacing="3" cellpadding="3" border="0" width="90%">
+							<thead>
+								<tr>
+									<td><span><b>SKU</b></span></td>
+									<td><span><b>Title</b></span></td>
+									<td><span><b>Supplier</b></span></td>
+									<td><span><b>MPN</b></span></td>
+									<td><span><b>Available Quantity</b></span></td>
+									<td><span><b>Ideal Quantity</b></span></td>
+									<td><span><b>Quantity On Order</b></span></td>
+									<td><span><b>Quantity</b></span></td>
+									<td><span><b>Cost</b></span></td>
+									<td><span><b>Purchase Order</b></span></td>
+								</tr>
+							</thead>
+							<apex:outputPanel rendered="{!renderBulkActions}">
+								<tr>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td><apex:inputText size="5" id="mqty"
+											value="{!masterQty}">
+											<apex:actionSupport event="onchange" action="{!changeQty}"
+												rerender="table" />
+										</apex:inputText></td>
+									<td></td>
+									<td><apex:selectList size="1" id="mpoid"
+											value="{!masterPOId}">
+											<apex:actionSupport event="onchange"
+												action="{!changePurchaseOrders}" rerender="table" />
+											<apex:selectOptions value="{!purchaseOrders}" />
+										</apex:selectList></td>
+								</tr>
+							</apex:outputPanel>
+							<tbody>
+								<apex:repeat value="{!productInfoList}" var="p">
+									<tr id="{!p.prod.Id}">
+										<td title="{!p.prod.Name}"><div>{!p.prod.Name}</div></td>
+										<td title="{!p.prod.ECS__Title__c}"><div>{!p.prod.ECS__Title__c}</div></td>
+										<td title="{!p.prod.ECS__Supplier__c}"><div>{!p.prod.ECS__Supplier__c}</div></td>
+										<td title="{!p.prod.ECS__MPN__c}"><div>{!p.prod.ECS__MPN__c}</div></td>
+										<td align="center" title="{!p.prod.ECS__Available_Units__c}"><div>{!p.prod.ECS__Available_Units__c}</div></td>
+										<td align="center" title="{!p.prod.ECS__Ideal_Quantity__c}"><div>{!p.prod.ECS__Ideal_Quantity__c}</div></td>
+										<td align="center" title="{!p.prod.serp__PO_Quantity_on_Order__c}"><div>{!p.prod.serp__PO_Quantity_on_Order__c}</div></td>
+										<td title="qty"><div>
+												<apex:inputText size="5" value="{!p.qty}" />
+											</div></td>
+										<td title="cost"><div>
+												<apex:inputText size="5" value="{!p.cost}" />
+											</div></td>
+										<td title="PurchaseOrder"><div>
+												<apex:selectList size="1" id="po" value="{!p.po}">
+													<apex:selectOptions value="{!purchaseOrders}" />
+												</apex:selectList>
+											</div></td>
+									</tr>
+								</apex:repeat>
+							</tbody>
+						</table>
+					</apex:actionRegion>
+					
+					Auto-Order: <apex:inputCheckbox value="{!autoOrder}"/>
+					
+				</apex:outputPanel>
+			</center>
+		</apex:pageBlock>
+	</apex:form>
+</apex:page>

@@ -1,0 +1,5 @@
+<apex:page standardController="ECS__Product__c" extensions="CloudGento.GetMagentoInventoryController" action="{!updateImagesFromProduct}">
+
+   <apex:pagemessages />
+
+</apex:page>

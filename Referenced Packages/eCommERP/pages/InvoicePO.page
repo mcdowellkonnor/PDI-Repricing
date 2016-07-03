@@ -1,0 +1,21 @@
+<apex:page standardController="serp__Purchase_Order__c" sidebar="false" action="{!init}" extensions="serp.CreatePOController" > 
+	<c:InvoicePO topController="{!theController}"   
+	    displayLineDollarPromoName="true"
+		displayDollarPromoName="true" 
+		displayLinePercentPromoName="true"
+		displayPercentPromoName="true" 
+		productReadOnlyName="false"
+		priceReadOnlyName="false" 
+		quantityReadOnlyName="false"
+		displaySupplierSearchName="true" 
+		displayLineShippingName="false"
+		displayOrderTypeName="true" 
+		displayPromoCodeName="false"
+		displayShippingOptionsName="true" 
+		displayAddressesName="true"
+		displayNotesName="true" 
+		displayPricebooksName="true"
+		displayRecurringOrderName="true" 
+		displayOrderSettingsName="true"
+		/>
+</apex:page>

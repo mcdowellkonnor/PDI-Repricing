@@ -1,0 +1,5 @@
+<apex:page controller="CloudConversion.returnPortalConfirmationController" renderAs="PDF">
+	
+	<c:returnsPortalConfirmationComponent />
+	
+</apex:page>

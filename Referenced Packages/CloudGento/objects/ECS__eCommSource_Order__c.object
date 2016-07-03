@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <enableEnhancedLookup>true</enableEnhancedLookup>
+    <fields>
+        <fullName>Create_Magento_Order__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Create Magento Order</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Hold_Status__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <formula>IF(OR(TEXT(ECS__Order_Status__c)=&apos;Hold&apos;,TEXT(ECS__Order_Status__c)=&apos;On Hold&apos;),
+TEXT(ECS__Order_Status__c) &amp; &quot; [&quot; &amp; HYPERLINK(&apos;/apex/CloudGento__CancelOrder?ordId=&apos;&amp;Id, &apos;Cancel Order&apos;, &quot;_self&quot;) &amp; &quot;]&quot; &amp; &quot; [&quot; &amp; HYPERLINK(&apos;/apex/CloudGento__UnholdOrder?ordId=&apos;&amp;Id, &apos;Unhold Order&apos;, &quot;_self&quot;) &amp; &quot;]&quot;,
+IF(TEXT(ECS__Order_Status__c) != &apos;Hold&apos;,
+TEXT(ECS__Order_Status__c) &amp; &quot; [&quot; &amp; HYPERLINK(&apos;/apex/CloudGento__CancelOrder?ordId=&apos;&amp;Id, &apos;Cancel Order&apos;, &quot;_self&quot;) &amp; &quot;]&quot; &amp; &quot; [&quot; &amp; HYPERLINK(&apos;/apex/CloudGento__HoldOrder?ordId=&apos;&amp;Id, &apos;Hold Order&apos;, &quot;_self&quot;) &amp; &quot;]&quot;, TEXT(ECS__Order_Status__c)
+))</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Change Order</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Issue__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Issue</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Magento_Store_Id__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Magento Store Id</label>
+        <precision>3</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <webLinks>
+        <fullName>Get_Magento_Shipping</fullName>
+        <availability>online</availability>
+        <displayType>massActionButton</displayType>
+        <linkType>javascript</linkType>
+        <masterLabel>Get Magento Shipping</masterLabel>
+        <openType>onClickJavaScript</openType>
+        <protected>false</protected>
+        <requireRowSelection>true</requireRowSelection>
+        <url>var ids= {!GETRECORDIDS($ObjectType.ECS__eCommSource_Order__c)}; var mywin = window.open(&apos;/apex/CloudGento__GetMagentoShippingDetails?ids=&apos;+ids.join(&apos;,&apos;));</url>
+    </webLinks>
+    <webLinks>
+        <fullName>Get_Magento_Updates</fullName>
+        <availability>online</availability>
+        <displayType>massActionButton</displayType>
+        <linkType>javascript</linkType>
+        <masterLabel>Get Magento Updates</masterLabel>
+        <openType>onClickJavaScript</openType>
+        <protected>false</protected>
+        <requireRowSelection>true</requireRowSelection>
+        <url>var ids= {!GETRECORDIDS($ObjectType.ECS__eCommSource_Order__c)}; var mywin = window.open(&apos;/apex/CloudGento__GetMagentoOrders?ids=&apos;+ids.join(&apos;,&apos;));</url>
+    </webLinks>
+    <webLinks>
+        <fullName>Get_Order_Updates</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <height>600</height>
+        <linkType>page</linkType>
+        <masterLabel>Get Order Updates</masterLabel>
+        <openType>sidebar</openType>
+        <page>GetMagentoOrderUpdates</page>
+        <protected>false</protected>
+    </webLinks>
+    <webLinks>
+        <fullName>Get_Shipping</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <height>600</height>
+        <linkType>page</linkType>
+        <masterLabel>Get Shipping</masterLabel>
+        <openType>sidebar</openType>
+        <page>GetMagentoShippingDetailsOnOrder</page>
+        <protected>false</protected>
+    </webLinks>
+</CustomObject>

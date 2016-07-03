@@ -1,0 +1,3 @@
+<apex:page standardController="ECS__eCommSource_Order__c" extensions="eCommazon.UpdateOrderController" action="{!autoRun}">
+	<apex:outputText value="{!orderId}" />
+</apex:page>
